@@ -1,5 +1,12 @@
 <template>
-  <router-view />
+  <div class="app-container">
+    <el-menu mode="horizontal" router>
+      <el-menu-item index="/">首页</el-menu-item>
+      <el-menu-item index="/recommend">推荐</el-menu-item>
+      <el-menu-item index="/about">关于</el-menu-item>
+    </el-menu>
+    <router-view />
+  </div>
 </template>
 
 <script setup>
@@ -21,4 +28,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.el-menu {
+  margin-bottom: 20px;
+}
 </style>
