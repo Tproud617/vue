@@ -1,0 +1,18 @@
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+const path = require('path')
+
+export default defineConfig({
+  base: '/vue-2/',  // 添加这一行，vue-2是你的仓库名
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true
+  }
+})
