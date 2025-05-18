@@ -23,7 +23,8 @@ const routes = [
   }
 ]
 
-const router = createRouter({  history: createWebHistory('/vue-2/'),
+const router = createRouter({
+  history: createWebHistory('/vue/'),
   routes
 })
 
