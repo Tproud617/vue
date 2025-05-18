@@ -29,11 +29,8 @@
         
         <template v-else-if="phone">
           <el-row :gutter="30">
-            <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="6">
-              <div class="phone-image-container">
-                <div class="phone-image-placeholder">
-                  {{ phone.brand.charAt(0) }}{{ phone.name.charAt(0) }}
-                </div>
+            <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="6">              <div class="phone-image-container">
+                <img :src="phone.image" :alt="phone.name" class="phone-image" />
               </div>
             </el-col>
             
@@ -183,24 +180,26 @@ const goBack = () => {
 
 .phone-image-container {
   width: 100%;
-  aspect-ratio: 1/1;
-  background: #f5f7fa;
+  max-width: 400px; /* 限制最大宽度 */
+  aspect-ratio: 4/3; /* 调整图片容器比例 */
+  background: #ffffff;
   border-radius: 12px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.phone-image-placeholder {
-  font-size: 64px;
-  font-weight: bold;
-  color: #909399;
-  background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
-  width: 100%;
-  height: 100%;
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.phone-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .phone-details {
