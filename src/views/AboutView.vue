@@ -33,7 +33,7 @@
                 
                 <div class="info-section">
                   <h3>联系我们</h3>
-                  <p>如有问题或建议，请发送邮件至：<a href="mailto:contact@phonerec.com">contact@phonerec.com</a></p>
+                  <p>如有问题或建议，请发送邮件至：<a href="mailto:Tproud617@qq.com">Tproud617@qq.com</a></p>
                 </div>
                 
                 <div class="actions">
