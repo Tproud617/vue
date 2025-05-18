@@ -210,7 +210,7 @@ const toggleBrand = async (brand) => {
 
 // 重置所有筛选条件
 const resetFilters = async () => {
-  await phoneStore.resetPreferences()
+  await phoneStore.reset()
   await phoneStore.generateRecommendations()
 }
 
