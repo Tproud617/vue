@@ -442,42 +442,86 @@ onUnmounted(() => {
   position: relative;
   width: 300px;
   height: 580px;
-  background: linear-gradient(145deg, #e8e8e8 0%, #c5c5c5 40%, #d9d9d9 70%, #f5f5f5 100%);
+  background: linear-gradient(145deg, 
+    #f0f0f0 0%, 
+    #dadada 20%, 
+    #c8c8c8 40%,
+    #d5d5d5 60%, 
+    #e8e8e8 80%,
+    #f5f5f5 100%
+  );
   border-radius: 50px;
-  animation: phone-float 6s ease-in-out infinite alternate;
   box-shadow:
-    0 0 0 1px rgba(230, 230, 230, 0.3),
-    0 30px 60px rgba(0, 0, 0, 0.25),
-    0 15px 30px rgba(0, 0, 0, 0.15);
+    0 0 0 1px rgba(230, 230, 230, 0.4),
+    0 35px 65px rgba(0, 0, 0, 0.3),
+    0 20px 35px rgba(0, 0, 0, 0.2);
   z-index: 0;
   transform-style: preserve-3d;
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: visible;
   cursor: pointer;
-  transform: perspective(2000px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+  animation: phone-float 2.5s ease-in-out infinite;
+}
+
+@keyframes phone-float {
+  0%, 100% {
+    transform: perspective(2000px) translateY(0) rotateX(1deg) rotateY(-3deg) scale(1);
+    box-shadow:
+      0 0 0 1px rgba(230, 230, 230, 0.4),
+      0 35px 65px rgba(0, 0, 0, 0.3),
+      0 20px 35px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: perspective(2000px) translateY(-15px) rotateX(-1deg) rotateY(3deg) scale(1.02);
+    box-shadow:
+      0 0 0 1px rgba(230, 230, 230, 0.4),
+      0 50px 80px rgba(0, 0, 0, 0.25),
+      0 30px 45px rgba(0, 0, 0, 0.15);
+  }
 }
 
 /* 银色边框 */
 .iphone-16-pro {
-  background: linear-gradient(145deg, #e6e6e6 0%, #c8c8c8 30%, #d5d5d5 60%, #f0f0f0 100%);
-  border: 1px solid rgba(240, 240, 240, 0.5);
+  background: linear-gradient(145deg, 
+    #f5f5f5 0%, 
+    #e0e0e0 15%, 
+    #d0d0d0 30%, 
+    #c8c8c8 45%,
+    #d5d5d5 60%, 
+    #e8e8e8 75%,
+    #f8f8f8 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.6);
   position: relative;
 }
 
 .iphone-16-pro::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(240, 240, 240, 0.2) 20%,
-    rgba(220, 220, 220, 0.1) 40%,
-    rgba(210, 210, 210, 0.1) 60%,
-    rgba(230, 230, 230, 0.2) 80%,
-    rgba(255, 255, 255, 0.4) 100%);
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.5) 15%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.2) 60%,
+    rgba(255, 255, 255, 0.5) 75%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
   border-radius: inherit;
   z-index: 2;
   pointer-events: none;
+  opacity: 0.9;
+  animation: metal-shine 4s linear infinite;
+}
+
+@keyframes metal-shine {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .phone-reflection {
@@ -488,14 +532,29 @@ onUnmounted(() => {
   bottom: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(240, 240, 240, 0.2) 20%,
-    rgba(255, 255, 255, 0) 50%
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.6) 15%,
+    rgba(255, 255, 255, 0.3) 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 70%
   );
-    border-radius: inherit;
+  border-radius: inherit;
   pointer-events: none;
   z-index: 5;
-  overflow: hidden;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  animation: reflection-pulse 4s ease-in-out infinite;
+}
+
+@keyframes reflection-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    background-position: 0% 0%;
+  }
+  50% {
+    opacity: 0.6;
+    background-position: 100% 100%;
+  }
 }
 
 /* 侧边按钮 */

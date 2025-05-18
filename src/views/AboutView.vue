@@ -107,11 +107,25 @@ const goRecommend = () => {
   margin: 20px 0;
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: float 1.5s ease-in-out infinite;
 }
 
 .about-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(66, 185, 131, 0.2);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .card-content {
