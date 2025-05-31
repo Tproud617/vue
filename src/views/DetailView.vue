@@ -82,7 +82,13 @@
                 
                 <div class="actions">
                   <el-button type="primary" @click="goBack">返回</el-button>
-                  <el-button type="success">添加到对比</el-button>
+                  <el-button 
+                    type="success" 
+                    @click="addToCompare"
+                    :disabled="isInCompareList"
+                  >
+                    {{ isInCompareList ? '已添加到对比' : '添加到对比' }}
+                  </el-button>
                   <el-button type="danger" plain>收藏</el-button>
                 </div>
               </div>
@@ -99,9 +105,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { usePhoneStore } from '@/stores/phone'
+import { ElMessage } from 'element-plus'
 
 const router = useRouter()
 const route = useRoute()
@@ -110,6 +117,12 @@ const phoneStore = usePhoneStore()
 const phone = ref(null)
 const loading = ref(true)
 const error = ref(null)
+
+// 判断当前手机是否已在对比列表中
+const isInCompareList = computed(() => {
+  if (!phone.value) return false
+  return phoneStore.compareList.includes(phone.value.id)
+})
 
 onMounted(async () => {
   const phoneId = Number(route.params.id)
@@ -137,6 +150,24 @@ onMounted(async () => {
 
 const goBack = () => {
   router.push('/recommend')
+}
+
+// 添加到对比列表
+const addToCompare = () => {
+  if (!phone.value) return
+  
+  if (phoneStore.compareList.length >= 4 && !isInCompareList.value) {
+    ElMessage.warning('对比列表最多只能添加4款手机')
+    return
+  }
+  
+  if (phoneStore.addToCompare(phone.value.id)) {
+    ElMessage.success('已添加到对比列表')
+  } else if (isInCompareList.value) {
+    ElMessage.info('该手机已在对比列表中')
+  } else {
+    ElMessage.error('添加失败，请稍后再试')
+  }
 }
 </script>
 

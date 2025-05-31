@@ -28,7 +28,10 @@ export const usePhoneStore = defineStore('phone', {
     
     // 筛选和排序
     sortBy: 'price',
-    sortOrder: 'asc'
+    sortOrder: 'asc',
+    
+    // 对比列表
+    compareList: []
   }),
   
   // 计算属性
@@ -57,6 +60,11 @@ export const usePhoneStore = defineStore('phone', {
         const factor = state.sortOrder === 'asc' ? 1 : -1
         return (a[state.sortBy] - b[state.sortBy]) * factor
       })
+    },
+
+    // 获取对比列表中的手机
+    comparePhones: (state) => {
+      return state.compareList.map(id => state.phones.find(phone => phone.id === id))
     }
   },
   
@@ -93,12 +101,47 @@ export const usePhoneStore = defineStore('phone', {
       localStorage.removeItem('userPreferences')
     },
 
+    // 添加手机到对比列表
+    addToCompare(phoneId) {
+      if (!this.compareList.includes(phoneId) && this.compareList.length < 4) {
+        this.compareList.push(phoneId)
+        // 保存到 localStorage
+        localStorage.setItem('compareList', JSON.stringify(this.compareList))
+        return true
+      }
+      return false
+    },
+    
+    // 从对比列表中移除手机
+    removeFromCompare(phoneId) {
+      const index = this.compareList.indexOf(phoneId)
+      if (index > -1) {
+        this.compareList.splice(index, 1)
+        // 更新 localStorage
+        localStorage.setItem('compareList', JSON.stringify(this.compareList))
+        return true
+      }
+      return false
+    },
+    
+    // 清空对比列表
+    clearCompareList() {
+      this.compareList = []
+      localStorage.removeItem('compareList')
+    },
+    
     // 初始化
     initialize() {
       // 从 localStorage 加载用户偏好
       const savedPreferences = localStorage.getItem('userPreferences')
       if (savedPreferences) {
         this.preferences = JSON.parse(savedPreferences)
+      }
+      
+      // 从 localStorage 加载对比列表
+      const savedCompareList = localStorage.getItem('compareList')
+      if (savedCompareList) {
+        this.compareList = JSON.parse(savedCompareList)
       }
     },
     

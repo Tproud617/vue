@@ -3,6 +3,10 @@
     <el-menu mode="horizontal" router>
       <el-menu-item index="/">首页</el-menu-item>
       <el-menu-item index="/recommend">推荐</el-menu-item>
+      <el-menu-item index="/compare">
+        对比
+        <el-badge v-if="compareCount > 0" :value="compareCount" class="compare-badge" />
+      </el-menu-item>
       <el-menu-item index="/about">关于</el-menu-item>
     </el-menu>
     <router-view />
@@ -10,10 +14,13 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { usePhoneStore } from '@/stores/phone'
 
 const phoneStore = usePhoneStore()
+
+// 计算对比列表中的手机数量
+const compareCount = computed(() => phoneStore.compareList.length)
 
 onMounted(() => {
   try {
@@ -38,5 +45,9 @@ onMounted(() => {
 
 .el-menu {
   margin-bottom: 20px;
+}
+
+.compare-badge {
+  margin-left: 6px;
 }
 </style>
