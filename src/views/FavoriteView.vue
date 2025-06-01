@@ -166,6 +166,7 @@ const goToRecommend = () => {
 
 // 查看手机详情
 const viewDetail = (id) => {
+  console.log('从收藏页跳转到详情页，ID:', id)
   router.push(`/detail/${id}`)
 }
 </script>

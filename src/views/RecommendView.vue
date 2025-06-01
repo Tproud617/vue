@@ -119,7 +119,7 @@
             >
               <div class="phone-card-inner">
                 <div class="phone-image-container">
-                  <img :src="phone.image" :alt="phone.name" class="phone-image">
+              <img :src="phone.image" :alt="phone.name" class="phone-image">
                   <div class="match-badge" :class="getMatchClass(phone.matchScore)">
                     {{ Math.min(100, Math.round((phone.matchScore / 25) * 100)) }}%
                   </div>
@@ -133,75 +133,75 @@
                   </button>
                 </div>
                 <h4 class="phone-title">{{ phone.name }}</h4>
-                <div class="phone-info">
+              <div class="phone-info">
                   <el-tag size="small" effect="dark" type="success" class="brand-badge">{{ phone.brand }}</el-tag>
-                  <span class="price">¥{{ phone.price.toLocaleString() }}</span>
-                </div>
+                <span class="price">¥{{ phone.price.toLocaleString() }}</span>
+              </div>
 
-                <!-- 匹配分数 -->
-                <div class="match-score">
-                  <el-progress 
-                    :percentage="Math.min(100, (phone.matchScore / 25) * 100)"
-                    :format="format => `匹配度: ${format}%`"
+              <!-- 匹配分数 -->
+              <div class="match-score">
+                <el-progress 
+                  :percentage="Math.min(100, (phone.matchScore / 25) * 100)"
+                  :format="format => `匹配度: ${format}%`"
                     :status="getMatchStatus(phone.matchScore)"
                     :stroke-width="10"
                     class="match-progress"
-                  />
-                </div>
+                />
+              </div>
 
-                <!-- 手机参数 -->
-                <div class="phone-specs">
-                  <div class="spec-item">
+              <!-- 手机参数 -->
+              <div class="phone-specs">
+                <div class="spec-item">
                     <el-tooltip content="存储容量" placement="top" effect="light">
                       <i class="el-icon spec-icon">💾</i>
-                      <span>{{ phone.storage }}GB</span>
-                    </el-tooltip>
-                  </div>
-                  <div class="spec-item">
+                    <span>{{ phone.storage }}GB</span>
+                  </el-tooltip>
+                </div>
+                <div class="spec-item">
                     <el-tooltip content="屏幕尺寸" placement="top" effect="light">
                       <i class="el-icon spec-icon">📱</i>
-                      <span>{{ phone.screen }}"</span>
-                    </el-tooltip>
-                  </div>
+                    <span>{{ phone.screen }}"</span>
+                  </el-tooltip>
                 </div>
+              </div>
 
-                <div class="phone-ratings">
-                  <div class="rating-item">
-                    <span class="rating-label">相机</span>
+              <div class="phone-ratings">
+                <div class="rating-item">
+                  <span class="rating-label">相机</span>
                     <el-rate v-model="phone.camera" disabled size="small" class="custom-rate"/>
-                  </div>
-                  <div class="rating-item">
-                    <span class="rating-label">性能</span>
+                </div>
+                <div class="rating-item">
+                  <span class="rating-label">性能</span>
                     <el-rate v-model="phone.performance" disabled size="small" class="custom-rate"/>
-                  </div>
-                  <div class="rating-item">
-                    <span class="rating-label">电池</span>
+                </div>
+                <div class="rating-item">
+                  <span class="rating-label">电池</span>
                     <el-rate v-model="phone.battery" disabled size="small" class="custom-rate"/>
-                  </div>
                 </div>
+              </div>
 
-                <!-- 使用场景标签 -->
-                <div class="usage-tags">
-                  <el-tag 
-                    v-for="usage in phone.usage" 
-                    :key="usage"
-                    size="small"
-                    :type="preferences.usage.includes(usage) ? 'warning' : 'info'"
+              <!-- 使用场景标签 -->
+              <div class="usage-tags">
+                <el-tag 
+                  v-for="usage in phone.usage" 
+                  :key="usage"
+                  size="small"
+                  :type="preferences.usage.includes(usage) ? 'warning' : 'info'"
                     effect="plain"
-                    class="usage-tag"
-                  >
-                    {{ usage }}
-                  </el-tag>
-                </div>
-
-                <el-button 
-                  type="primary" 
-                  @click="viewDetail(phone.id)"
-                  size="default"
-                  class="detail-btn"
+                  class="usage-tag"
                 >
+                  {{ usage }}
+                </el-tag>
+              </div>
+
+              <el-button 
+                type="primary" 
+                @click="viewDetail(phone.id)"
+                  size="default"
+                class="detail-btn"
+              >
                   <el-icon><view /></el-icon> 查看详情
-                </el-button>
+              </el-button>
               </div>
             </el-card>
           </div>
@@ -250,6 +250,7 @@ const updatePreferences = async () => {
 
 // 查看手机详情
 const viewDetail = (id) => {
+  console.log('跳转到详情页，ID:', id)
   router.push(`/detail/${id}`)
 }
 
@@ -285,6 +286,16 @@ const toggleFavorite = (event, phoneId) => {
       ElMessage.success('已从收藏中移除')
     }
   }
+}
+
+// 跳转到推荐页面
+const goToRecommend = () => {
+  router.push('/recommend')
+}
+
+// 跳转到收藏页面
+const goToFavorite = () => {
+  router.push('/favorite')
 }
 
 // 初始化数据

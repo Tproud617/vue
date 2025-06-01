@@ -1028,8 +1028,8 @@ onUnmounted(() => {
 }
 
 .app::before {
-  content: '';
-  position: absolute;
+    content: '';
+    position: absolute;
   inset: 0;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.3) 0%, 
@@ -1044,7 +1044,7 @@ onUnmounted(() => {
   box-shadow: 
     0 18px 35px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.15);
-}
+  }
 
 .app-pressed {
   transform: scale(0.9) !important;
@@ -1109,7 +1109,7 @@ onUnmounted(() => {
   z-index: 2;
   box-sizing: border-box;
   padding: 0 10px;
-}
+  }
 
 .dock::before {
   content: '';
