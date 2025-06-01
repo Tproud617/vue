@@ -31,7 +31,10 @@ export const usePhoneStore = defineStore('phone', {
     sortOrder: 'asc',
     
     // 对比列表
-    compareList: []
+    compareList: [],
+    
+    // 收藏列表
+    favoriteList: []
   }),
   
   // 计算属性
@@ -65,6 +68,11 @@ export const usePhoneStore = defineStore('phone', {
     // 获取对比列表中的手机
     comparePhones: (state) => {
       return state.compareList.map(id => state.phones.find(phone => phone.id === id))
+    },
+    
+    // 获取收藏列表中的手机
+    favoritePhones: (state) => {
+      return state.favoriteList.map(id => state.phones.find(phone => phone.id === id))
     }
   },
   
@@ -130,6 +138,44 @@ export const usePhoneStore = defineStore('phone', {
       localStorage.removeItem('compareList')
     },
     
+    // 添加手机到收藏列表
+    addToFavorite(phoneId) {
+      if (!this.favoriteList.includes(phoneId)) {
+        this.favoriteList.push(phoneId)
+        // 保存到 localStorage
+        localStorage.setItem('favoriteList', JSON.stringify(this.favoriteList))
+        return true
+      }
+      return false
+    },
+    
+    // 从收藏列表中移除手机
+    removeFromFavorite(phoneId) {
+      const index = this.favoriteList.indexOf(phoneId)
+      if (index > -1) {
+        this.favoriteList.splice(index, 1)
+        // 更新 localStorage
+        localStorage.setItem('favoriteList', JSON.stringify(this.favoriteList))
+        return true
+      }
+      return false
+    },
+    
+    // 切换收藏状态
+    toggleFavorite(phoneId) {
+      if (this.favoriteList.includes(phoneId)) {
+        return this.removeFromFavorite(phoneId)
+      } else {
+        return this.addToFavorite(phoneId)
+      }
+    },
+    
+    // 清空收藏列表
+    clearFavoriteList() {
+      this.favoriteList = []
+      localStorage.removeItem('favoriteList')
+    },
+    
     // 初始化
     initialize() {
       // 从 localStorage 加载用户偏好
@@ -142,6 +188,12 @@ export const usePhoneStore = defineStore('phone', {
       const savedCompareList = localStorage.getItem('compareList')
       if (savedCompareList) {
         this.compareList = JSON.parse(savedCompareList)
+      }
+      
+      // 从 localStorage 加载收藏列表
+      const savedFavoriteList = localStorage.getItem('favoriteList')
+      if (savedFavoriteList) {
+        this.favoriteList = JSON.parse(savedFavoriteList)
       }
     },
     

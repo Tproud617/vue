@@ -89,7 +89,15 @@
                   >
                     {{ isInCompareList ? '已添加到对比' : '添加到对比' }}
                   </el-button>
-                  <el-button type="danger" plain>收藏</el-button>
+                  <el-button 
+                    type="danger" 
+                    :plain="!isInFavoriteList" 
+                    @click="toggleFavorite"
+                    class="favorite-btn"
+                  >
+                    <el-icon class="favorite-icon"><star /></el-icon>
+                    {{ isInFavoriteList ? '已收藏' : '收藏' }}
+                  </el-button>
                 </div>
               </div>
             </el-col>
@@ -109,6 +117,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { usePhoneStore } from '@/stores/phone'
 import { ElMessage } from 'element-plus'
+import { Star } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -122,6 +131,12 @@ const error = ref(null)
 const isInCompareList = computed(() => {
   if (!phone.value) return false
   return phoneStore.compareList.includes(phone.value.id)
+})
+
+// 判断当前手机是否已收藏
+const isInFavoriteList = computed(() => {
+  if (!phone.value) return false
+  return phoneStore.favoriteList.includes(phone.value.id)
 })
 
 onMounted(async () => {
@@ -167,6 +182,21 @@ const addToCompare = () => {
     ElMessage.info('该手机已在对比列表中')
   } else {
     ElMessage.error('添加失败，请稍后再试')
+  }
+}
+
+// 切换收藏状态
+const toggleFavorite = () => {
+  if (!phone.value) return
+  
+  if (phoneStore.toggleFavorite(phone.value.id)) {
+    if (isInFavoriteList.value) {
+      ElMessage.success('已从收藏中移除')
+    } else {
+      ElMessage.success('已添加到收藏')
+    }
+  } else {
+    ElMessage.error('操作失败，请稍后再试')
   }
 }
 </script>
@@ -294,6 +324,27 @@ const addToCompare = () => {
   margin-top: 40px;
   display: flex;
   gap: 16px;
+}
+
+.favorite-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.favorite-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(245, 108, 108, 0.2);
+}
+
+.favorite-icon {
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.favorite-btn:hover .favorite-icon {
+  transform: scale(1.2);
 }
 
 @media (max-width: 768px) {

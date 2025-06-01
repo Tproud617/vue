@@ -7,6 +7,10 @@
         对比
         <el-badge v-if="compareCount > 0" :value="compareCount" class="compare-badge" />
       </el-menu-item>
+      <el-menu-item index="/favorite">
+        收藏
+        <el-badge v-if="favoriteCount > 0" :value="favoriteCount" class="favorite-badge" />
+      </el-menu-item>
       <el-menu-item index="/about">关于</el-menu-item>
     </el-menu>
     <router-view />
@@ -21,6 +25,9 @@ const phoneStore = usePhoneStore()
 
 // 计算对比列表中的手机数量
 const compareCount = computed(() => phoneStore.compareList.length)
+
+// 计算收藏列表中的手机数量
+const favoriteCount = computed(() => phoneStore.favoriteList.length)
 
 onMounted(() => {
   try {
@@ -47,7 +54,11 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-.compare-badge {
+.compare-badge, .favorite-badge {
   margin-left: 6px;
+}
+
+.favorite-badge :deep(.el-badge__content) {
+  background-color: #f56c6c;
 }
 </style>

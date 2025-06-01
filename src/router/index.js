@@ -25,6 +25,11 @@ const routes = [
     path: '/compare',
     name: 'Compare',
     component: () => import('@/views/CompareView.vue')
+  },
+  {
+    path: '/favorite',
+    name: 'Favorite',
+    component: () => import('@/views/FavoriteView.vue')
   }
 ]
 

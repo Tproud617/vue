@@ -260,6 +260,21 @@ onUnmounted(() => {
 .phone-wrapper {
   perspective: 1500px;
   transform-style: preserve-3d;
+  position: relative;
+}
+
+.phone-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 40px;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
 }
 
 .content-column {
@@ -460,7 +475,7 @@ onUnmounted(() => {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: visible;
   cursor: pointer;
-  animation: phone-float 2.5s ease-in-out infinite;
+  animation: phone-float 3s ease-in-out infinite;
 }
 
 @keyframes phone-float {
@@ -483,15 +498,15 @@ onUnmounted(() => {
 /* 银色边框 */
 .iphone-16-pro {
   background: linear-gradient(145deg, 
-    #f5f5f5 0%, 
-    #e0e0e0 15%, 
-    #d0d0d0 30%, 
-    #c8c8c8 45%,
-    #d5d5d5 60%, 
-    #e8e8e8 75%,
-    #f8f8f8 100%
+    #e8e8e8 0%, 
+    #d6d6d6 15%, 
+    #c0c0c0 30%, 
+    #b8b8b8 45%,
+    #c5c5c5 60%, 
+    #d8d8d8 75%,
+    #e8e8e8 100%
   );
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   position: relative;
 }
 
@@ -515,12 +530,26 @@ onUnmounted(() => {
   animation: metal-shine 4s linear infinite;
 }
 
+.iphone-16-pro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
 @keyframes metal-shine {
   0%, 100% {
     opacity: 0.9;
+    background-position: 0% 0%;
   }
   50% {
     opacity: 0.7;
+    background-position: 100% 100%;
   }
 }
 
@@ -571,22 +600,56 @@ onUnmounted(() => {
 .volume-up, .volume-down, .power-button {
   width: 3px;
   height: 30px;
-  background: #6a6a6a;
+  background: linear-gradient(to right, #777, #999);
   border-radius: 2px;
   box-shadow: 
     -1px 0 2px rgba(0, 0, 0, 0.5),
-    inset 1px 0 1px rgba(255, 255, 255, 0.2);
+    inset 1px 0 1px rgba(255, 255, 255, 0.3);
 }
 
 .action-button {
   width: 3px;
   height: 35px;
-  background: #6a6a6a;
+  background: linear-gradient(to right, #777, #999);
   border-radius: 2px;
   margin-top: 40px;
   box-shadow: 
     -1px 0 2px rgba(0, 0, 0, 0.5),
-    inset 1px 0 1px rgba(255, 255, 255, 0.2);
+    inset 1px 0 1px rgba(255, 255, 255, 0.3);
+}
+
+/* 添加更多硬件细节 */
+.phone-model::after {
+  content: '';
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: #333;
+  border-radius: 3px;
+  z-index: 10;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 添加麦克风和扬声器 */
+.phone-model::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 /* 屏幕 */
@@ -608,7 +671,7 @@ onUnmounted(() => {
   padding: 0;
 }
 
-/* 添加经典iOS气泡元素 */
+/* 添加玻璃质感 */
 .screen::before {
   content: '';
   position: absolute;
@@ -620,9 +683,10 @@ onUnmounted(() => {
     radial-gradient(circle at 60% 80%, rgba(61, 99, 236, 0.3) 0%, rgba(61, 99, 236, 0) 40%);
   opacity: 0.7;
   z-index: 0;
+  animation: background-shift 15s ease-in-out infinite alternate;
 }
 
-/* 添加轻微动态模糊效果 */
+/* 添加轻微的指纹和污渍效果 */
 .screen::after {
   content: '';
   position: absolute;
@@ -630,6 +694,23 @@ onUnmounted(() => {
   height: 100%;
   backdrop-filter: blur(1px);
   z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.02;
+  mix-blend-mode: overlay;
+}
+
+/* 锁屏效果 */
+.app-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.2) 100%);
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* 动态岛 */
@@ -638,22 +719,51 @@ onUnmounted(() => {
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 112px;
-  height: 30px;
+  width: 120px;
+  height: 34px;
   background: #000;
-  border-radius: 18px;
+  border-radius: 20px;
   z-index: 10;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    0 0 5px rgba(0, 0, 0, 0.8),
+    inset 0 0 2px rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+.dynamic-island::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(
+    ellipse at 30% 40%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.02);
+  }
 }
 
 .dynamic-island-content {
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
 }
 
 .island-pill {
@@ -661,9 +771,9 @@ onUnmounted(() => {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 6px;
-  background: rgba(50, 50, 50, 0.9);
+  width: 60px;
+  height: 5px;
+  background: rgba(60, 60, 60, 0.9);
   border-radius: 3px;
   opacity: 0.5;
 }
@@ -673,13 +783,15 @@ onUnmounted(() => {
   top: 50%;
   right: 30px;
   transform: translateY(-50%);
-  width: 9px;
-  height: 9px;
-  background: #2d2d2d;
+  width: 10px;
+  height: 10px;
+  background: #1a1a1a;
   border-radius: 50%;
   box-shadow: 
     inset 0 0 0 1px rgba(0, 0, 0, 0.5),
-    inset 0 0 2px rgba(255, 255, 255, 0.1);
+    inset 0 0 2px rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
 }
 
 .island-camera::after {
@@ -690,9 +802,33 @@ onUnmounted(() => {
   transform: translate(-50%, -50%);
   width: 4px;
   height: 4px;
-  background: #1a1a1a;
+  background: #000;
   border-radius: 50%;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    inset 0 0 2px rgba(0, 0, 0, 0.8),
+    0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.island-camera::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, transparent 40%, rgba(0, 132, 255, 0.5) 100%);
+  border-radius: 50%;
+  animation: camera-glow 4s ease-in-out infinite;
+}
+
+@keyframes camera-glow {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* 修改状态栏背景 */
@@ -708,6 +844,7 @@ onUnmounted(() => {
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .time {
@@ -724,30 +861,74 @@ onUnmounted(() => {
 .signal {
   width: 18px;
   height: 12px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 2px;
   position: relative;
+  overflow: hidden;
 }
 
 .signal::before {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, 
-    rgba(255, 255, 255, 0.9) 70%, 
-    rgba(255, 255, 255, 0.3) 70%, 
-    rgba(255, 255, 255, 0.3) 85%, 
-    rgba(255, 255, 255, 0.1) 85%);
-  border-radius: inherit;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
+  mask-image: linear-gradient(to right, 
+    #000 0%, #000 70%, 
+    #000 70%, #000 75%, transparent 75%,
+    transparent 80%, #000 80%, #000 85%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to right, 
+    #000 0%, #000 70%, 
+    #000 70%, #000 75%, transparent 75%,
+    transparent 80%, #000 80%, #000 85%, transparent 85%);
+  animation: signal-pulse 2s ease-in-out infinite;
+}
+
+@keyframes signal-pulse {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .wifi {
   width: 16px;
   height: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wifi::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 2px;
-  position: relative;
+  mask-image: radial-gradient(
+    circle at bottom center,
+    transparent 0%,
+    transparent 40%,
+    #000 40.1%,
+    #000 60%,
+    transparent 60.1%,
+    transparent 70%,
+    #000 70.1%,
+    #000 80%,
+    transparent 80.1%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at bottom center,
+    transparent 0%,
+    transparent 40%,
+    #000 40.1%,
+    #000 60%,
+    transparent 60.1%,
+    transparent 70%,
+    #000 70.1%,
+    #000 80%,
+    transparent 80.1%
+  );
+  transform: scale(1.5);
 }
 
 .battery {
@@ -756,6 +937,7 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
   position: relative;
+  overflow: hidden;
 }
 
 .battery::before {
@@ -767,6 +949,23 @@ onUnmounted(() => {
   width: 60%;
   background: rgba(80, 220, 100, 0.9);
   border-radius: 1px;
+  box-shadow: 0 0 5px rgba(80, 220, 100, 0.5);
+  animation: battery-pulse 5s ease-in-out infinite;
+}
+
+@keyframes battery-pulse {
+  0%, 100% {
+    width: 60%;
+    background: rgba(80, 220, 100, 0.9);
+  }
+  30% {
+    width: 40%;
+    background: rgba(255, 204, 0, 0.9);
+  }
+  60% {
+    width: 75%;
+    background: rgba(80, 220, 100, 0.9);
+  }
 }
 
 .battery::after {
@@ -786,8 +985,8 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
-  padding: 20px 8px;
+  gap: 15px;
+  padding: 25px 15px;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -808,9 +1007,11 @@ onUnmounted(() => {
 
 /* 应用图标优化 */
 .app {
-  border-radius: 22%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 25%;
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: visible;
   display: flex;
@@ -827,69 +1028,88 @@ onUnmounted(() => {
 }
 
 .app::before {
-    content: '';
-    position: absolute;
+  content: '';
+  position: absolute;
   inset: 0;
   background: linear-gradient(145deg, 
-    rgba(255, 255, 255, 0.2) 0%, 
-    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0.1) 50%,
     rgba(255, 255, 255, 0) 100%);
   border-radius: inherit;
   z-index: 2;
 }
 
 .app:hover {
-  transform: scale(1.05) translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
+  transform: scale(1.15) translateY(-8px) translateZ(20px) rotateX(10deg);
+  box-shadow: 
+    0 18px 35px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
 
 .app-pressed {
-  transform: scale(0.95) !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  transform: scale(0.9) !important;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) !important;
   transition: all 0.1s ease-in-out !important;
 }
 
 .app-icon-content {
-  width: 60%;
-  height: 60%;
+  width: 65%;
+  height: 65%;
   position: relative;
   z-index: 1;
-  border-radius: 18%;
+  border-radius: 22%;
   margin-bottom: 4px;
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.app-icon-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 70%);
+  z-index: 2;
+  border-radius: inherit;
 }
 
 .app-label {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 90%;
-  margin-top: 3px;
+  margin-top: 5px;
   letter-spacing: 0.5px;
+  font-weight: 500;
 }
 
 /* Dock应用图标样式 */
 .dock {
-  height: 80px;
-  margin: 5px 16px 15px;
+  height: 85px;
+  margin: 5px 16px 18px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 30px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   box-shadow: 
-    0 0 20px rgba(0, 0, 0, 0.3),
-    inset 0 0 5px rgba(255, 255, 255, 0.2);
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 5px rgba(255, 255, 255, 0.05);
   position: relative;
   overflow: hidden;
   z-index: 2;
   box-sizing: border-box;
   padding: 0 10px;
-  }
+}
 
 .dock::before {
   content: '';
@@ -897,27 +1117,44 @@ onUnmounted(() => {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
     rgba(0, 0, 0, 0.05) 100%
   );
   border-radius: inherit;
   z-index: 0;
 }
 
+.dock::after {
+  content: '';
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  height: 4px;
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  filter: blur(1px);
+}
+
 .dock-app {
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 5px;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 
 .dock-app::before {
@@ -933,11 +1170,27 @@ onUnmounted(() => {
 }
 
 .dock-app:hover {
-  transform: scale(1.15) translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  transform: scale(1.25) translateY(-12px) translateZ(30px) rotateX(10deg);
+  box-shadow: 
+    0 20px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-/* 应用图标具体样式 */
+.dock-app:hover ~ .dock-app {
+  transform: translateX(8px);
+}
+
+.dock-app:hover ~ .dock-app:hover {
+  transform: scale(1.25) translateY(-12px) translateZ(30px) rotateX(10deg);
+}
+
+.dock-app .app-icon-content {
+  width: 85%;
+  height: 85%;
+  border-radius: 22%;
+}
+
+/* 重新设计应用图标具体样式，添加更逼真的效果 */
 .photos-icon {
   background: linear-gradient(145deg, #f45d5d, #e13a3a);
   position: relative;
@@ -947,21 +1200,23 @@ onUnmounted(() => {
 .photos-icon::before {
   content: '';
   position: absolute;
-  width: 70%;
-  height: 70%;
-  top: 15%;
-  left: 15%;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
   background: 
-    radial-gradient(circle at 30% 30%, #ffeb3b 0%, #ffeb3b 10%, transparent 10.1%),
-    radial-gradient(circle at 70% 30%, #4caf50 0%, #4caf50 10%, transparent 10.1%),
-    radial-gradient(circle at 30% 70%, #03a9f4 0%, #03a9f4 10%, transparent 10.1%),
-    radial-gradient(circle at 70% 70%, #9c27b0 0%, #9c27b0 10%, transparent 10.1%);
-  border-radius: 10%;
+    radial-gradient(circle at 25% 25%, #ffeb3b 0%, #ffeb3b 12%, transparent 12.1%, transparent),
+    radial-gradient(circle at 75% 25%, #4caf50 0%, #4caf50 12%, transparent 12.1%, transparent),
+    radial-gradient(circle at 25% 75%, #03a9f4 0%, #03a9f4 12%, transparent 12.1%, transparent),
+    radial-gradient(circle at 75% 75%, #9c27b0 0%, #9c27b0 12%, transparent 12.1%, transparent),
+    linear-gradient(to bottom, transparent 0%, transparent 100%);
+  border-radius: 20%;
 }
 
 .camera-icon {
-  background: #333333;
+  background: linear-gradient(145deg, #3d3d3d, #292929);
   position: relative;
+  overflow: hidden;
 }
 
 .camera-icon::before {
@@ -971,27 +1226,30 @@ onUnmounted(() => {
   height: 60%;
   top: 20%;
   left: 20%;
-  background: #4a4a4a;
+  background: linear-gradient(145deg, #555, #444);
   border-radius: 50%;
   box-shadow: 
-    0 0 0 2px #5c5c5c,
-    0 0 0 4px #2a2a2a;
+    inset 0 0 0 2px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(30, 30, 30, 0.8);
 }
 
 .camera-icon::after {
   content: '';
   position: absolute;
-  width: 15%;
-  height: 15%;
-  top: 15%;
-  right: 15%;
-  background: #ffa726;
+  width: 20%;
+  height: 20%;
+  top: 12%;
+  right: 12%;
+  background: linear-gradient(145deg, #ffa726, #ff9800);
   border-radius: 50%;
+  box-shadow: 0 0 5px rgba(255, 152, 0, 0.6);
 }
 
 .calendar-icon {
   background: #ffffff;
   position: relative;
+  overflow: hidden;
 }
 
 .calendar-icon::before {
@@ -1001,28 +1259,30 @@ onUnmounted(() => {
   height: 30%;
   top: 0;
   left: 0;
-  background: #ff3b30;
+  background: linear-gradient(to bottom, #ff3b30, #e62d20);
   border-radius: 12px 12px 0 0;
 }
 
 .calendar-icon::after {
   content: '';
   position: absolute;
-  width: 60%;
-  height: 40%;
-  bottom: 20%;
-  left: 20%;
-  font-family: sans-serif;
-  font-weight: bold;
-  color: #333;
+  width: 70%;
+  height: 50%;
+  bottom: 15%;
+  left: 15%;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  content: attr(data-date);
 }
 
 .maps-icon {
-  background: linear-gradient(145deg, #f1f1f1, #e6e6e6);
+  background: linear-gradient(145deg, #f8f8f8, #ececec);
   position: relative;
   overflow: hidden;
 }
@@ -1033,23 +1293,27 @@ onUnmounted(() => {
   inset: 0;
   background: 
     linear-gradient(120deg, 
-      rgba(76, 175, 80, 0.5) 0%, 
-      rgba(156, 204, 101, 0.5) 30%,
-      rgba(255, 235, 59, 0.5) 50%,
-      rgba(255, 193, 7, 0.5) 70%,
-      rgba(255, 87, 34, 0.5) 100%);
+      rgba(76, 217, 100, 0.6) 0%, 
+      rgba(156, 204, 101, 0.6) 30%,
+      rgba(255, 235, 59, 0.6) 50%,
+      rgba(255, 193, 7, 0.6) 70%,
+      rgba(255, 87, 34, 0.6) 100%);
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6));
+  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6));
 }
 
 .maps-icon::after {
   content: '';
   position: absolute;
-  width: 40%;
-  height: 40%;
-  top: 30%;
-  left: 30%;
+  width: 35%;
+  height: 35%;
+  top: 32%;
+  left: 32%;
   background: #4285f4;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 0 0 3px rgba(255, 255, 255, 0.7),
+    0 0 10px rgba(66, 133, 244, 0.8);
 }
 
 .messages-icon {
@@ -1062,53 +1326,78 @@ onUnmounted(() => {
   content: '';
   position: absolute;
   width: 70%;
-  height: 50%;
-  top: 25%;
+  height: 55%;
+  top: 22%;
   left: 15%;
   background: white;
   border-radius: 20px;
+  box-shadow: 
+    inset 0 -3px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.messages-icon::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  bottom: 18%;
+  left: 20%;
+  background: white;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  z-index: -1;
 }
 
 .mail-icon {
   background: linear-gradient(145deg, #1e88e5, #1976d2);
   position: relative;
+  overflow: hidden;
 }
 
 .mail-icon::before {
   content: '';
   position: absolute;
-  width: 70%;
-  height: 45%;
-  top: 27.5%;
-  left: 15%;
-  background: white;
-  border-radius: 3px;
-  transform: perspective(100px) rotateX(10deg);
+  width: 80%;
+  height: 50%;
+  top: 25%;
+  left: 10%;
+  background: linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
+  border-radius: 4px;
+  transform: perspective(120px) rotateX(12deg);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 .mail-icon::after {
   content: '';
   position: absolute;
-  width: 70%;
-  height: 15%;
-  top: 27.5%;
-  left: 15%;
-  background: #1565c0;
-  border-radius: 3px 3px 0 0;
+  width: 80%;
+  height: 20%;
+  top: 25%;
+  left: 10%;
+  background: linear-gradient(to bottom, #1565c0 0%, #0d47a1 100%);
+  border-radius: 4px 4px 0 0;
+  transform: perspective(120px) rotateX(12deg);
 }
 
 .safari-icon {
   background: linear-gradient(145deg, #ffffff, #f6f6f6);
   position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .safari-icon::before {
   content: '';
   position: absolute;
-  width: 80%;
-  height: 80%;
-  top: 10%;
-  left: 10%;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
   background: 
     radial-gradient(circle at center, white 0%, white 35%, transparent 35.1%),
     conic-gradient(
@@ -1124,17 +1413,21 @@ onUnmounted(() => {
       #ff3b30 100%
     );
   border-radius: 50%;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .safari-icon::after {
   content: '';
   position: absolute;
-  width: 40%;
-  height: 40%;
-  top: 30%;
-  left: 30%;
+  width: 44%;
+  height: 44%;
+  top: 28%;
+  left: 28%;
   background: 
-    radial-gradient(circle at center, transparent 0%, transparent 50%, #007aff 50.1%, #007aff 85%, transparent 85.1%);
+    radial-gradient(circle at center, #007aff 0%, #007aff 10%, transparent 10.1%),
+    radial-gradient(circle at center, transparent 0%, transparent 40%, #007aff 40.1%, #007aff 70%, transparent 70.1%);
   border-radius: 50%;
   transform: rotate(45deg);
 }
@@ -1143,33 +1436,56 @@ onUnmounted(() => {
   background: linear-gradient(145deg, #fc3c44, #ed2c3a);
   position: relative;
   overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .music-icon::before {
-  content: '';
-  position: absolute;
-  width: 50%;
-  height: 60%;
-  top: 20%;
-  left: 25%;
-  background: 
-    radial-gradient(circle at 70% 30%, white 0%, white 25%, transparent 25.1%),
-    linear-gradient(to bottom, white, white);
-  border-radius: 0 0 50% 50%;
-}
-
-.appstore-icon {
-  background: linear-gradient(145deg, #0571ff, #0b62ed);
-  position: relative;
-}
-
-.appstore-icon::before {
   content: '';
   position: absolute;
   width: 60%;
   height: 60%;
   top: 20%;
   left: 20%;
+  background: 
+    radial-gradient(circle at 70% 30%, white 0%, white 30%, transparent 30.1%),
+    linear-gradient(to bottom, white, white);
+  border-radius: 0 0 50% 50%;
+  box-shadow: 
+    2px 2px 5px rgba(0, 0, 0, 0.2),
+    -2px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.music-icon::after {
+  content: '';
+  position: absolute;
+  width: 15%;
+  height: 35%;
+  top: 20%;
+  right: 30%;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 
+    2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.appstore-icon {
+  background: linear-gradient(145deg, #0571ff, #0b62ed);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.appstore-icon::before {
+  content: '';
+  position: absolute;
+  width: 66%;
+  height: 66%;
+  top: 17%;
+  left: 17%;
   background: white;
   -webkit-mask: 
     linear-gradient(45deg, transparent 0%, transparent 40%, black 40.1%, black 60%, transparent 60.1%),
@@ -1179,21 +1495,27 @@ onUnmounted(() => {
     linear-gradient(45deg, transparent 0%, transparent 40%, black 40.1%, black 60%, transparent 60.1%),
     linear-gradient(-45deg, transparent 0%, transparent 40%, black 40.1%, black 60%, transparent 60.1%),
     linear-gradient(90deg, black 0%, black 100%);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .settings-icon {
-  background: #e9e9ea;
+  background: linear-gradient(145deg, #ececec, #e0e0e0);
   position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .settings-icon::before {
   content: '';
   position: absolute;
-  width: 70%;
-  height: 70%;
-  top: 15%;
-  left: 15%;
-  background: #8e8e93;
+  width: 78%;
+  height: 78%;
+  top: 11%;
+  left: 11%;
+  background: linear-gradient(145deg, #8e8e93, #7a7a7f);
   -webkit-mask: 
     radial-gradient(circle at center, transparent 0%, transparent 25%, black 25.1%, black 37%, transparent 37.1%),
     repeating-conic-gradient(
@@ -1211,54 +1533,79 @@ onUnmounted(() => {
       black 60deg
     );
   border-radius: 50%;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .notes-icon {
   background: linear-gradient(145deg, #fffef8, #f8f6e8);
   position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .notes-icon::before {
   content: '';
   position: absolute;
-  width: 80%;
-  height: 70%;
-  top: 15%;
-  left: 10%;
+  width: 85%;
+  height: 80%;
+  top: 10%;
+  left: 7.5%;
   background: 
     linear-gradient(to bottom, 
       transparent 0%, 
-      transparent 20%, 
-      #d1d1d1 20.1%, 
-      #d1d1d1 20.3%, 
-      transparent 20.4%,
-      transparent 40%, 
-      #d1d1d1 40.1%, 
-      #d1d1d1 40.3%, 
-      transparent 40.4%,
-      transparent 60%, 
-      #d1d1d1 60.1%, 
-      #d1d1d1 60.3%, 
-      transparent 60.4%,
-      transparent 80%, 
-      #d1d1d1 80.1%, 
-      #d1d1d1 80.3%, 
-      transparent 80.4%
+      transparent 19%, 
+      #d1d1d1 19.1%, 
+      #d1d1d1 19.5%, 
+      transparent 19.6%,
+      transparent 39%, 
+      #d1d1d1 39.1%, 
+      #d1d1d1 39.5%, 
+      transparent 39.6%,
+      transparent 59%, 
+      #d1d1d1 59.1%, 
+      #d1d1d1 59.5%, 
+      transparent 59.6%,
+      transparent 79%, 
+      #d1d1d1 79.1%, 
+      #d1d1d1 79.5%, 
+      transparent 79.6%
     );
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.notes-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 8%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom, #f8e283, #f5d151);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .health-icon {
   background: linear-gradient(145deg, #ff2d55, #ff3b50);
   position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .health-icon::before {
   content: '';
   position: absolute;
-  width: 60%;
-  height: 60%;
-  top: 20%;
-  left: 20%;
+  width: 68%;
+  height: 68%;
+  top: 16%;
+  left: 16%;
   background: white;
   -webkit-mask: linear-gradient(
     to bottom,
@@ -1278,15 +1625,16 @@ onUnmounted(() => {
     black 60.1%,
     black 100%
   );
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .health-icon::after {
   content: '';
   position: absolute;
-  width: 60%;
-  height: 60%;
-  top: 20%;
-  left: 20%;
+  width: 68%;
+  height: 68%;
+  top: 16%;
+  left: 16%;
   background: white;
   -webkit-mask: linear-gradient(
     to right,
@@ -1311,33 +1659,26 @@ onUnmounted(() => {
 .phone-icon {
   background: linear-gradient(145deg, #35c759, #30b24d);
   position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .phone-icon::before {
   content: '';
   position: absolute;
-  width: 55%;
-  height: 55%;
-  top: 22.5%;
-  left: 22.5%;
+  width: 65%;
+  height: 65%;
+  top: 17.5%;
+  left: 17.5%;
   background: white;
-  border-radius: 10%;
+  border-radius: 12%;
   -webkit-mask: 
-    radial-gradient(circle at center, black 0%, black 70%, transparent 70.1%);
+    radial-gradient(circle at center, black 0%, black 75%, transparent 75.1%);
   mask: 
-    radial-gradient(circle at center, black 0%, black 70%, transparent 70.1%);
-}
-
-@keyframes phone-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+    radial-gradient(circle at center, black 0%, black 75%, transparent 75.1%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* 响应式调整 */
