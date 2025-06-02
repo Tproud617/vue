@@ -2,18 +2,18 @@
   <div class="app-container">
     <div class="nav-bar">
       <el-menu mode="horizontal" router :default-active="$route.path">
-        <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="/recommend">推荐</el-menu-item>
-        <el-menu-item index="/compare">
-          对比
-          <el-badge v-if="compareCount > 0" :value="compareCount" class="compare-badge" />
-        </el-menu-item>
+      <el-menu-item index="/">首页</el-menu-item>
+      <el-menu-item index="/recommend">推荐</el-menu-item>
+      <el-menu-item index="/compare">
+        对比
+        <el-badge v-if="compareCount > 0" :value="compareCount" class="compare-badge" />
+      </el-menu-item>
         <el-menu-item index="/favorite">
           收藏
           <el-badge v-if="favoriteCount > 0" :value="favoriteCount" class="favorite-badge" />
         </el-menu-item>
-        <el-menu-item index="/about">关于</el-menu-item>
-      </el-menu>
+      <el-menu-item index="/about">关于</el-menu-item>
+    </el-menu>
     </div>
     
     <router-view />

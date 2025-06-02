@@ -21,7 +21,7 @@
         <!-- 错误信息 -->
         <div v-else-if="error" class="error-section">
           <h2>出错了</h2>
-          <p>{{ error }}</p>
+              <p>{{ error }}</p>
           <button @click="reloadData" class="primary-btn">重试</button>
           <button @click="goBack" class="secondary-btn">返回列表</button>
         </div>
@@ -81,7 +81,7 @@
                   {{ isInFavoriteList ? '已收藏' : '收藏' }}
                 </button>
               </div>
-
+                
               <div class="tabs">
                 <div class="tab-header">
                   <div v-for="tab in tabs" :key="tab.id" 
@@ -163,9 +163,9 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        
+                  </div>
+                </div>
+                
         <!-- 相关推荐 -->
         <div v-if="phone && similarPhones.length" class="similar-phones">
           <h3 class="section-title">相关推荐</h3>
@@ -205,13 +205,13 @@ export default {
     }
   },
   setup(props) {
-    const router = useRouter()
-    const route = useRoute()
-    const phoneStore = usePhoneStore()
-    
-    const phone = ref(null)
-    const loading = ref(true)
-    const error = ref(null)
+const router = useRouter()
+const route = useRoute()
+const phoneStore = usePhoneStore()
+
+const phone = ref(null)
+const loading = ref(true)
+const error = ref(null)
     const imageLoaded = ref(false)
     const activeTab = ref('specs')
     const selectedColor = ref(0)
@@ -290,8 +290,8 @@ export default {
     
     // 获取手机数据
     const fetchPhoneData = () => {
-      loading.value = true
-      error.value = null
+    loading.value = true
+    error.value = null
       
       try {
         // 从props或路由参数获取ID
@@ -303,18 +303,18 @@ export default {
         
         // 获取手机数据
         const phoneData = phoneStore.getPhoneDetail(Number(phoneId))
-        
+    
         if (!phoneData) {
           throw new Error(`找不到ID为${phoneId}的手机`)
-        }
+    }
         
         // 更新状态
         phone.value = phoneData
-      } catch (err) {
+  } catch (err) {
         error.value = err.message || '加载失败，请稍后再试'
-      } finally {
-        loading.value = false
-      }
+  } finally {
+    loading.value = false
+  }
     }
     
     // 重新加载数据
@@ -323,9 +323,9 @@ export default {
     }
     
     // 返回推荐页面
-    const goBack = () => {
-      router.push('/recommend')
-    }
+const goBack = () => {
+  router.push('/recommend')
+}
     
     // 查看其他手机详情
     const viewDetail = (id) => {
@@ -343,16 +343,16 @@ export default {
       if (!phone.value) return false
       return phoneStore.favoriteList.includes(phone.value.id)
     })
-    
-    // 添加到对比列表
-    const addToCompare = () => {
+
+// 添加到对比列表
+const addToCompare = () => {
       if (!phone.value || isInCompareList.value) return
       phoneStore.addToCompare(phone.value.id)
     }
     
     // 切换收藏状态
     const toggleFavorite = () => {
-      if (!phone.value) return
+  if (!phone.value) return
       phoneStore.toggleFavorite(phone.value.id)
     }
     

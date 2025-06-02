@@ -96,31 +96,102 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="16" class="content-column">
         <div class="content">
-          <el-card class="welcome-card" shadow="hover">
+          <div class="content-header">
             <h1 class="title">手机推荐系统</h1>
-            <p class="description">我们将根据您的需求和偏好，为您推荐最适合的手机</p>
-            <div class="features">
-              <div class="feature-item">
-                <el-icon :size="36" color="#42b983"><Histogram /></el-icon>
+            <p class="subtitle">找到您的理想手机</p>
+          </div>
+          
+          <div class="features-showcase">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><Histogram /></el-icon>
+              </div>
+              <div class="feature-text">
                 <h3>智能匹配</h3>
-                <p>基于您的偏好自动匹配最适合的手机型号</p>
+                <p>基于您的偏好与使用场景，精准匹配最适合的手机型号</p>
               </div>
-              <div class="feature-item">
-                <el-icon :size="36" color="#42b983"><DataAnalysis /></el-icon>
-                <h3>详细对比</h3>
-                <p>多维度参数对比，助您做出明智选择</p>
               </div>
-              <div class="feature-item">
-                <el-icon :size="36" color="#42b983"><Refresh /></el-icon>
-                <h3>实时更新</h3>
-                <p>手机数据库定期更新，确保信息准确性</p>
+            
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><DataAnalysis /></el-icon>
+              </div>
+              <div class="feature-text">
+                <h3>多维对比</h3>
+                <p>对比不同机型的参数，从性能、相机、电池等多个维度进行分析</p>
               </div>
             </div>
-            <el-button type="primary" size="large" class="start-btn" @click="$router.push('/recommend')">
-              开始推荐
-              <el-icon class="el-icon--right"><arrow-right /></el-icon>
+            
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><Refresh /></el-icon>
+              </div>
+              <div class="feature-text">
+                <h3>实时更新</h3>
+                <p>手机数据库定期更新，确保信息准确性和时效性</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="action-container">
+            <div class="quick-links">
+              <el-button class="action-btn primary-action" type="primary" size="large" @click="$router.push('/recommend')">
+                <el-icon><Search /></el-icon>
+                开始推荐
             </el-button>
-          </el-card>
+              
+              <el-button class="action-btn secondary-action" @click="$router.push('/compare')">
+                <el-icon><Operation /></el-icon>
+                对比手机
+              </el-button>
+              
+              <el-button class="action-btn secondary-action" @click="$router.push('/detail/1')">
+                <el-icon><View /></el-icon>
+                浏览热门
+              </el-button>
+            </div>
+            
+            <div class="stats-showcase">
+              <div class="stat-item">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">品牌覆盖</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">手机型号</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">推荐满意度</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="trending-phones">
+            <h3 class="section-title">热门机型</h3>
+            <div class="phone-tags">
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>iPhone 16 Pro</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>三星 Galaxy S24</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>华为 Mate 60 Pro</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>小米 14 Ultra</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>OPPO Find X7</span>
+              </div>
+            </div>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -131,7 +202,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { ArrowRight, Histogram, DataAnalysis, Refresh } from '@element-plus/icons-vue'
+import { ArrowRight, Histogram, DataAnalysis, Refresh, Search, Operation, View } from '@element-plus/icons-vue'
 
 // 当前时间
 const currentTime = ref('12:30')
@@ -285,171 +356,274 @@ onUnmounted(() => {
 
 .content {
   width: 100%;
-  max-width: 600px;
-  transition: all 0.5s ease;
-}
-
-.welcome-card {
-  padding: 40px;
+  max-width: 700px;
   border-radius: 24px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(15px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.welcome-card:hover {
+.content:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.content-header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.content-header::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  border-radius: 2px;
 }
 
 .title {
   font-size: 3rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 10px;
   background: linear-gradient(to right, #42b983, #2f9768);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
   letter-spacing: -1px;
+  line-height: 1.1;
 }
 
-.description {
-  font-size: 1.25rem;
+.subtitle {
+  font-size: 1.4rem;
   color: #555;
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-}
-
-.brand-filter {
-  margin: 20px 0;
-  text-align: left;
-}
-
-.brand-filter h3 {
-  margin-bottom: 15px;
-  color: #606266;
-}
-
-.brand-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.brand-tag {
-  cursor: pointer;
-  user-select: none;
+  font-weight: 300;
   margin: 0;
-  transition: all 0.3s ease;
 }
 
-.brand-tag:hover {
-  transform: scale(1.05);
-}
-
-.phone-list {
-  margin-top: 30px;
-}
-
-.phone-list h3 {
-  margin-bottom: 20px;
-  color: #606266;
-  text-align: left;
-}
-
-.phone-card {
-  margin-bottom: 20px;
-  transition: transform 0.3s ease;
-}
-
-.phone-card:hover {
-  transform: translateY(-5px);
-}
-
-.phone-image {
-  width: 100%;
-  max-height: 200px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.phone-card h4 {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #303133;
-}
-
-.price {
-  color: #f56c6c;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.no-results {
+/* 功能展示区 */
+.features-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   margin: 40px 0;
 }
 
-.features {
+.feature-card {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 20px;
-}
-
-.feature-item {
-  flex: 1;
-  min-width: 150px;
-  padding: 20px 15px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.7);
   transition: all 0.3s ease;
 }
 
-.feature-item:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.feature-card:hover {
+  transform: translateX(8px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.feature-item h3 {
-  font-size: 1.2rem;
-  color: #333;
-  margin: 12px 0 8px;
-}
-
-.feature-item p {
-  font-size: 0.95rem;
-  color: #666;
-  margin: 0;
-}
-
-.start-btn {
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  border-radius: 16px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #42b983 0%, #2f9768 100%);
+  color: white;
+  flex-shrink: 0;
   box-shadow: 0 8px 20px rgba(66, 185, 131, 0.3);
 }
 
-.start-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 25px rgba(66, 185, 131, 0.4);
+.feature-text h3 {
+  margin: 0 0 5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #303133;
 }
 
-.start-btn .el-icon {
-  margin-left: 8px;
-  transition: transform 0.3s ease;
+.feature-text p {
+  margin: 0;
+  color: #606266;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.start-btn:hover .el-icon {
-  transform: translateX(5px);
+/* 操作按钮区 */
+.action-container {
+  margin: 30px 0;
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  padding: 12px 25px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 12px;
+}
+
+.primary-action {
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(66, 185, 131, 0.25);
+  flex: 2;
+}
+
+.primary-action:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(66, 185, 131, 0.4);
+}
+
+.secondary-action {
+  flex: 1;
+}
+
+.secondary-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 数据统计区 */
+.stats-showcase {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(66, 185, 131, 0.1), rgba(47, 151, 104, 0.2));
+  border-radius: 16px;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #606266;
+}
+
+/* 热门机型标签 */
+.trending-phones {
+  margin-top: 30px;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  color: #303133;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 15px;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 20px;
+  background: #42b983;
+  border-radius: 3px;
+}
+
+.phone-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.phone-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.phone-tag:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.tag-icon {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    padding: 30px;
+}
+
+  .title {
+    font-size: 2.5rem;
+}
+
+  .subtitle {
+  font-size: 1.2rem;
+  }
+  
+  .feature-icon {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .quick-links {
+    flex-direction: column;
+}
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 25px;
+    margin-top: 30px;
+  }
+  
+  .stat-number {
+    font-size: 1.7rem;
+}
+
+  .features-showcase {
+    margin: 30px 0;
+  }
 }
 
 /* iPhone 16 Pro Max 模型样式 */
