@@ -5,7 +5,7 @@
       <div 
         class="content-header fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.title }">
-        <h1 class="title">智能手机推荐系统</h1>
+        <h1 class="title">智能手机<span class="highlight-text">推荐系统</span></h1>
         <p class="subtitle">找到您的理想手机</p>
       </div>
       
@@ -153,12 +153,17 @@
       <div 
         class="action-container fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.actions }">
-        <div class="quick-links" :class="{ 'visible': animatedElements.actions }">
-          <el-button class="action-btn primary-action" type="primary" size="large" @click="$router.push('/recommend')">
+        <!-- 主要操作按钮单独一行 -->
+        <div class="primary-action-wrapper">
+          <el-button class="action-btn primary-action pulse-effect" type="primary" size="large" @click="$router.push('/recommend')">
             <el-icon><Search /></el-icon>
             开始推荐
+            <el-icon class="arrow-icon"><ArrowRight /></el-icon>
           </el-button>
-          
+        </div>
+        
+        <!-- 辅助按钮放在第二行 -->
+        <div class="quick-links" :class="{ 'visible': animatedElements.actions }">
           <el-button class="action-btn secondary-action" @click="$router.push('/compare')">
             <el-icon><Operation /></el-icon>
             对比手机
@@ -223,7 +228,7 @@
         </div>
       </div>
       
-      <!-- 用户指南部分 -->
+      <!-- 用户指南部分 - 优化设计 -->
       <div 
         class="user-guide-section fade-up"
         :class="{ 'animated': animationReady, 'visible': animatedElements.userGuide }">
@@ -260,7 +265,7 @@
         </div>
       </div>
       
-      <!-- 手机百科部分 -->
+      <!-- 手机百科部分 - 优化设计 -->
       <div 
         class="phone-encyclopedia fade-up"
         :class="{ 'animated': animationReady, 'visible': animatedElements.encyclopedia }">
@@ -305,7 +310,7 @@
         </div>
       </div>
       
-      <!-- 评测专区 -->
+      <!-- 评测专区 - 优化设计，去除卡片框架，与其他模块风格一致 -->
       <div 
         class="review-section fade-up"
         :class="{ 'animated': animationReady, 'visible': animatedElements.reviews }">
@@ -674,8 +679,8 @@ onUnmounted(() => {
 .phone-wrapper::before {
   content: '';
   position: absolute;
-  width: 250px;
-  height: 40px;
+  width: 280px; /* 增大阴影尺寸 */
+  height: 45px;
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
@@ -704,22 +709,127 @@ onUnmounted(() => {
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 10px;
-  background: linear-gradient(to right, #42b983, #2f9768);
+  background: linear-gradient(to right, #42b983, #2c8b63);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-weight: 800;
-  letter-spacing: -1px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
   line-height: 1.1;
+  position: relative;
+  display: inline-block;
+  animation: title-float 4s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(66, 185, 131, 0.3));
+  transition: all 0.5s ease;
+  text-rendering: geometricPrecision;
+}
+
+@keyframes title-float {
+  0%, 100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 2px 4px rgba(66, 185, 131, 0.3));
+  }
+  50% {
+    transform: translateY(-15px);
+    filter: drop-shadow(0 4px 8px rgba(66, 185, 131, 0.4));
+  }
+}
+
+.title:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 3px 6px rgba(66, 185, 131, 0.5));
+}
+
+.highlight-text {
+  position: relative;
+  background: linear-gradient(to right, #37a873, #287057);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  animation: text-pulse 4s ease-in-out infinite;
+}
+
+@keyframes text-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.98;
+    filter: drop-shadow(0 0 2px rgba(66, 185, 131, 0.4));
+    transform: scale(1.03);
+  }
+}
+
+/* 移除下方绿线动画 */
+.highlight-text::after {
+  display: none;
 }
 
 .subtitle {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #555;
   font-weight: 300;
   margin: 0;
+  animation: subtitle-appear 1.5s ease-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes subtitle-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 标题动画增强 */
+.content-header.animated.visible {
+  animation: header-appear 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes header-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.8rem;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .title {
+    font-size: 4rem;
+  }
+  
+  .subtitle {
+    font-size: 1.8rem;
+  }
 }
 
 /* 功能展示区 - 改进视觉效果 */
@@ -817,6 +927,18 @@ onUnmounted(() => {
 .action-container {
   width: 100%;
   max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* 主要操作按钮容器 */
+.primary-action-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .quick-links {
@@ -859,16 +981,71 @@ onUnmounted(() => {
   transform: translateX(100%);
 }
 
+/* 增强主要按钮 */
 .primary-action {
-  font-size: 1.1rem;
+  font-size: 1.3rem; /* 放大字体 */
   box-shadow: 0 10px 25px rgba(66, 185, 131, 0.25);
-  flex: 2;
-  min-width: 200px;
+  min-width: 300px; /* 增加最小宽度 */
+  max-width: 400px; /* 限制最大宽度 */
+  width: 80%; /* 设置为容器的80%宽 */
+  padding: 18px 30px; /* 增加内边距使按钮更大 */
+  background: linear-gradient(135deg, #42b983, #2f9768, #238957); /* 更丰富的渐变 */
+  position: relative;
+  z-index: 2;
+  letter-spacing: 1px; /* 增加字间距 */
+  border: none;
+  transform: scale(1.15); /* 默认就放大一点 */
+  margin: 10px 0; /* 调整外边距 */
+  overflow: visible; /* 允许阴影和光晕效果溢出 */
+}
+
+/* 呼吸效果 */
+.pulse-effect {
+  animation: button-pulse 3s infinite;
+}
+
+.primary-action .arrow-icon {
+  font-size: 1.3rem;
+  margin-left: 8px;
+  animation: arrow-bounce 1.5s infinite;
+}
+
+@keyframes button-pulse {
+  0%, 100% {
+    transform: scale(1.15);
+    box-shadow: 
+      0 10px 25px rgba(66, 185, 131, 0.25),
+      0 0 0 0 rgba(66, 185, 131, 0.5);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 
+      0 15px 30px rgba(66, 185, 131, 0.35),
+      0 0 20px 10px rgba(66, 185, 131, 0.2);
+  }
+}
+
+@keyframes arrow-bounce {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+/* 添加点击感觉 */
+.primary-action:active {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(66, 185, 131, 0.3);
 }
 
 .primary-action:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(66, 185, 131, 0.4);
+  transform: translateY(-5px) scale(1.2);
+  box-shadow: 
+    0 15px 30px rgba(66, 185, 131, 0.4),
+    0 0 30px 5px rgba(66, 185, 131, 0.25);
+  background: linear-gradient(135deg, #4ecf94, #42b983, #2f9768); /* 悬停时颜色微调 */
 }
 
 .secondary-action {
@@ -1173,11 +1350,11 @@ onUnmounted(() => {
   }
   
   .title {
-    font-size: 2rem;
+    font-size: 2.8rem;
   }
   
   .subtitle {
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
   
   .stats-showcase {
@@ -1223,8 +1400,8 @@ onUnmounted(() => {
 /* 优化的iPhone模型动画性能 */
 .phone-model {
   position: relative;
-  width: 300px;
-  height: 580px;
+  width: 320px; /* 增大尺寸 */
+  height: 620px; /* 增大尺寸 */
   background: linear-gradient(145deg, 
     #f0f0f0 0%, 
     #dadada 20%, 
@@ -1233,7 +1410,7 @@ onUnmounted(() => {
     #e8e8e8 80%,
     #f5f5f5 100%
   );
-  border-radius: 50px;
+  border-radius: 55px;
   box-shadow:
     0 0 0 1px rgba(230, 230, 230, 0.4),
     0 35px 65px rgba(0, 0, 0, 0.3),
@@ -1244,7 +1421,7 @@ onUnmounted(() => {
   overflow: visible;
   cursor: pointer;
   will-change: transform; /* 性能优化 */
-  animation: phone-float 3s ease-in-out infinite;
+  animation: phone-float 2.5s ease-in-out infinite; /* 加快动画速度 */
   animation-play-state: running;
 }
 
@@ -1254,18 +1431,18 @@ onUnmounted(() => {
 
 @keyframes phone-float {
   0%, 100% {
-    transform: perspective(2000px) translateY(0) rotateX(1deg) rotateY(-3deg) scale(1);
+    transform: perspective(2000px) translateY(0) rotateX(2deg) rotateY(-5deg) scale(1);
     box-shadow:
       0 0 0 1px rgba(230, 230, 230, 0.4),
       0 35px 65px rgba(0, 0, 0, 0.3),
       0 20px 35px rgba(0, 0, 0, 0.2);
   }
   50% {
-    transform: perspective(2000px) translateY(-15px) rotateX(-1deg) rotateY(3deg) scale(1.02);
+    transform: perspective(2000px) translateY(-25px) rotateX(-2deg) rotateY(5deg) scale(1.04);
     box-shadow:
       0 0 0 1px rgba(230, 230, 230, 0.4),
-      0 50px 80px rgba(0, 0, 0, 0.25),
-      0 30px 45px rgba(0, 0, 0, 0.15);
+      0 60px 100px rgba(0, 0, 0, 0.25),
+      0 35px 55px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -2270,126 +2447,242 @@ onUnmounted(() => {
   border-radius: 0 1px 1px 0;
 }
 
-/* 用户指南部分 */
+/* 用户指南部分 - 优化设计 */
 .user-guide-section {
   width: 100%;
   max-width: 900px;
+  position: relative;
+  margin-top: 20px;
 }
 
 .guide-steps {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 40px 30px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
-/* 卡片基础样式 */
-.guide-step, .encyclopedia-card, .review-card {
-  flex: 0 0 calc(45% - 10px);
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(10px);
-  display: flex;
+/* 添加连接线 */
+.guide-steps::before {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: calc(100% - 50px);
+  height: calc(100% - 50px);
+  border: 2px dashed rgba(66, 185, 131, 0.2);
+  border-radius: 20px;
+  z-index: -1;
+  pointer-events: none;
 }
 
+/* 修改步骤样式，更加现代化 */
 .guide-step {
-  aspect-ratio: 16/9; /* 使用16:9比例 */
-  min-height: 180px;
-  padding: 25px;
+  flex: 0 0 calc(45% - 10px);
+  padding: 15px 0;
+  display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  gap: 15px;
+  gap: 25px;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  min-height: auto;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  position: relative;
 }
 
 .step-number {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: linear-gradient(135deg, #42b983, #2f9768);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  font-weight: 700;
   box-shadow: 0 5px 15px rgba(66, 185, 131, 0.3);
   flex-shrink: 0;
+  margin-top: 5px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.guide-step:hover .step-number {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 25px rgba(66, 185, 131, 0.4);
 }
 
 .step-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 12px;
 }
 
 .guide-step:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  border: 1px solid #42b983;
-}
-
-.step-number {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #303133;
-  margin-bottom: 10px;
+  transform: translateY(-8px);
 }
 
 .step-content h4 {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #303133;
-  margin-bottom: 5px;
+  margin: 0;
+  position: relative;
+  padding-bottom: 12px;
+  transition: color 0.3s ease;
+}
+
+.guide-step:hover .step-content h4 {
+  color: #42b983;
+}
+
+.step-content h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.guide-step:hover .step-content h4::after {
+  width: 80px;
 }
 
 .step-content p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #606266;
-  line-height: 1.6;
+  line-height: 1.7;
+  margin: 0;
 }
 
-/* 具体卡片特殊样式 */
+/* 手机百科部分 - 优化设计 */
+.phone-encyclopedia {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 20px;
+}
+
+.encyclopedia-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px 30px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .encyclopedia-card {
-  aspect-ratio: 16/9; /* 使用16:9比例 */
-  min-height: 180px;
-  padding: 25px;
+  flex: 0 0 calc(45% - 10px);
+  padding: 15px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border-left: 4px solid #42b983;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  border-left: 0;
+  padding-left: 0;
+  min-height: auto;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: visible;
+}
+
+.encyclopedia-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, #42b983, transparent);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  opacity: 0.3;
+}
+
+.encyclopedia-card:hover::before {
+  width: 6px;
+  opacity: 1;
 }
 
 .encyclopedia-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
   background: linear-gradient(135deg, #42b983, #2f9768);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
   filter: drop-shadow(0 2px 4px rgba(66, 185, 131, 0.2));
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.encyclopedia-card:hover .encyclopedia-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(66, 185, 131, 0.4));
+}
+
+.encyclopedia-card h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #303133;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.encyclopedia-card:hover h4 {
+  color: #42b983;
+}
+
+.encyclopedia-card h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  transition: width 0.3s ease;
+}
+
+.encyclopedia-card:hover h4::after {
+  width: 80px;
 }
 
 .encyclopedia-list {
   list-style: none;
-  padding-left: 10px;
-  margin-top: 15px;
+  padding-left: 5px;
+  margin: 0;
 }
 
 .encyclopedia-list li {
   position: relative;
-  padding-left: 20px;
-  margin-bottom: 8px;
+  padding-left: 28px;
+  margin-bottom: 14px;
+  font-size: 1.1rem;
+  color: #606266;
+  transition: transform 0.3s ease;
 }
 
 .encyclopedia-list li::before {
@@ -2397,88 +2690,113 @@ onUnmounted(() => {
   position: absolute;
   left: 0;
   color: #42b983;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   line-height: 1;
+  transition: transform 0.3s ease;
 }
 
-/* 调整评测专区布局 */
+.encyclopedia-list li:hover {
+  transform: translateX(5px);
+  color: #303133;
+}
+
+.encyclopedia-list li:hover::before {
+  transform: scale(1.2);
+}
+
+.encyclopedia-card:hover {
+  transform: translateY(-8px);
+}
+
+/* 评测专区 - 优化设计，去除卡片框架，与其他模块风格一致 */
 .review-section {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
 .review-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 40px 30px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .review-card {
-  aspect-ratio: 16/9; /* 使用16:9比例 */
-  min-height: 180px;
-  padding: 25px;
+  flex: 0 0 calc(45% - 10px);
+  padding: 15px 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   position: relative;
-  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  min-height: auto;
+  overflow: visible;
 }
 
-.review-card::after {
+.review-card::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  background: #42b983;
-  transform: rotate(45deg) translate(20px, -20px);
-  z-index: 0;
-  opacity: 0.8;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, #42b983, transparent);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  opacity: 0.3;
 }
 
-.review-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  border: 1px solid #42b983;
+.review-card:hover::before {
+  width: 6px;
+  opacity: 1;
 }
 
 .review-header {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 18px;
+  margin-bottom: 20px;
 }
 
 .review-avatar {
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   background: linear-gradient(135deg, #42b983, #2f9768);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: white;
   box-shadow: 0 4px 10px rgba(66, 185, 131, 0.3);
+  transition: all 0.3s ease;
+}
+
+.review-card:hover .review-avatar {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(66, 185, 131, 0.4);
 }
 
 .review-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 
 .review-name {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #333;
 }
@@ -2487,18 +2805,88 @@ onUnmounted(() => {
   font-size: 1rem;
   color: #ffd700;
   text-shadow: 0 0 2px rgba(255, 215, 0, 0.5);
+  display: flex;
+  gap: 2px;
+}
+
+.review-content {
+  margin-left: 83px;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.review-content p {
+  font-size: 1.1rem;
+  color: #606266;
+  line-height: 1.7;
+  margin: 0;
+  font-style: italic;
+  position: relative;
+}
+
+.review-content p::before {
+  content: '"';
+  position: absolute;
+  left: -25px;
+  top: -5px;
+  font-size: 2.5rem;
+  color: rgba(66, 185, 131, 0.2);
+  font-family: Georgia, serif;
 }
 
 .review-phone-tag {
   display: inline-block;
-  padding: 5px 12px;
+  padding: 6px 15px;
   background: rgba(66, 185, 131, 0.1);
   border: 1px solid rgba(66, 185, 131, 0.3);
   border-radius: 20px;
   color: #42b983;
   font-weight: 500;
-  margin-top: 10px;
-  font-size: 0.9rem;
+  margin-top: 15px;
+  font-size: 1rem;
+  margin-left: 83px;
+  transition: all 0.3s ease;
+}
+
+.review-card:hover .review-phone-tag {
+  background: rgba(66, 185, 131, 0.2);
+  border-color: rgba(66, 185, 131, 0.5);
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+}
+
+/* 修改标题样式，使三个部分风格一致 */
+.section-title {
+  font-size: 1.6rem;
+  color: #303133;
+  margin-bottom: 30px;
+  position: relative;
+  padding-left: 18px;
+  display: inline-block;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 30px;
+  background: linear-gradient(to bottom, #42b983, #2f9768);
+  border-radius: 3px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 18px;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, #42b983, transparent);
 }
 
 /* 响应式调整 */
@@ -2512,59 +2900,47 @@ onUnmounted(() => {
   .guide-steps,
   .encyclopedia-content,
   .review-cards {
-    gap: 15px;
+    gap: 30px;
+  }
+  
+  .guide-steps::before {
+    display: none;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .step-number,
+  .review-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+  
+  .step-content h4,
+  .encyclopedia-card h4 {
+    font-size: 1.3rem;
+  }
+  
+  .step-content p,
+  .encyclopedia-list li,
+  .review-content p {
+    font-size: 1rem;
   }
   
   .encyclopedia-icon {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
   
-  .review-avatar {
-    width: 40px;
-    height: 40px;
+  .review-content,
+  .review-phone-tag {
+    margin-left: 0;
   }
   
-  .home-container {
-    gap: 30px;
+  .review-content p::before {
+    left: -20px;
+    top: -10px;
   }
-}
-
-/* 添加部分通用样式 */
-.user-guide-section, .phone-encyclopedia {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.user-guide-section .section-title, 
-.phone-encyclopedia .section-title,
-.review-section .section-title {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* 手机百科部分 */
-.phone-encyclopedia {
-  width: 100%;
-  max-width: 900px;
-}
-
-.encyclopedia-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.encyclopedia-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  border: 1px solid #42b983;
 }
 </style>

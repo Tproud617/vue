@@ -2,6 +2,7 @@
   <div class="compare-view">
     <div class="bg-gradient-1"></div>
     <div class="bg-gradient-2"></div>
+    <div class="bg-gradient-3"></div>
     
     <el-container>
       <el-header>
@@ -23,111 +24,129 @@
       </el-header>
       
       <el-main>
-        <el-empty 
+        <div 
           v-if="comparePhones.length === 0" 
-          description="对比列表为空" 
-          :image-size="200"
           class="empty-container"
         >
+          <div class="empty-illustration">
+            <div class="empty-icon">
+              <el-icon><data-analysis /></el-icon>
+            </div>
+            <div class="empty-phones">
+              <div class="empty-phone phone1"></div>
+              <div class="empty-phone phone2"></div>
+              <div class="empty-phone phone3"></div>
+              <div class="empty-phone phone4"></div>
+            </div>
+          </div>
+          <h2 class="empty-title">对比列表为空</h2>
           <p class="empty-description">添加手机到对比列表，可以更直观地比较它们的参数差异</p>
           <el-button type="primary" @click="goToRecommend" size="large" class="add-phone-btn">
             <el-icon><plus /></el-icon>
             去添加手机
           </el-button>
-        </el-empty>
+        </div>
         
-        <div v-else class="compare-container">
-          <div class="compare-header">
-            <h2 class="compare-title">已添加 {{ comparePhones.length }} 台手机</h2>
-            <el-tag type="info" effect="dark" class="compare-tag">
-              最多可添加4台手机进行对比
-            </el-tag>
-          </div>
-          
-          <div class="phone-cards">
-            <div 
-              v-for="(phone, index) in comparePhones" 
-              :key="phone.id"
-              class="phone-card"
-            >
-              <div class="phone-image-wrapper">
-                <img :src="phone.image" :alt="phone.name" class="phone-image">
-                <div class="remove-overlay">
-                  <el-button 
-                    type="danger" 
-                    circle 
-                    @click="removePhone(phone.id)"
-                    class="remove-btn"
-                    title="移除此手机"
-                  >
-                    <el-icon><close /></el-icon>
-                  </el-button>
-                </div>
-              </div>
-              <h3 class="phone-name">{{ phone.name }}</h3>
-              <div class="phone-price">¥{{ phone.price.toLocaleString() }}</div>
+        <transition name="fade-scale" v-else>
+          <div class="compare-container">
+            <div class="compare-header">
+              <h2 class="compare-title">已添加 {{ comparePhones.length }} 台手机</h2>
+              <el-tag type="info" effect="dark" class="compare-tag">
+                最多可添加4台手机进行对比
+              </el-tag>
             </div>
             
-            <div v-if="comparePhones.length < 4" class="add-more-card" @click="goToRecommend">
-              <div class="add-icon-container">
-                <el-icon class="add-icon"><plus /></el-icon>
+            <transition-group name="phone-list" tag="div" class="phone-cards">
+              <div 
+                v-for="(phone, index) in comparePhones" 
+                :key="phone.id"
+                class="phone-card"
+              >
+                <div class="phone-image-wrapper">
+                  <img :src="phone.image" :alt="phone.name" class="phone-image">
+                  <div class="phone-model-shadow"></div>
+                  <div class="remove-overlay">
+                    <el-button 
+                      type="danger" 
+                      circle 
+                      @click="removePhone(phone.id)"
+                      class="remove-btn"
+                      title="移除此手机"
+                    >
+                      <el-icon><close /></el-icon>
+                    </el-button>
+                  </div>
+                </div>
+                <h3 class="phone-name">{{ phone.name }}</h3>
+                <div class="phone-price">¥{{ phone.price.toLocaleString() }}</div>
+                <div class="phone-badge">
+                  <el-tag size="small" type="success">{{ phone.brand }}</el-tag>
+                </div>
               </div>
-              <div class="add-text">添加更多手机</div>
+              
+              <div v-if="comparePhones.length < 4" :key="'add'" class="add-more-card" @click="goToRecommend">
+                <div class="add-icon-container">
+                  <el-icon class="add-icon"><plus /></el-icon>
+                </div>
+                <div class="add-text">添加更多手机</div>
+              </div>
+            </transition-group>
+            
+            <div class="compare-table-container">
+              <el-table 
+                :data="tableData" 
+                border 
+                style="width: 100%"
+                class="compare-table"
+                stripe
+                highlight-current-row
+                :header-cell-style="{background:'#f9fbff', color: '#409EFF'}"
+              >
+                <el-table-column 
+                  prop="property" 
+                  label="参数项" 
+                  width="180" 
+                  fixed="left"
+                  header-align="center"
+                  align="center"
+                  class-name="property-column"
+                />
+                <el-table-column 
+                  v-for="(phone, index) in comparePhones" 
+                  :key="phone.id"
+                  :label="phone.name"
+                  :prop="'phone' + index"
+                  header-align="center"
+                  align="center"
+                  class-name="value-column"
+                >
+                  <template #header>
+                    <div class="table-phone-header">
+                      <div class="table-phone-name">{{ phone.name }}</div>
+                      <el-tag size="small" type="success" class="table-phone-brand">{{ phone.brand }}</el-tag>
+                    </div>
+                  </template>
+                  
+                  <template #default="scope">
+                    <div 
+                      class="cell-value"
+                      :class="{'highlight': isHighlightedValue(scope.row, index)}"
+                    >
+                      {{ scope.row['phone' + index] }}
+                    </div>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            
+            <div class="compare-actions">
+              <el-button @click="goToRecommend" type="primary" class="action-btn">
+                <el-icon><back /></el-icon>
+                返回推荐页
+              </el-button>
             </div>
           </div>
-          
-          <el-table 
-            :data="tableData" 
-            border 
-            style="width: 100%"
-            class="compare-table"
-            stripe
-            highlight-current-row
-            :header-cell-style="{background:'#f9fbff', color: '#409EFF'}"
-          >
-            <el-table-column 
-              prop="property" 
-              label="参数项" 
-              width="180" 
-              fixed="left"
-              header-align="center"
-              align="center"
-              class-name="property-column"
-            />
-            <el-table-column 
-              v-for="(phone, index) in comparePhones" 
-              :key="phone.id"
-              :label="phone.name"
-              :prop="'phone' + index"
-              header-align="center"
-              align="center"
-              class-name="value-column"
-            >
-              <template #header>
-                <div class="table-phone-header">
-                  <div class="table-phone-name">{{ phone.name }}</div>
-                  <el-tag size="small" type="success" class="table-phone-brand">{{ phone.brand }}</el-tag>
-                </div>
-              </template>
-              
-              <template #default="scope">
-                <div 
-                  class="cell-value"
-                  :class="{'highlight': isHighlightedValue(scope.row, index)}"
-                >
-                  {{ scope.row['phone' + index] }}
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-          
-          <div class="compare-actions">
-            <el-button @click="goToRecommend" type="primary" class="action-btn">
-              <el-icon><back /></el-icon>
-              返回推荐页
-            </el-button>
-          </div>
-        </div>
+        </transition>
       </el-main>
     </el-container>
   </div>
@@ -257,33 +276,49 @@ const goToRecommend = () => {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   position: relative;
   overflow: hidden;
+  padding-bottom: 40px;
 }
 
 .bg-gradient-1,
-.bg-gradient-2 {
+.bg-gradient-2,
+.bg-gradient-3 {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(100px);
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .bg-gradient-1 {
   background: radial-gradient(circle, rgba(66, 185, 131, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 60vw;
-  height: 60vw;
+  width: 70vw;
+  height: 70vw;
   top: -20vw;
   right: -20vw;
-  animation: float-1 15s ease-in-out infinite alternate;
+  animation: float-1 20s ease-in-out infinite alternate;
 }
 
 .bg-gradient-2 {
   background: radial-gradient(circle, rgba(91, 143, 249, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 70vw;
-  height: 70vw;
+  width: 80vw;
+  height: 80vw;
   bottom: -30vw;
   left: -20vw;
-  animation: float-2 20s ease-in-out infinite alternate;
+  animation: float-2 25s ease-in-out infinite alternate;
+}
+
+.bg-gradient-3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  opacity: 0.6;
+  background: radial-gradient(circle, rgba(66, 185, 131, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  width: 90vw;
+  height: 90vw;
+  top: -40vw;
+  left: -40vw;
+  animation: float-3 30s ease-in-out infinite alternate;
 }
 
 @keyframes float-1 {
@@ -291,7 +326,7 @@ const goToRecommend = () => {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(-5vw, 5vw);
+    transform: translate(-8vw, 8vw);
   }
 }
 
@@ -300,7 +335,16 @@ const goToRecommend = () => {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(5vw, -5vw);
+    transform: translate(8vw, -8vw);
+  }
+}
+
+@keyframes float-3 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-10vw, 10vw);
   }
 }
 
@@ -315,43 +359,89 @@ const goToRecommend = () => {
   justify-content: space-between;
   height: 80px !important;
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0 25px;
 }
 
 .header-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   background: linear-gradient(to right, #42b983, #2f9768);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
-  font-weight: 700;
+  font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  filter: drop-shadow(0 2px 3px rgba(66, 185, 131, 0.2));
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.header-title:hover {
+  transform: scale(1.02);
+  filter: drop-shadow(0 3px 5px rgba(66, 185, 131, 0.3));
 }
 
 .header-icon {
-  font-size: 24px;
+  font-size: 28px;
   color: #42b983;
+  animation: pulse-icon 2s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-icon {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .clear-btn {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
 .clear-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(245, 108, 108, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.3);
+}
+
+.clear-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.clear-btn:hover:not(:disabled)::before {
+  transform: translateX(100%);
 }
 
 .el-main {
@@ -360,7 +450,13 @@ const goToRecommend = () => {
 
 .empty-container {
   margin-top: 40px;
-  animation: fade-in 0.8s ease-out;
+  animation: fade-in 1s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 500px;
+  margin: 60px auto;
 }
 
 @keyframes fade-in {
@@ -374,35 +470,157 @@ const goToRecommend = () => {
   }
 }
 
-.empty-description {
-  color: #909399;
-  font-size: 16px;
+.empty-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  color: #42b983;
+  margin-bottom: 30px;
+  animation: pulse-icon-empty 2s ease-in-out infinite;
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(66, 185, 131, 0.2);
+}
+
+@keyframes pulse-icon-empty {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.empty-phones {
+  display: flex;
+  gap: 15px;
   margin: 20px 0;
+  position: relative;
+}
+
+.empty-phone {
+  width: 15px;
+  height: 40px;
+  background: linear-gradient(to bottom, #42b983, #2f9768);
+  border-radius: 4px;
+  position: relative;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.phone1 {
+  height: 35px;
+  animation-name: float-phone-compare;
+  animation-delay: 0s;
+}
+
+.phone2 {
+  height: 50px;
+  animation-name: float-phone-compare;
+  animation-delay: 0.3s;
+}
+
+.phone3 {
+  height: 40px;
+  animation-name: float-phone-compare;
+  animation-delay: 0.6s;
+}
+
+.phone4 {
+  height: 45px;
+  animation-name: float-phone-compare;
+  animation-delay: 0.9s;
+}
+
+@keyframes float-phone-compare {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.empty-title {
+  color: #303133;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 2px rgba(66, 185, 131, 0.1));
+}
+
+.empty-description {
+  color: #606266;
+  font-size: 16px;
+  margin: 15px 0 30px;
+  max-width: 320px;
+  line-height: 1.6;
 }
 
 .add-phone-btn {
-  padding: 12px 24px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
+  padding: 14px 28px !important;
+  font-size: 16px !important;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #42b983, #2f9768) !important;
+  border: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 15px rgba(66, 185, 131, 0.3) !important;
 }
 
 .add-phone-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(64, 158, 255, 0.3);
+  transform: translateY(-5px) !important;
+  box-shadow: 0 15px 25px rgba(66, 185, 131, 0.4) !important;
+}
+
+.add-phone-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.add-phone-btn:hover::before {
+  transform: translateX(100%);
 }
 
 .compare-container {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   animation: slide-up 0.8s ease-out;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 0 0 30px 0;
 }
 
@@ -423,17 +641,43 @@ const goToRecommend = () => {
   align-items: center;
   padding: 20px 30px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to right, rgba(66, 185, 131, 0.05), rgba(255, 255, 255, 0));
 }
 
 .compare-title {
   margin: 0;
   color: #303133;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.compare-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.compare-title:hover::after {
+  width: 100%;
 }
 
 .compare-tag {
   font-size: 13px;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #42b983, #2f9768);
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 3px 10px rgba(66, 185, 131, 0.2);
+  border: none;
 }
 
 .phone-cards {
@@ -442,47 +686,71 @@ const goToRecommend = () => {
   padding: 30px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #c0c4cc #f0f2f5;
+}
+
+.phone-cards::-webkit-scrollbar {
+  height: 6px;
+}
+
+.phone-cards::-webkit-scrollbar-track {
+  background: #f0f2f5;
+  border-radius: 3px;
+}
+
+.phone-cards::-webkit-scrollbar-thumb {
+  background-color: #c0c4cc;
+  border-radius: 3px;
 }
 
 .phone-card {
   min-width: 200px;
   background: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
   position: relative;
   scroll-snap-align: start;
+  transform: translateZ(0);
 }
 
 .phone-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .phone-image-wrapper {
   width: 100%;
-  height: 150px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
   margin-bottom: 15px;
+  background: linear-gradient(145deg, #f0f2f5, #ffffff);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .phone-image {
-  height: 140px;
+  height: 160px;
   object-fit: contain;
-  transition: all 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+  transform: translateZ(0);
+  z-index: 2;
 }
 
 .phone-card:hover .phone-image {
-  transform: scale(1.1);
+  transform: scale(1.12) translateY(-8px);
+  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.2));
 }
 
 .remove-overlay {
@@ -520,60 +788,74 @@ const goToRecommend = () => {
   color: #303133;
   text-align: center;
   font-weight: 600;
-  height: 40px;
+  height: 44px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  transition: color 0.3s ease;
+}
+
+.phone-card:hover .phone-name {
+  color: #42b983;
 }
 
 .phone-price {
   color: #f56c6c;
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+.phone-badge {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .add-more-card {
   min-width: 200px;
-  height: 253px; /* 与手机卡片高度一致 */
+  height: 273px; /* 匹配调整后的手机卡片高度 */
   border: 2px dashed #c0c4cc;
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   scroll-snap-align: start;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .add-more-card:hover {
-  border-color: #409EFF;
-  background: rgba(64, 158, 255, 0.05);
-  transform: translateY(-5px);
+  border-color: #42b983;
+  background: rgba(66, 185, 131, 0.05);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(66, 185, 131, 0.1);
 }
 
 .add-icon-container {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: #f0f2f5;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
 }
 
 .add-more-card:hover .add-icon-container {
-  background: #409EFF;
+  background: #42b983;
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 15px rgba(66, 185, 131, 0.2);
 }
 
 .add-icon {
-  font-size: 24px;
+  font-size: 28px;
   color: #909399;
   transition: all 0.3s ease;
 }
@@ -586,25 +868,48 @@ const goToRecommend = () => {
   color: #909399;
   font-size: 16px;
   transition: all 0.3s ease;
-}
-
-.add-more-card:hover .add-text {
-  color: #409EFF;
   font-weight: 500;
 }
 
+.add-more-card:hover .add-text {
+  color: #42b983;
+  font-weight: 600;
+  transform: scale(1.05);
+}
+
+.compare-table-container {
+  margin: 20px 30px;
+  transition: all 0.5s ease;
+  opacity: 1;
+  transform: translateY(0);
+  animation: slide-up 0.8s ease-out 0.2s both;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .compare-table {
-  margin: 0 30px 30px;
-  border-radius: 8px;
+  margin: 10px 30px 30px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .table-phone-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  padding: 5px 0;
 }
 
 .table-phone-name {
@@ -614,18 +919,21 @@ const goToRecommend = () => {
 
 .table-phone-brand {
   font-size: 12px;
+  border-radius: 4px;
+  padding: 2px 8px;
 }
 
 .cell-value {
   transition: all 0.3s ease;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 .highlight {
-  background: rgba(103, 194, 58, 0.1);
-  color: #67c23a;
+  background: rgba(66, 185, 131, 0.1);
+  color: #42b983;
   font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(66, 185, 131, 0.2);
 }
 
 .compare-actions {
@@ -635,17 +943,45 @@ const goToRecommend = () => {
 }
 
 .action-btn {
-  transition: all 0.3s ease;
-  padding: 12px 24px;
-  border-radius: 8px;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  padding: 14px 28px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to right, #409EFF, #337ecc);
+  color: white;
+  border: none;
+  box-shadow: 0 8px 15px rgba(64, 158, 255, 0.3);
 }
 
 .action-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(64, 158, 255, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(64, 158, 255, 0.4);
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.action-btn:hover::before {
+  transform: translateX(100%);
 }
 
 .property-column {
@@ -728,5 +1064,59 @@ const goToRecommend = () => {
   .compare-table {
     margin: 0 15px 15px;
   }
+}
+
+/* 淡入缩放过渡效果 */
+.fade-scale-enter-active,
+.fade-scale-leave-active {
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fade-scale-enter-from,
+.fade-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* 列表项动画 */
+.phone-list-enter-active,
+.phone-list-leave-active {
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.phone-list-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.phone-list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.phone-list-move {
+  transition: transform 0.5s;
+}
+
+/* 添加手机倒影效果 */
+.phone-model-shadow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 70%;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translateX(-50%) scaleX(0.8);
+  filter: blur(4px);
+  opacity: 0.7;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.phone-card:hover .phone-model-shadow {
+  width: 75%;
+  opacity: 0.9;
+  filter: blur(6px);
+  transform: translateX(-50%) scaleX(0.9);
 }
 </style>
