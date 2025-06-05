@@ -30,22 +30,41 @@
         <div v-else-if="phone" class="detail-content">
           <!-- 左侧：手机图片 -->
           <div class="phone-image-section">
-            <div class="phone-showcase" 
-                 @mousemove="handleMouseMove" 
-                 @mouseleave="resetTilt">
-              <div class="phone-display" 
-                   :style="tiltStyle">
-                <img :src="phone.image" :alt="phone.name" class="phone-image" @load="imageLoaded = true" />
-                <div class="phone-shadow"></div>
-                <div class="phone-reflection"></div>
-              </div>
-              
-              <div class="phone-stand">
-                <div class="phone-platform"></div>
-              </div>
-              
-              <div class="view-hint">
-                <span>移动鼠标查看不同角度</span>
+            <!-- 滑动查看更多图片 -->
+            <el-carousel :interval="5000" indicator-position="outside" class="phone-carousel">
+              <el-carousel-item v-for="(image, index) in phoneImages" :key="index">
+                <div class="phone-showcase" 
+                     @mousemove="handleMouseMove" 
+                     @mouseleave="resetTilt">
+                  <div class="phone-display" 
+                       :style="tiltStyle">
+                    <img :src="image" :alt="phone.name" class="phone-image" @load="imageLoaded = true" />
+                    <div class="phone-shadow"></div>
+                    <div class="phone-reflection"></div>
+                  </div>
+                  
+                  <div class="phone-stand">
+                    <div class="phone-platform"></div>
+                  </div>
+                  
+                  <div class="view-hint">
+                    <span>移动鼠标查看不同角度</span>
+                  </div>
+                </div>
+              </el-carousel-item>
+            </el-carousel>
+            
+            <!-- 颜色选择器 -->
+            <div class="color-selector">
+              <span class="color-title">选择颜色:</span>
+              <div class="color-options">
+                <div v-for="(color, index) in phone.colors || colors" 
+                     :key="color"
+                     class="color-option" 
+                     :class="{ active: selectedColor === index }"
+                     :style="{ background: color }"
+                     @click="selectColor(index)">
+                </div>
               </div>
             </div>
           </div>
@@ -69,12 +88,46 @@
                          :class="{ 'filled': n <= getAverageRating(phone) }">★</i>
                     </div>
                   </div>
-                  <span class="rating-count">综合评分</span>
+                  <span class="rating-count">综合评分 ({{ reviews.length || 0 }}条评价)</span>
+                </div>
+              </div>
+              
+              <!-- 购买选项 -->
+              <div class="purchase-options">
+                <div class="memory-options">
+                  <span class="memory-title">存储配置:</span>
+                  <div class="memory-selector">
+                    <button 
+                      v-for="option in memoryOptions" 
+                      :key="option.value"
+                      class="memory-btn" 
+                      :class="{ active: selectedMemory === option.value }"
+                      @click="selectMemory(option.value)">
+                      {{ option.label }}
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="delivery-options">
+                  <div class="delivery-item">
+                    <el-icon><location /></el-icon>
+                    <span>清远市清城区 <a href="#" class="change-link">修改</a></span>
+                  </div>
+                  <div class="delivery-item">
+                    <el-icon><truck /></el-icon>
+                    <span>预计次日送达</span>
+                  </div>
                 </div>
               </div>
               
               <div class="action-buttons">
-                <button class="action-btn compare-btn" @click="addToCompare" :class="{'disabled': isInCompareList}">
+                <button class="action-btn buy-btn" @click="buyNow">
+                  立即购买
+                </button>
+                <button class="action-btn cart-btn" @click="addToCart">
+                  加入购物车
+                </button>
+                <button class="action-btn compare-btn" :class="{'disabled': isInCompareList}" @click="addToCompare">
                   {{ isInCompareList ? '已添加到对比' : '添加到对比' }}
                 </button>
                 <button class="action-btn favorite-btn" :class="{'is-active': isInFavoriteList}" @click="toggleFavorite">
@@ -108,7 +161,23 @@
                         <div class="spec-icon">💾</div>
                         <div class="spec-detail">
                           <div class="spec-label">存储容量</div>
-                          <div class="spec-value">{{ phone.storage }} GB</div>
+                          <div class="spec-value">{{ selectedMemoryLabel }}</div>
+                        </div>
+                      </div>
+                      
+                      <div class="spec-card">
+                        <div class="spec-icon">🔋</div>
+                        <div class="spec-detail">
+                          <div class="spec-label">电池容量</div>
+                          <div class="spec-value">{{ phone.batteryCapacity || '4500mAh' }}</div>
+                        </div>
+                      </div>
+                      
+                      <div class="spec-card">
+                        <div class="spec-icon">⚡</div>
+                        <div class="spec-detail">
+                          <div class="spec-label">充电功率</div>
+                          <div class="spec-value">{{ phone.chargingPower || '33W' }}</div>
                         </div>
                       </div>
                     </div>
@@ -138,11 +207,19 @@
                           <span class="perf-value">{{ phone.battery }}/5</span>
                         </div>
                       </div>
+                      
+                      <div class="performance-item">
+                        <div class="perf-label">屏幕</div>
+                        <div class="perf-bar-container">
+                          <div class="perf-bar" :style="{ width: `${phone.screenQuality || 4 * 20}%` }"></div>
+                          <span class="perf-value">{{ phone.screenQuality || 4 }}/5</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
                   <!-- 特点选项卡 -->
-                  <div v-else class="features-section">
+                  <div v-else-if="activeTab === 'features'" class="features-section">
                     <h4 class="section-subtitle">产品特点</h4>
                     <ul class="features-list">
                       <li v-for="(feature, index) in phone.features" :key="index" class="feature-item">
@@ -160,12 +237,64 @@
                       </div>
                     </div>
                   </div>
+                  
+                  <!-- 评论选项卡（新增） -->
+                  <div v-else-if="activeTab === 'reviews'" class="reviews-section">
+                    <h4 class="section-subtitle">用户评价</h4>
+                    
+                    <!-- 添加评论 -->
+                    <div class="add-review">
+                      <h5>发表评论</h5>
+                      <div class="review-form">
+                        <div class="review-rating">
+                          <span>评分:</span>
+                          <el-rate v-model="newReview.rating" />
+                        </div>
+                        <el-input
+                          v-model="newReview.comment"
+                          type="textarea"
+                          :rows="3"
+                          placeholder="分享您的使用体验..."
+                        />
+                        <el-button type="primary" @click="submitReview" :disabled="!newReview.rating || !newReview.comment">
+                          提交评价
+                        </el-button>
+                      </div>
+                    </div>
+                    
+                    <!-- 评论列表 -->
+                    <div class="reviews-list">
+                      <div v-if="reviews.length === 0" class="no-reviews">
+                        暂无评价，快来发表第一条评价吧！
+                      </div>
+                      
+                      <div v-for="(review, index) in reviews" :key="index" class="review-item">
+                        <div class="review-header">
+                          <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                              {{ review.username.charAt(0).toUpperCase() }}
+                            </div>
+                            <div class="reviewer-details">
+                              <div class="reviewer-name">{{ review.username }}</div>
+                              <div class="review-date">{{ formatDate(review.date) }}</div>
+                            </div>
+                          </div>
+                          <div class="review-rating">
+                            <el-rate v-model="review.rating" disabled />
+                          </div>
+                        </div>
+                        <div class="review-content">
+                          {{ review.comment }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-                  </div>
-                </div>
-                
+          </div>
+        </div>
+        
         <!-- 相关推荐 -->
         <div v-if="phone && similarPhones.length" class="similar-phones">
           <h3 class="section-title">相关推荐</h3>
@@ -192,12 +321,17 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { usePhoneStore } from '@/stores/phone'
+import { ElMessage } from 'element-plus'
+import { Location } from '@element-plus/icons-vue'
 
 export default {
   name: 'DetailView',
+  components: {
+    Location,
+  },
   props: {
     id: {
       type: [Number, String],
@@ -217,14 +351,90 @@ const error = ref(null)
     const selectedColor = ref(0)
     const tiltStyle = ref({})
     
+    // 新增的状态
+    const selectedMemory = ref(128) // 默认128GB
+    const reviews = ref([]) // 评论数组
+    const newReview = reactive({
+      rating: 0,
+      comment: '',
+      username: '用户' + Math.floor(Math.random() * 10000)
+    })
+    
+    // 内存选项
+    const memoryOptions = [
+      { label: '64GB', value: 64 },
+      { label: '128GB', value: 128 },
+      { label: '256GB', value: 256 },
+      { label: '512GB', value: 512 }
+    ]
+    
+    // 获取选中的内存标签
+    const selectedMemoryLabel = computed(() => {
+      const option = memoryOptions.find(opt => opt.value === selectedMemory.value)
+      return option ? option.label : phone.value.storage + 'GB'
+    })
+    
+    // 手机图片数组
+    const phoneImages = computed(() => {
+      if (!phone.value) return []
+      // 这里实际项目中应该从后端获取多张图片
+      // 这里模拟多个角度的图片
+      return [
+        phone.value.image,
+        phone.value.image,
+        phone.value.image
+      ]
+    })
+    
     // 定义选项卡
     const tabs = [
       { id: 'specs', name: '规格参数' },
-      { id: 'features', name: '产品特点' }
+      { id: 'features', name: '产品特点' },
+      { id: 'reviews', name: '用户评价' }
     ]
     
     // 手机颜色选项
     const colors = ['#f5f7fa', '#303133', '#42b983', '#e6a23c', '#f56c6c']
+    
+    // 选择颜色
+    const selectColor = (index) => {
+      selectedColor.value = index
+    }
+    
+    // 选择内存
+    const selectMemory = (memory) => {
+      selectedMemory.value = memory
+    }
+    
+    // 立即购买
+    const buyNow = () => {
+      ElMessage.success('购买功能开发中，敬请期待！')
+    }
+    
+    // 加入购物车
+    const addToCart = () => {
+      ElMessage.success('购买功能开发中，敬请期待！')
+    }
+    
+    // 提交评论
+    const submitReview = () => {
+      const review = {
+        ...newReview,
+        date: new Date()
+      }
+      reviews.value.unshift(review)
+      // 重置表单
+      newReview.rating = 0
+      newReview.comment = ''
+      ElMessage.success('评论已提交，感谢您的反馈！')
+    }
+    
+    // 格式化日期
+    const formatDate = (date) => {
+      if (!date) return ''
+      const d = new Date(date)
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    }
     
     // 3D倾斜效果
     const handleMouseMove = (e) => {
@@ -297,24 +507,29 @@ const error = ref(null)
         // 从props或路由参数获取ID
         const phoneId = props.id || Number(route.params.id)
         
+        console.log('DetailView - 尝试加载手机ID:', phoneId)
+        console.log('DetailView - 路由参数:', route.params)
+        
         if (!phoneId || isNaN(Number(phoneId))) {
           throw new Error('无效的手机ID，请检查URL')
         }
         
         // 获取手机数据
         const phoneData = phoneStore.getPhoneDetail(Number(phoneId))
+        console.log('DetailView - 获取到的手机数据:', phoneData ? '成功' : '失败')
     
         if (!phoneData) {
           throw new Error(`找不到ID为${phoneId}的手机`)
-    }
+        }
         
         // 更新状态
         phone.value = phoneData
-  } catch (err) {
+      } catch (err) {
+        console.error('DetailView - 加载错误:', err)
         error.value = err.message || '加载失败，请稍后再试'
-  } finally {
-    loading.value = false
-  }
+      } finally {
+        loading.value = false
+      }
     }
     
     // 重新加载数据
@@ -346,9 +561,9 @@ const goBack = () => {
 
 // 添加到对比列表
 const addToCompare = () => {
-      if (!phone.value || isInCompareList.value) return
-      phoneStore.addToCompare(phone.value.id)
-    }
+  if (!phone.value) return
+  phoneStore.toggleCompare(phone.value.id)
+}
     
     // 切换收藏状态
     const toggleFavorite = () => {
@@ -391,7 +606,19 @@ const addToCompare = () => {
       resetTilt,
       formatPrice,
       similarPhones,
-      getAverageRating
+      getAverageRating,
+      phoneImages,
+      selectColor,
+      memoryOptions,
+      selectedMemory,
+      selectedMemoryLabel,
+      selectMemory,
+      buyNow,
+      addToCart,
+      reviews,
+      newReview,
+      submitReview,
+      formatDate
     }
   }
 }
@@ -503,7 +730,7 @@ const addToCompare = () => {
 .phone-showcase {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 420px; /* 增加展示区域高度 */
   border-radius: 20px;
   background: linear-gradient(145deg, #f8f9fa, #e9ecef);
   display: flex;
@@ -512,15 +739,17 @@ const addToCompare = () => {
   overflow: hidden;
   cursor: pointer;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+  padding-bottom: 60px; /* 增加底部内边距 */
 }
 
 .phone-display {
   position: relative;
   width: 60%;
-  height: 70%;
+  height: 60%; /* 进一步减小高度 */
   transform-style: preserve-3d;
   will-change: transform;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: -50px; /* 进一步向上移动显示区域 */
 }
 
 .phone-image {
@@ -530,6 +759,8 @@ const addToCompare = () => {
   filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.2));
   transition: all 0.5s ease;
   transform-style: preserve-3d;
+  max-height: 85%; /* 略微减小最大高度 */
+  margin-bottom: 40px;
 }
 
 .phone-shadow {
@@ -568,7 +799,7 @@ const addToCompare = () => {
 
 .phone-stand {
   position: absolute;
-  bottom: 20px;
+  bottom: 90px; /* 进一步增加距底部的距离 */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -584,7 +815,7 @@ const addToCompare = () => {
 
 .view-hint {
   position: absolute;
-  bottom: 20px;
+  bottom: 70px; /* 提高提示文字的位置 */
   font-size: 13px;
   color: #909399;
   opacity: 0.6;
@@ -678,41 +909,66 @@ const addToCompare = () => {
 }
 
 .action-buttons {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   margin-top: 10px;
 }
 
 .action-btn {
-  flex: 1;
-  padding: 14px 20px;
+  height: 46px;
   border: none;
-  border-radius: 10px;
+  border-radius: 23px; /* 更圆润的按钮 */
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 16px;
+}
+
+.buy-btn {
+  background: linear-gradient(45deg, #f56c6c, #e64242); /* 渐变背景 */
+  color: white;
+  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.2);
+  grid-column: span 2;
+}
+
+.buy-btn:hover {
+  background: linear-gradient(45deg, #e64242, #d52121);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(245, 108, 108, 0.3);
+}
+
+.cart-btn {
+  background: linear-gradient(45deg, #e6a23c, #d48f23); /* 渐变背景 */
+  color: white;
+  box-shadow: 0 8px 15px rgba(230, 162, 60, 0.2);
+}
+
+.cart-btn:hover {
+  background: linear-gradient(45deg, #d48f23, #bf7e1a);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(230, 162, 60, 0.3);
 }
 
 .compare-btn {
+  background: white;
+  color: #409EFF;
+  border: 2px solid #409EFF;
+  border-radius: 23px;
+}
+
+.compare-btn:hover, .compare-btn.disabled {
   background: #409EFF;
   color: white;
+  transform: translateY(-3px);
   box-shadow: 0 8px 15px rgba(64, 158, 255, 0.2);
 }
 
-.compare-btn:hover:not(.disabled) {
-  background: #337ecc;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(64, 158, 255, 0.3);
-}
-
 .compare-btn.disabled {
-  background: #a0cfff;
-  cursor: default;
+  cursor: pointer; /* 保持可点击状态 */
 }
 
 .favorite-btn {
@@ -1044,6 +1300,220 @@ const addToCompare = () => {
   background: #e9e9eb;
 }
 
+.phone-carousel {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.color-selector {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.color-title {
+  font-size: 14px;
+  color: #606266;
+  font-weight: 500;
+}
+
+.color-options {
+  display: flex;
+  gap: 10px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.color-option.active {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.color-option.active::after {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  top: -5px;
+  left: -5px;
+}
+
+.purchase-options {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.memory-options {
+  margin-bottom: 15px;
+}
+
+.memory-title {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #606266;
+  font-weight: 500;
+}
+
+.memory-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.memory-btn {
+  padding: 8px 16px;
+  border: 1px solid #dcdfe6;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  color: #606266;
+  min-width: 80px;
+  text-align: center;
+}
+
+.memory-btn.active {
+  border-color: #409EFF;
+  color: #409EFF;
+  background: #ecf5ff;
+}
+
+.memory-btn:hover {
+  border-color: #c6e2ff;
+}
+
+.delivery-options {
+  border-top: 1px dashed #dcdfe6;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.change-link {
+  color: #409EFF;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.change-link:hover {
+  color: #337ecc;
+  text-decoration: underline;
+}
+
+/* 评价部分样式 */
+.add-review {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.add-review h5 {
+  margin: 0 0 15px;
+  font-size: 16px;
+  color: #303133;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reviews-list {
+  margin-top: 20px;
+}
+
+.no-reviews {
+  text-align: center;
+  padding: 20px;
+  color: #909399;
+  font-style: italic;
+}
+
+.review-item {
+  padding: 15px;
+  border-bottom: 1px solid #ebeef5;
+  margin-bottom: 15px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  background: #409EFF;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.reviewer-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-name {
+  font-weight: 500;
+  color: #303133;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #909399;
+}
+
+.review-content {
+  color: #606266;
+  line-height: 1.6;
+}
+
 @media (max-width: 900px) {
   .detail-content {
     flex-direction: column;
@@ -1077,7 +1547,11 @@ const addToCompare = () => {
   }
   
   .action-buttons {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  
+  .buy-btn {
+    grid-column: span 1;
   }
   
   .phone-showcase {

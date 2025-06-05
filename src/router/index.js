@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // 解决基础路径问题
-const baseUrl = '/vue/'
+const baseUrl = '/' // 改为根路径，方便开发调试
 
 const routes = [
   {

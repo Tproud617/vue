@@ -154,12 +154,12 @@
       <div class="fixed-actions-wrapper">
         <div class="fixed-actions" :class="{ 'force-visible': true }">
           <button class="custom-button primary-button" @click="goHome">
-            <el-icon><HomeFilled /></el-icon>
-            返回首页
+          <el-icon><HomeFilled /></el-icon>
+          返回首页
           </button>
           <button class="custom-button success-button" @click="goRecommend">
-            <el-icon><Search /></el-icon>
-            开始推荐
+          <el-icon><Search /></el-icon>
+          开始推荐
           </button>
         </div>
       </div>
@@ -326,37 +326,37 @@ const teamMembers = ref([
   {
     name: '唐子豪',
     title: '项目总负责人',
-    avatar: '/vue/images/唐子豪.png'
+    avatar: '/images/唐子豪.png'
   },
   {
     name: '郑灿森',
     title: '数据分析工程师',
-    avatar: '/vue/images/郑灿森.png'
+    avatar: '/images/郑灿森.png'
   },
   {
     name: '陈烁翰',
     title: '算法工程师',
-    avatar: '/vue/images/陈烁翰.png'
+    avatar: '/images/陈烁翰.png'
   },
   {
     name: '刘鑫',
     title: '前端开发工程师',
-    avatar: '/vue/images/刘鑫.png'
+    avatar: '/images/刘鑫.png'
   },
   {
     name: '李景浩',
     title: '后端开发工程师',
-    avatar: '/vue/images/李景浩.png'
+    avatar: '/images/李景浩.png'
   },
   {
     name: '胡叶远',
     title: 'UI设计工程师',
-    avatar: '/vue/images/胡叶远.png'
+    avatar: '/images/胡叶远.png'
   },
   {
     name: '莫骏宇',
     title: '运维工程师',
-    avatar: '/vue/images/莫骏宇.png'
+    avatar: '/images/莫骏宇.png'
   }
 ])
 

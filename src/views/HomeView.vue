@@ -13,130 +13,130 @@
       <div 
         class="phone-wrapper fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.phone }">
-        <div class="phone-model iphone-16-pro" @mousemove="handleMouseMove" @mouseleave="resetPhonePosition">
-          <div class="dynamic-island">
-            <div class="dynamic-island-content">
-              <div class="island-pill"></div>
-              <div class="island-camera"></div>
+          <div class="phone-model iphone-16-pro" @mousemove="handleMouseMove" @mouseleave="resetPhonePosition">
+            <div class="dynamic-island">
+              <div class="dynamic-island-content">
+                <div class="island-pill"></div>
+                <div class="island-camera"></div>
+              </div>
             </div>
+            <div class="screen">
+              <div class="status-bar">
+                <div class="time">{{ currentTime }}</div>
+                <div class="indicators">
+                  <span class="signal"></span>
+                  <span class="wifi"></span>
+                  <span class="battery"></span>
+                </div>
+              </div>
+              <div class="app-grid">
+                <div class="app app-photos" @click="animateApp">
+                  <div class="app-icon-content photos-icon"></div>
+                  <span class="app-label">照片</span>
+                </div>
+                <div class="app app-camera" @click="animateApp">
+                  <div class="app-icon-content camera-icon"></div>
+                  <span class="app-label">相机</span>
+                </div>
+                <div class="app app-calendar" @click="animateApp">
+                  <div class="app-icon-content calendar-icon"></div>
+                  <span class="app-label">日历</span>
+                </div>
+                <div class="app app-maps" @click="animateApp">
+                  <div class="app-icon-content maps-icon"></div>
+                  <span class="app-label">地图</span>
+                </div>
+                <div class="app app-messages" @click="animateApp">
+                  <div class="app-icon-content messages-icon"></div>
+                  <span class="app-label">信息</span>
+                </div>
+                <div class="app app-mail" @click="animateApp">
+                  <div class="app-icon-content mail-icon"></div>
+                  <span class="app-label">邮件</span>
+                </div>
+                <div class="app app-safari" @click="animateApp">
+                  <div class="app-icon-content safari-icon"></div>
+                  <span class="app-label">Safari</span>
+                </div>
+                <div class="app app-music" @click="animateApp">
+                  <div class="app-icon-content music-icon"></div>
+                  <span class="app-label">音乐</span>
+                </div>
+                <div class="app app-store" @click="animateApp">
+                  <div class="app-icon-content appstore-icon"></div>
+                  <span class="app-label">App Store</span>
+                </div>
+                <div class="app app-settings" @click="animateApp">
+                  <div class="app-icon-content settings-icon"></div>
+                  <span class="app-label">设置</span>
+                </div>
+                <div class="app app-notes" @click="animateApp">
+                  <div class="app-icon-content notes-icon"></div>
+                  <span class="app-label">备忘录</span>
+                </div>
+                <div class="app app-health" @click="animateApp">
+                  <div class="app-icon-content health-icon"></div>
+                  <span class="app-label">健康</span>
+                </div>
+              </div>
+              <div class="dock">
+                <div class="dock-app dock-phone" @click="animateApp">
+                  <div class="app-icon-content phone-icon"></div>
+                </div>
+                <div class="dock-app dock-messages" @click="animateApp">
+                  <div class="app-icon-content messages-icon"></div>
+                </div>
+                <div class="dock-app dock-safari" @click="animateApp">
+                  <div class="app-icon-content safari-icon"></div>
+                </div>
+                <div class="dock-app dock-music" @click="animateApp">
+                  <div class="app-icon-content music-icon"></div>
+                </div>
+              </div>
+            </div>
+            <div class="side-buttons">
+              <div class="volume-up"></div>
+              <div class="volume-down"></div>
+              <div class="action-button"></div>
+              <div class="power-button"></div>
+            </div>
+            <div class="phone-reflection"></div>
           </div>
-          <div class="screen">
-            <div class="status-bar">
-              <div class="time">{{ currentTime }}</div>
-              <div class="indicators">
-                <span class="signal"></span>
-                <span class="wifi"></span>
-                <span class="battery"></span>
-              </div>
-            </div>
-            <div class="app-grid">
-              <div class="app app-photos" @click="animateApp">
-                <div class="app-icon-content photos-icon"></div>
-                <span class="app-label">照片</span>
-              </div>
-              <div class="app app-camera" @click="animateApp">
-                <div class="app-icon-content camera-icon"></div>
-                <span class="app-label">相机</span>
-              </div>
-              <div class="app app-calendar" @click="animateApp">
-                <div class="app-icon-content calendar-icon"></div>
-                <span class="app-label">日历</span>
-              </div>
-              <div class="app app-maps" @click="animateApp">
-                <div class="app-icon-content maps-icon"></div>
-                <span class="app-label">地图</span>
-              </div>
-              <div class="app app-messages" @click="animateApp">
-                <div class="app-icon-content messages-icon"></div>
-                <span class="app-label">信息</span>
-              </div>
-              <div class="app app-mail" @click="animateApp">
-                <div class="app-icon-content mail-icon"></div>
-                <span class="app-label">邮件</span>
-              </div>
-              <div class="app app-safari" @click="animateApp">
-                <div class="app-icon-content safari-icon"></div>
-                <span class="app-label">Safari</span>
-              </div>
-              <div class="app app-music" @click="animateApp">
-                <div class="app-icon-content music-icon"></div>
-                <span class="app-label">音乐</span>
-              </div>
-              <div class="app app-store" @click="animateApp">
-                <div class="app-icon-content appstore-icon"></div>
-                <span class="app-label">App Store</span>
-              </div>
-              <div class="app app-settings" @click="animateApp">
-                <div class="app-icon-content settings-icon"></div>
-                <span class="app-label">设置</span>
-              </div>
-              <div class="app app-notes" @click="animateApp">
-                <div class="app-icon-content notes-icon"></div>
-                <span class="app-label">备忘录</span>
-              </div>
-              <div class="app app-health" @click="animateApp">
-                <div class="app-icon-content health-icon"></div>
-                <span class="app-label">健康</span>
-              </div>
-            </div>
-            <div class="dock">
-              <div class="dock-app dock-phone" @click="animateApp">
-                <div class="app-icon-content phone-icon"></div>
-              </div>
-              <div class="dock-app dock-messages" @click="animateApp">
-                <div class="app-icon-content messages-icon"></div>
-              </div>
-              <div class="dock-app dock-safari" @click="animateApp">
-                <div class="app-icon-content safari-icon"></div>
-              </div>
-              <div class="dock-app dock-music" @click="animateApp">
-                <div class="app-icon-content music-icon"></div>
-              </div>
-            </div>
           </div>
-          <div class="side-buttons">
-            <div class="volume-up"></div>
-            <div class="volume-down"></div>
-            <div class="action-button"></div>
-            <div class="power-button"></div>
-          </div>
-          <div class="phone-reflection"></div>
-        </div>
-      </div>
-      
+          
       <!-- 功能特性 -->
       <div 
         class="features-showcase fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.features }">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <el-icon :size="40"><Histogram /></el-icon>
-          </div>
-          <div class="feature-text">
-            <h3>智能匹配</h3>
-            <p>基于您的偏好与使用场景，精准匹配最适合的手机型号</p>
-          </div>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <el-icon :size="40"><DataAnalysis /></el-icon>
-          </div>
-          <div class="feature-text">
-            <h3>多维对比</h3>
-            <p>对比不同机型的参数，从性能、相机、电池等多个维度进行分析</p>
-          </div>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <el-icon :size="40"><Refresh /></el-icon>
-          </div>
-          <div class="feature-text">
-            <h3>实时更新</h3>
-            <p>手机数据库定期更新，确保信息准确性和时效性</p>
-          </div>
-        </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><Histogram /></el-icon>
+              </div>
+              <div class="feature-text">
+                <h3>智能匹配</h3>
+                <p>基于您的偏好与使用场景，精准匹配最适合的手机型号</p>
+              </div>
+              </div>
+            
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><DataAnalysis /></el-icon>
+              </div>
+              <div class="feature-text">
+                <h3>多维对比</h3>
+                <p>对比不同机型的参数，从性能、相机、电池等多个维度进行分析</p>
+              </div>
+            </div>
+            
+            <div class="feature-card">
+              <div class="feature-icon">
+                <el-icon :size="40"><Refresh /></el-icon>
+              </div>
+              <div class="feature-text">
+                <h3>实时更新</h3>
+                <p>手机数据库定期更新，确保信息准确性和时效性</p>
+              </div>
+            </div>
         
         <div class="feature-card">
           <div class="feature-icon">
@@ -145,10 +145,10 @@
           <div class="feature-text">
             <h3>用户评测</h3>
             <p>汇集真实用户的使用体验与评价，为您提供最真实的购机参考</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      
+          
       <!-- 操作按钮 -->
       <div 
         class="action-container fade-up" 
@@ -156,77 +156,77 @@
         <!-- 主要操作按钮单独一行 -->
         <div class="primary-action-wrapper">
           <el-button class="action-btn primary-action pulse-effect" type="primary" size="large" @click="$router.push('/recommend')">
-            <el-icon><Search /></el-icon>
-            开始推荐
+                <el-icon><Search /></el-icon>
+                开始推荐
             <el-icon class="arrow-icon"><ArrowRight /></el-icon>
-          </el-button>
+            </el-button>
         </div>
-        
+              
         <!-- 辅助按钮放在第二行 -->
         <div class="quick-links" :class="{ 'visible': animatedElements.actions }">
-          <el-button class="action-btn secondary-action" @click="$router.push('/compare')">
-            <el-icon><Operation /></el-icon>
-            对比手机
-          </el-button>
-          
-          <el-button class="action-btn secondary-action" @click="$router.push('/detail/1')">
-            <el-icon><View /></el-icon>
-            浏览热门
-          </el-button>
+              <el-button class="action-btn secondary-action" @click="$router.push('/compare')">
+                <el-icon><Operation /></el-icon>
+                对比手机
+              </el-button>
+              
+              <el-button class="action-btn secondary-action" @click="$router.push('/detail/1')">
+                <el-icon><View /></el-icon>
+                浏览热门
+              </el-button>
           
           <el-button class="action-btn secondary-action" @click="replayAnimation">
             <el-icon><RefreshRight /></el-icon>
             重播动画
-          </el-button>
+              </el-button>
         </div>
-      </div>
-      
+            </div>
+            
       <!-- 统计数据 -->
       <div 
         class="stats-showcase fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.stats }">
-        <div class="stat-item">
-          <div class="stat-number">30+</div>
-          <div class="stat-label">品牌覆盖</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">手机型号</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">99%</div>
-          <div class="stat-label">推荐满意度</div>
-        </div>
-      </div>
-      
+              <div class="stat-item">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">品牌覆盖</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">手机型号</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">99%</div>
+                <div class="stat-label">推荐满意度</div>
+            </div>
+          </div>
+          
       <!-- 热门机型 -->
       <div 
         class="trending-phones fade-up" 
         :class="{ 'animated': animationReady, 'visible': animatedElements.trending }">
-        <h3 class="section-title">热门机型</h3>
-        <div class="phone-tags">
-          <div class="phone-tag">
-            <div class="tag-icon">📱</div>
-            <span>iPhone 16 Pro</span>
+            <h3 class="section-title">热门机型</h3>
+            <div class="phone-tags">
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>iPhone 16 Pro</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>三星 Galaxy S24</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>华为 Mate 60 Pro</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>小米 14 Ultra</span>
+              </div>
+              <div class="phone-tag">
+                <div class="tag-icon">📱</div>
+                <span>OPPO Find X7</span>
+              </div>
+            </div>
           </div>
-          <div class="phone-tag">
-            <div class="tag-icon">📱</div>
-            <span>三星 Galaxy S24</span>
-          </div>
-          <div class="phone-tag">
-            <div class="tag-icon">📱</div>
-            <span>华为 Mate 60 Pro</span>
-          </div>
-          <div class="phone-tag">
-            <div class="tag-icon">📱</div>
-            <span>小米 14 Ultra</span>
-          </div>
-          <div class="phone-tag">
-            <div class="tag-icon">📱</div>
-            <span>OPPO Find X7</span>
-          </div>
-        </div>
-      </div>
       
       <!-- 用户指南部分 - 优化设计 -->
       <div 
@@ -239,7 +239,7 @@
             <div class="step-content">
               <h4>填写偏好</h4>
               <p>告诉我们您的使用习惯、预算范围和关注点</p>
-            </div>
+        </div>
           </div>
           <div class="guide-step">
             <div class="step-number">2</div>
@@ -325,7 +325,7 @@
               </div>
             </div>
             <div class="review-content">
-              <p>选择的iPhone 16 Pro完全符合我的预期，推荐系统给出的建议非常准确。续航提升明显，相机系统出色。</p>
+              <p>选择的iPhone 16 Pro完全符合我的预期，推荐系统给出的建议非常准确。续航提升明显，相机系统出色，尤其是在暗光环境下的表现令人惊艳。</p>
             </div>
             <div class="review-phone-tag">iPhone 16 Pro</div>
           </div>
@@ -339,7 +339,7 @@
               </div>
             </div>
             <div class="review-content">
-              <p>按照系统推荐购买了小米14 Ultra，相机表现超出预期，唯一不足是有点重，但整体非常满意。</p>
+              <p>按照系统推荐购买了小米14 Ultra，相机表现超出预期，徕卡合作的徕卡四摄系统拍摄质量极佳。唯一不足是有点重，但整体非常满意，尤其是快充体验。</p>
             </div>
             <div class="review-phone-tag">小米 14 Ultra</div>
           </div>
@@ -353,9 +353,53 @@
               </div>
             </div>
             <div class="review-content">
-              <p>系统推荐了华为Mate 60 Pro，国产系统的进步令人惊讶，性能流畅，信号稳定，拍照也很出色。</p>
+              <p>系统推荐了华为Mate 60 Pro，国产系统的进步令人惊讶，HarmonyOS流畅度不输iOS，自研麒麟芯片性能优秀。鸿蒙生态日渐完善，应用体验丰富。</p>
             </div>
             <div class="review-phone-tag">华为 Mate 60 Pro</div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">ZX</div>
+              <div class="review-info">
+                <div class="review-name">赵女士</div>
+                <div class="review-stars">★★★★☆</div>
+              </div>
+            </div>
+            <div class="review-content">
+              <p>根据系统推荐选择了三星Galaxy S24 Ultra，AI功能非常强大，实时翻译和对话摘要特别实用。S Pen手写笔功能精准，屏幕显示效果极佳。相机系统的远摄能力令人印象深刻。</p>
+            </div>
+            <div class="review-phone-tag">三星 Galaxy S24 Ultra</div>
+          </div>
+
+          <div class="review-card::before">
+            <div class="review-header">
+              <div class="review-avatar">TW</div>
+              <div class="review-info">
+                <div class="review-name">田评测师</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <div class="review-content">
+              <p>作为专业评测师，我对比测试了系统推荐的几款旗舰机型。从硬件规格、系统优化、相机表现、游戏性能到续航表现各个维度进行了详尽测试。结果显示，推荐系统的匹配度高达95%以上，准确捕捉用户需求并给出合理建议。</p>
+            </div>
+            <div class="review-metrics">
+              <div class="metric">
+                <span class="metric-label">准确率</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 95%"></div>
+                </div>
+                <span class="metric-value">95%</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">专业度</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 97%"></div>
+                </div>
+                <span class="metric-value">97%</span>
+              </div>
+            </div>
+            <div class="review-phone-tag">专业横评</div>
           </div>
         </div>
       </div>
@@ -1328,14 +1372,14 @@ onUnmounted(() => {
   
   .action-btn {
     padding: 12px 20px;
-  }
-  
+}
+
   .title {
     font-size: 2.5rem;
-  }
-  
+}
+
   .subtitle {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
   }
 }
 
@@ -1369,8 +1413,8 @@ onUnmounted(() => {
   
   .stat-number {
     font-size: 1.8rem;
-  }
-  
+}
+
   .feature-card {
     padding: 15px;
   }
@@ -1741,8 +1785,8 @@ onUnmounted(() => {
 }
 
 .app::before {
-  content: '';
-  position: absolute;
+    content: '';
+    position: absolute;
   inset: 0;
   background: linear-gradient(145deg, 
     rgba(255, 255, 255, 0.3) 0%, 
@@ -1805,7 +1849,7 @@ onUnmounted(() => {
   z-index: 2;
   box-sizing: border-box;
   padding: 0 10px;
-}
+  }
 
 /* Dock中的应用 */
 .dock-app {
@@ -2357,8 +2401,8 @@ onUnmounted(() => {
   50% {
     opacity: 0.7;
   }
-}
-
+  }
+  
 .wifi {
   width: 16px;
   height: 12px;
@@ -2449,7 +2493,7 @@ onUnmounted(() => {
 
 /* 用户指南部分 - 优化设计 */
 .user-guide-section {
-  width: 100%;
+    width: 100%;
   max-width: 900px;
   position: relative;
   margin-top: 20px;
@@ -2520,8 +2564,8 @@ onUnmounted(() => {
 .guide-step:hover .step-number {
   transform: scale(1.1) rotate(5deg);
   box-shadow: 0 8px 25px rgba(66, 185, 131, 0.4);
-}
-
+  }
+  
 .step-content {
   flex: 1;
   display: flex;
@@ -2557,19 +2601,19 @@ onUnmounted(() => {
   background: linear-gradient(to right, #42b983, #2f9768);
   border-radius: 2px;
   transition: width 0.3s ease;
-}
-
+  }
+  
 .guide-step:hover .step-content h4::after {
   width: 80px;
 }
 
 .step-content p {
-  font-size: 1.1rem;
+    font-size: 1.1rem;
   color: #606266;
   line-height: 1.7;
   margin: 0;
-}
-
+  }
+  
 /* 手机百科部分 - 优化设计 */
 .phone-encyclopedia {
   width: 100%;
@@ -2585,8 +2629,8 @@ onUnmounted(() => {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-}
-
+  }
+  
 .encyclopedia-card {
   flex: 0 0 calc(45% - 10px);
   padding: 15px 0;
@@ -2668,8 +2712,8 @@ onUnmounted(() => {
 
 .encyclopedia-card:hover h4::after {
   width: 80px;
-}
-
+  }
+  
 .encyclopedia-list {
   list-style: none;
   padding-left: 5px;
@@ -2690,11 +2734,11 @@ onUnmounted(() => {
   position: absolute;
   left: 0;
   color: #42b983;
-  font-size: 1.8rem;
+    font-size: 1.8rem;
   line-height: 1;
   transition: transform 0.3s ease;
-}
-
+  }
+  
 .encyclopedia-list li:hover {
   transform: translateX(5px);
   color: #303133;
@@ -2792,7 +2836,7 @@ onUnmounted(() => {
 .review-info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+    gap: 8px;
 }
 
 .review-name {
@@ -2807,8 +2851,8 @@ onUnmounted(() => {
   text-shadow: 0 0 2px rgba(255, 215, 0, 0.5);
   display: flex;
   gap: 2px;
-}
-
+  }
+  
 .review-content {
   margin-left: 83px;
   position: relative;
@@ -2822,8 +2866,8 @@ onUnmounted(() => {
   margin: 0;
   font-style: italic;
   position: relative;
-}
-
+  }
+  
 .review-content p::before {
   content: '"';
   position: absolute;
@@ -2846,7 +2890,7 @@ onUnmounted(() => {
   font-size: 1rem;
   margin-left: 83px;
   transition: all 0.3s ease;
-}
+  }
 
 .review-card:hover .review-phone-tag {
   background: rgba(66, 185, 131, 0.2);
@@ -2878,7 +2922,7 @@ onUnmounted(() => {
   background: linear-gradient(to bottom, #42b983, #2f9768);
   border-radius: 3px;
 }
-
+  
 .section-title::after {
   content: '';
   position: absolute;
@@ -2895,6 +2939,178 @@ onUnmounted(() => {
   .encyclopedia-card,
   .review-card {
     flex: 0 0 100%;
+  }
+  
+  .guide-steps,
+  .encyclopedia-content,
+  .review-cards {
+    gap: 30px;
+  }
+  
+  .guide-steps::before {
+    display: none;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .step-number,
+  .review-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+  
+  .step-content h4,
+  .encyclopedia-card h4 {
+    font-size: 1.3rem;
+  }
+  
+  .step-content p,
+  .encyclopedia-list li,
+  .review-content p {
+    font-size: 1rem;
+  }
+  
+  .encyclopedia-icon {
+    font-size: 2.2rem;
+  }
+  
+  .review-content,
+  .review-phone-tag {
+    margin-left: 0;
+  }
+  
+  .review-content p::before {
+    left: -20px;
+    top: -10px;
+  }
+}
+
+/* 专业评测卡片样式 */
+.featured-review {
+  flex: 0 0 100%;
+  margin-top: 20px;
+  padding: 20px 25px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9));
+    border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  border-left: 5px solid #42b983;
+}
+
+.featured-review:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(66, 185, 131, 0.1), transparent 70%);
+  z-index: 0;
+}
+
+.featured-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #42b983, #2f9768);
+  color: white;
+  font-weight: 600;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 0 0 0 12px;
+  box-shadow: -3px 3px 10px rgba(66, 185, 131, 0.2);
+  z-index: 1;
+}
+
+.featured-review .review-avatar {
+  background: linear-gradient(135deg, #5d7df5, #4562d1);
+}
+
+.featured-review .review-avatar:after {
+  content: '✓';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    font-size: 12px;
+  color: #4562d1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+.featured-review .review-content {
+  z-index: 1;
+}
+
+.review-metrics {
+  margin: 15px 0 15px 83px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 70%;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.metric-label {
+  width: 60px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #606266;
+}
+
+.metric-bar {
+  flex: 1;
+  height: 8px;
+  background: #e4e7ed;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.metric-fill {
+  height: 100%;
+  background: linear-gradient(to right, #42b983, #2f9768);
+  border-radius: 4px;
+}
+
+.metric-value {
+  font-weight: 600;
+  color: #42b983;
+  width: 40px;
+  text-align: right;
+}
+
+.review-card:hover::before {
+  width: 6px;
+  opacity: 1;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .guide-step, 
+  .encyclopedia-card,
+  .review-card,
+  .featured-review {
+    flex: 0 0 100%;
+  }
+  
+  .review-metrics {
+    margin-left: 0;
+    width: 100%;
   }
   
   .guide-steps,

@@ -49,103 +49,103 @@
         
         <transition name="fade-scale" v-else>
           <div class="compare-container">
-            <div class="compare-header">
-              <h2 class="compare-title">已添加 {{ comparePhones.length }} 台手机</h2>
-              <el-tag type="info" effect="dark" class="compare-tag">
-                最多可添加4台手机进行对比
-              </el-tag>
-            </div>
-            
+          <div class="compare-header">
+            <h2 class="compare-title">已添加 {{ comparePhones.length }} 台手机</h2>
+            <el-tag type="info" effect="dark" class="compare-tag">
+              最多可添加4台手机进行对比
+            </el-tag>
+          </div>
+          
             <transition-group name="phone-list" tag="div" class="phone-cards">
-              <div 
-                v-for="(phone, index) in comparePhones" 
-                :key="phone.id"
-                class="phone-card"
-              >
-                <div class="phone-image-wrapper">
-                  <img :src="phone.image" :alt="phone.name" class="phone-image">
+            <div 
+              v-for="(phone, index) in comparePhones" 
+              :key="phone.id"
+              class="phone-card"
+            >
+              <div class="phone-image-wrapper">
+                <img :src="phone.image" :alt="phone.name" class="phone-image">
                   <div class="phone-model-shadow"></div>
-                  <div class="remove-overlay">
-                    <el-button 
-                      type="danger" 
-                      circle 
-                      @click="removePhone(phone.id)"
-                      class="remove-btn"
-                      title="移除此手机"
-                    >
-                      <el-icon><close /></el-icon>
-                    </el-button>
-                  </div>
+                <div class="remove-overlay">
+                  <el-button 
+                    type="danger" 
+                    circle 
+                    @click="removePhone(phone.id)"
+                    class="remove-btn"
+                    title="移除此手机"
+                  >
+                    <el-icon><close /></el-icon>
+                  </el-button>
                 </div>
-                <h3 class="phone-name">{{ phone.name }}</h3>
-                <div class="phone-price">¥{{ phone.price.toLocaleString() }}</div>
+              </div>
+              <h3 class="phone-name">{{ phone.name }}</h3>
+              <div class="phone-price">¥{{ phone.price.toLocaleString() }}</div>
                 <div class="phone-badge">
                   <el-tag size="small" type="success">{{ phone.brand }}</el-tag>
                 </div>
-              </div>
-              
+            </div>
+            
               <div v-if="comparePhones.length < 4" :key="'add'" class="add-more-card" @click="goToRecommend">
-                <div class="add-icon-container">
-                  <el-icon class="add-icon"><plus /></el-icon>
-                </div>
-                <div class="add-text">添加更多手机</div>
+              <div class="add-icon-container">
+                <el-icon class="add-icon"><plus /></el-icon>
               </div>
+              <div class="add-text">添加更多手机</div>
+            </div>
             </transition-group>
-            
+          
             <div class="compare-table-container">
-              <el-table 
-                :data="tableData" 
-                border 
-                style="width: 100%"
-                class="compare-table"
-                stripe
-                highlight-current-row
-                :header-cell-style="{background:'#f9fbff', color: '#409EFF'}"
-              >
-                <el-table-column 
-                  prop="property" 
-                  label="参数项" 
-                  width="180" 
-                  fixed="left"
-                  header-align="center"
-                  align="center"
-                  class-name="property-column"
-                />
-                <el-table-column 
-                  v-for="(phone, index) in comparePhones" 
-                  :key="phone.id"
-                  :label="phone.name"
-                  :prop="'phone' + index"
-                  header-align="center"
-                  align="center"
-                  class-name="value-column"
+          <el-table 
+            :data="tableData" 
+            border 
+            style="width: 100%"
+            class="compare-table"
+            stripe
+            highlight-current-row
+            :header-cell-style="{background:'#f9fbff', color: '#409EFF'}"
+          >
+            <el-table-column 
+              prop="property" 
+              label="参数项" 
+              width="180" 
+              fixed="left"
+              header-align="center"
+              align="center"
+              class-name="property-column"
+            />
+            <el-table-column 
+              v-for="(phone, index) in comparePhones" 
+              :key="phone.id"
+              :label="phone.name"
+              :prop="'phone' + index"
+              header-align="center"
+              align="center"
+              class-name="value-column"
+            >
+              <template #header>
+                <div class="table-phone-header">
+                  <div class="table-phone-name">{{ phone.name }}</div>
+                  <el-tag size="small" type="success" class="table-phone-brand">{{ phone.brand }}</el-tag>
+                </div>
+              </template>
+              
+              <template #default="scope">
+                <div 
+                  class="cell-value"
+                  :class="{'highlight': isHighlightedValue(scope.row, index)}"
                 >
-                  <template #header>
-                    <div class="table-phone-header">
-                      <div class="table-phone-name">{{ phone.name }}</div>
-                      <el-tag size="small" type="success" class="table-phone-brand">{{ phone.brand }}</el-tag>
-                    </div>
-                  </template>
-                  
-                  <template #default="scope">
-                    <div 
-                      class="cell-value"
-                      :class="{'highlight': isHighlightedValue(scope.row, index)}"
-                    >
-                      {{ scope.row['phone' + index] }}
-                    </div>
-                  </template>
-                </el-table-column>
-              </el-table>
+                  {{ scope.row['phone' + index] }}
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
             </div>
-            
-            <div class="compare-actions">
-              <el-button @click="goToRecommend" type="primary" class="action-btn">
-                <el-icon><back /></el-icon>
-                返回推荐页
-              </el-button>
-            </div>
+          
+          <div class="compare-actions">
+            <el-button @click="goToRecommend" type="primary" class="action-btn">
+              <el-icon><back /></el-icon>
+              返回推荐页
+            </el-button>
           </div>
+        </div>
         </transition>
       </el-main>
     </el-container>

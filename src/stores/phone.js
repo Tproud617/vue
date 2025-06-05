@@ -176,6 +176,15 @@ export const usePhoneStore = defineStore('phone', {
       localStorage.removeItem('favoriteList')
     },
     
+    // 切换对比状态
+    toggleCompare(phoneId) {
+      if (this.compareList.includes(phoneId)) {
+        return this.removeFromCompare(phoneId)
+      } else {
+        return this.addToCompare(phoneId)
+      }
+    },
+    
     // 初始化
     initialize() {
       // 从 localStorage 加载用户偏好

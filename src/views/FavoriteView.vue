@@ -48,8 +48,8 @@
         
         <transition name="fade-scale" v-else>
           <div class="favorite-container">
-            <div class="favorite-header">
-              <h2 class="favorite-title">已收藏 {{ favoritePhones.length }} 台手机</h2>
+          <div class="favorite-header">
+            <h2 class="favorite-title">已收藏 {{ favoritePhones.length }} 台手机</h2>
               <div class="favorite-sort">
                 <el-tooltip content="按添加时间排序" placement="top">
                   <el-button circle size="small" class="sort-btn">
@@ -57,29 +57,29 @@
                   </el-button>
                 </el-tooltip>
               </div>
-            </div>
-            
+          </div>
+          
             <transition-group name="phone-list" tag="div" class="phone-grid">
-              <el-card 
-                v-for="phone in favoritePhones" 
-                :key="phone.id"
-                class="phone-card"
-                shadow="hover"
-              >
-                <div class="phone-card-inner">
-                  <div class="phone-image-container">
-                    <img :src="phone.image" :alt="phone.name" class="phone-image">
-                    <div class="actions-overlay">
+            <el-card 
+              v-for="phone in favoritePhones" 
+              :key="phone.id"
+              class="phone-card"
+              shadow="hover"
+            >
+              <div class="phone-card-inner">
+                <div class="phone-image-container">
+                  <img :src="phone.image" :alt="phone.name" class="phone-image">
+                  <div class="actions-overlay">
                       <div class="action-buttons">
-                        <el-button 
-                          type="danger" 
-                          circle 
-                          @click="removeFromFavorite(phone.id)"
-                          class="remove-btn"
-                          title="移除收藏"
-                        >
-                          <el-icon><close /></el-icon>
-                        </el-button>
+                    <el-button 
+                      type="danger" 
+                      circle 
+                      @click="removeFromFavorite(phone.id)"
+                      class="remove-btn"
+                      title="移除收藏"
+                    >
+                      <el-icon><close /></el-icon>
+                    </el-button>
                         <el-button 
                           type="primary" 
                           circle 
@@ -93,52 +93,52 @@
                     </div>
                   </div>
                   
-                  <h3 class="phone-title">{{ phone.name }}</h3>
-                  <div class="phone-info">
-                    <el-tag size="small" effect="dark" type="success" class="brand-badge">{{ phone.brand }}</el-tag>
-                    <span class="price">¥{{ phone.price.toLocaleString() }}</span>
-                  </div>
-
-                  <div class="phone-specs">
-                    <div class="spec-item">
-                      <el-tooltip content="存储容量" placement="top" effect="light">
-                        <i class="el-icon spec-icon">💾</i>
-                        <span>{{ phone.storage }}GB</span>
-                      </el-tooltip>
-                    </div>
-                    <div class="spec-item">
-                      <el-tooltip content="屏幕尺寸" placement="top" effect="light">
-                        <i class="el-icon spec-icon">📱</i>
-                        <span>{{ phone.screen }}"</span>
-                      </el-tooltip>
-                    </div>
-                  </div>
-
-                  <div class="phone-ratings">
-                    <div class="rating-item">
-                      <span class="rating-label">相机</span>
-                      <el-rate v-model="phone.camera" disabled size="small" class="custom-rate"/>
-                    </div>
-                    <div class="rating-item">
-                      <span class="rating-label">性能</span>
-                      <el-rate v-model="phone.performance" disabled size="small" class="custom-rate"/>
-                    </div>
-                    <div class="rating-item">
-                      <span class="rating-label">电池</span>
-                      <el-rate v-model="phone.battery" disabled size="small" class="custom-rate"/>
-                    </div>
-                  </div>
-
-                  <el-button 
-                    type="primary" 
-                    @click="viewDetail(phone.id)"
-                    size="default"
-                    class="detail-btn"
-                  >
-                    <el-icon><view /></el-icon> 查看详情
-                  </el-button>
+                <h3 class="phone-title">{{ phone.name }}</h3>
+                <div class="phone-info">
+                  <el-tag size="small" effect="dark" type="success" class="brand-badge">{{ phone.brand }}</el-tag>
+                  <span class="price">¥{{ phone.price.toLocaleString() }}</span>
                 </div>
-              </el-card>
+
+                <div class="phone-specs">
+                  <div class="spec-item">
+                    <el-tooltip content="存储容量" placement="top" effect="light">
+                      <i class="el-icon spec-icon">💾</i>
+                      <span>{{ phone.storage }}GB</span>
+                    </el-tooltip>
+                  </div>
+                  <div class="spec-item">
+                    <el-tooltip content="屏幕尺寸" placement="top" effect="light">
+                      <i class="el-icon spec-icon">📱</i>
+                      <span>{{ phone.screen }}"</span>
+                    </el-tooltip>
+                  </div>
+                </div>
+
+                <div class="phone-ratings">
+                  <div class="rating-item">
+                    <span class="rating-label">相机</span>
+                    <el-rate v-model="phone.camera" disabled size="small" class="custom-rate"/>
+                  </div>
+                  <div class="rating-item">
+                    <span class="rating-label">性能</span>
+                    <el-rate v-model="phone.performance" disabled size="small" class="custom-rate"/>
+                  </div>
+                  <div class="rating-item">
+                    <span class="rating-label">电池</span>
+                    <el-rate v-model="phone.battery" disabled size="small" class="custom-rate"/>
+                  </div>
+                </div>
+
+                <el-button 
+                  type="primary" 
+                  @click="viewDetail(phone.id)"
+                  size="default"
+                  class="detail-btn"
+                >
+                  <el-icon><view /></el-icon> 查看详情
+                </el-button>
+              </div>
+            </el-card>
             </transition-group>
           </div>
         </transition>

@@ -10,92 +10,211 @@
           <template #header>
             <div class="filter-header">
               <h3><el-icon><filter /></el-icon> 智能筛选</h3>
-              <el-button type="primary" @click="resetFilters" size="small" class="reset-btn">
-                <el-icon><refresh /></el-icon> 重置
-              </el-button>
+              <div class="filter-actions">
+                <el-tooltip content="保存当前筛选" placement="top">
+                  <el-button type="success" @click="saveCurrentFilter" size="small" circle>
+                    <el-icon><document-add /></el-icon>
+                  </el-button>
+                </el-tooltip>
+                <el-button type="primary" @click="resetFilters" size="small" class="reset-btn">
+                  <el-icon><refresh /></el-icon> 重置
+                </el-button>
+              </div>
             </div>
           </template>
           
-          <!-- 品牌筛选 -->
-          <div class="filter-section">
-            <h4><el-icon><apple /></el-icon> 品牌选择</h4>
-            <div class="brand-tags">
-              <el-tag
-                v-for="brand in availableBrands"
-                :key="brand"
-                :type="preferences.brand.includes(brand) ? 'success' : 'info'"
-                class="brand-tag"
-                @click="toggleBrand(brand)"
-                :effect="preferences.brand.includes(brand) ? 'dark' : 'light'"
+          <!-- 快速筛选预设 -->
+          <div class="filter-section" v-if="savedFilters.length > 0 || quickFilters.length > 0">
+            <h4><el-icon><magic-stick /></el-icon> 快速筛选</h4>
+            <div class="quick-filters">
+              <el-button 
+                v-for="filter in quickFilters" 
+                :key="filter.name"
+                size="small" 
+                @click="applyQuickFilter(filter)"
+                :type="filter.type || 'default'"
+                class="quick-filter-btn"
               >
-                {{ brand }}
-              </el-tag>
+                {{ filter.name }}
+              </el-button>
+              <el-button 
+                v-for="(filter, index) in savedFilters" 
+                :key="'saved-'+index"
+                size="small"
+                @click="applySavedFilter(filter)"
+                type="info"
+                class="quick-filter-btn saved-filter"
+              >
+                {{ filter.name }}
+                <el-icon class="delete-icon" @click.stop="removeSavedFilter(index)"><delete /></el-icon>
+              </el-button>
             </div>
           </div>
-
-          <!-- 预算范围 -->
-          <div class="filter-section">
-            <h4><el-icon><money /></el-icon> 预算范围</h4>
-            <el-slider
-              v-model="preferences.budget"
-              :min="1000"
-              :max="12000"
-              :step="500"
-              show-stops
-              show-input
-              :format-tooltip="value => `¥${value}`"
-              @change="updatePreferences"
-              class="budget-slider"
-            />
-          </div>
-
-          <!-- 重要性评分 -->
-          <div class="filter-section">
-            <h4><el-icon><star /></el-icon> 性能需求</h4>
-            <div class="importance-rating">
-              <div class="rating-row">
-                <span>相机重要性</span>
-                <el-rate v-model="preferences.camera" @change="updatePreferences" class="custom-rate"/>
+          
+          <!-- 折叠筛选面板 -->
+          <el-collapse v-model="activeCollapse" accordion class="filter-collapse">
+            <!-- 品牌筛选 -->
+            <el-collapse-item name="brand">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><apple /></el-icon> 品牌选择</h4>
+              </template>
+              <div class="brand-tags">
+                <el-tag
+                  v-for="brand in availableBrands"
+                  :key="brand"
+                  :type="preferences.brand.includes(brand) ? 'success' : 'info'"
+                  class="brand-tag"
+                  @click="toggleBrand(brand)"
+                  :effect="preferences.brand.includes(brand) ? 'dark' : 'light'"
+                >
+                  {{ brand }}
+                </el-tag>
               </div>
-              <div class="rating-row">
-                <span>性能重要性</span>
-                <el-rate v-model="preferences.performance" @change="updatePreferences" class="custom-rate"/>
-              </div>
-              <div class="rating-row">
-                <span>电池重要性</span>
-                <el-rate v-model="preferences.battery" @change="updatePreferences" class="custom-rate"/>
-              </div>
-            </div>
-          </div>
+            </el-collapse-item>
 
-          <!-- 存储和屏幕 -->
-          <div class="filter-section">
-            <h4><el-icon><folder /></el-icon> 存储需求</h4>
-            <el-select v-model="preferences.storage" placeholder="选择存储容量" @change="updatePreferences" class="custom-select">
-              <el-option label="64GB" :value="64" />
-              <el-option label="128GB" :value="128" />
-              <el-option label="256GB" :value="256" />
-              <el-option label="512GB" :value="512" />
-              <el-option label="1TB" :value="1024" />
-            </el-select>
-          </div>
+            <!-- 价格筛选 -->
+            <el-collapse-item name="price">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><money /></el-icon> 价格区间</h4>
+              </template>
+              <div class="price-range">
+                <div class="range-values">
+                  <span>¥{{ preferences.budget[0] }}</span>
+                  <span>¥{{ preferences.budget[1] }}</span>
+                </div>
+                <el-slider
+                  v-model="preferences.budget"
+                  range
+                  :min="1000"
+                  :max="12000"
+                  :step="500"
+                  :marks="priceMarks"
+                  @change="updatePreferences"
+                  class="budget-slider"
+                />
+                <div class="popular-price-ranges">
+                  <el-button size="small" @click="setPrice([1000, 3000])">入门</el-button>
+                  <el-button size="small" @click="setPrice([3000, 5000])">中端</el-button>
+                  <el-button size="small" @click="setPrice([5000, 8000])">高端</el-button>
+                  <el-button size="small" @click="setPrice([8000, 12000])">旗舰</el-button>
+                </div>
+              </div>
+            </el-collapse-item>
 
-          <div class="filter-section">
-            <h4><el-icon><connection /></el-icon> 使用场景</h4>
-            <el-select
-              v-model="preferences.usage"
-              multiple
-              placeholder="选择使用场景"
-              @change="updatePreferences"
-              class="custom-select"
-            >
-              <el-option label="游戏" value="游戏" />
-              <el-option label="拍照" value="拍照" />
-              <el-option label="社交" value="社交" />
-              <el-option label="办公" value="办公" />
-              <el-option label="影音" value="影音" />
-            </el-select>
-          </div>
+            <!-- 重要性评分 -->
+            <el-collapse-item name="performance">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><star /></el-icon> 性能需求</h4>
+              </template>
+              <div class="importance-rating">
+                <div class="rating-row">
+                  <span>相机重要性</span>
+                  <el-rate v-model="preferences.camera" @change="updatePreferences" class="custom-rate"/>
+                </div>
+                <div class="rating-row">
+                  <span>性能重要性</span>
+                  <el-rate v-model="preferences.performance" @change="updatePreferences" class="custom-rate"/>
+                </div>
+                <div class="rating-row">
+                  <span>电池重要性</span>
+                  <el-rate v-model="preferences.battery" @change="updatePreferences" class="custom-rate"/>
+                </div>
+                <div class="rating-row">
+                  <span>屏幕重要性</span>
+                  <el-rate v-model="preferences.screen" @change="updatePreferences" class="custom-rate"/>
+                </div>
+              </div>
+            </el-collapse-item>
+
+            <!-- 存储和内存 -->
+            <el-collapse-item name="storage">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><folder /></el-icon> 硬件配置</h4>
+              </template>
+              <div class="spec-filters">
+                <div class="spec-filter-item">
+                  <span class="spec-label">存储容量</span>
+                  <el-select v-model="preferences.storage" placeholder="选择存储容量" @change="updatePreferences" class="custom-select">
+                    <el-option label="不限" :value="0" />
+                    <el-option label="64GB" :value="64" />
+                    <el-option label="128GB" :value="128" />
+                    <el-option label="256GB" :value="256" />
+                    <el-option label="512GB" :value="512" />
+                    <el-option label="1TB" :value="1024" />
+                  </el-select>
+                </div>
+                
+                <div class="spec-filter-item">
+                  <span class="spec-label">运行内存</span>
+                  <el-select v-model="preferences.ram" placeholder="选择运行内存" @change="updatePreferences" class="custom-select">
+                    <el-option label="不限" :value="0" />
+                    <el-option label="4GB" :value="4" />
+                    <el-option label="6GB" :value="6" />
+                    <el-option label="8GB" :value="8" />
+                    <el-option label="12GB" :value="12" />
+                    <el-option label="16GB" :value="16" />
+                  </el-select>
+                </div>
+                
+                <div class="spec-filter-item">
+                  <span class="spec-label">屏幕尺寸</span>
+                  <el-select v-model="preferences.screenSize" placeholder="选择屏幕尺寸" @change="updatePreferences" class="custom-select">
+                    <el-option label="不限" :value="0" />
+                    <el-option label="小屏 (≤6.1英寸)" :value="'small'" />
+                    <el-option label="中屏 (6.1-6.5英寸)" :value="'medium'" />
+                    <el-option label="大屏 (>6.5英寸)" :value="'large'" />
+                  </el-select>
+                </div>
+              </div>
+            </el-collapse-item>
+
+            <!-- 使用场景 -->
+            <el-collapse-item name="usage">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><connection /></el-icon> 使用场景</h4>
+              </template>
+              <div class="usage-filters">
+                <el-checkbox-group v-model="preferences.usage" @change="updatePreferences" class="usage-checkbox-group">
+                  <el-checkbox label="游戏">游戏玩家</el-checkbox>
+                  <el-checkbox label="拍照">摄影爱好者</el-checkbox>
+                  <el-checkbox label="社交">社交达人</el-checkbox>
+                  <el-checkbox label="办公">商务办公</el-checkbox>
+                  <el-checkbox label="影音">影音娱乐</el-checkbox>
+                  <el-checkbox label="学生">学生党</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </el-collapse-item>
+            
+            <!-- 高级筛选 -->
+            <el-collapse-item name="advanced">
+              <template #title>
+                <h4 class="collapse-title"><el-icon><setting /></el-icon> 高级选项</h4>
+              </template>
+              <div class="advanced-filters">
+                <div class="spec-filter-item">
+                  <el-checkbox v-model="preferences.hasNFC" @change="updatePreferences">支持 NFC</el-checkbox>
+                </div>
+                <div class="spec-filter-item">
+                  <el-checkbox v-model="preferences.has5G" @change="updatePreferences">支持 5G</el-checkbox>
+                </div>
+                <div class="spec-filter-item">
+                  <el-checkbox v-model="preferences.hasWirelessCharge" @change="updatePreferences">无线充电</el-checkbox>
+                </div>
+                <div class="spec-filter-item">
+                  <el-checkbox v-model="preferences.waterproof" @change="updatePreferences">防水防尘</el-checkbox>
+                </div>
+                
+                <div class="spec-filter-item mt-10">
+                  <span class="spec-label">系统偏好</span>
+                  <el-radio-group v-model="preferences.os" @change="updatePreferences" class="os-radio-group">
+                    <el-radio label="">不限</el-radio>
+                    <el-radio label="Android">安卓</el-radio>
+                    <el-radio label="iOS">iOS</el-radio>
+                  </el-radio-group>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
         </el-card>
       </el-col>
 
@@ -197,10 +316,10 @@
               <el-button 
                 type="primary" 
                 @click="viewDetail(phone.id)"
-                  size="default"
+                size="default"
                 class="detail-btn"
               >
-                  <el-icon><view /></el-icon> 查看详情
+                <el-icon><view /></el-icon> 查看详情
               </el-button>
               </div>
             </el-card>
@@ -213,18 +332,40 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePhoneStore } from '@/stores/phone'
 import { storeToRefs } from 'pinia'
-import { Filter, Refresh, Apple, Money, Star, Folder, Connection, MagicStick, View } from '@element-plus/icons-vue'
+import { Filter, Refresh, Apple, Money, Star, Folder, Connection, MagicStick, View, DocumentAdd, Delete, Setting } from '@element-plus/icons-vue'
 import { Star as StarIcon } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const router = useRouter()
 const phoneStore = usePhoneStore()
 const { loading, recommendations } = storeToRefs(phoneStore)
 const { preferences, availableBrands } = storeToRefs(phoneStore)
+
+// 筛选面板状态
+const activeCollapse = ref(['brand', 'price'])
+
+// 价格区间标记
+const priceMarks = {
+  1000: '1K',
+  5000: '5K',
+  8000: '8K',
+  12000: '12K'
+}
+
+// 快速筛选预设
+const quickFilters = ref([
+  { name: '性价比之选', type: 'success', filter: { budget: [2000, 4000], performance: 4, camera: 3, battery: 4 } },
+  { name: '拍照旗舰', type: 'danger', filter: { budget: [4000, 12000], camera: 5, usage: ['拍照'] } },
+  { name: '游戏性能', type: 'warning', filter: { performance: 5, ram: 8, usage: ['游戏'] } },
+  { name: '轻薄便携', type: 'info', filter: { screenSize: 'small', battery: 3 } }
+])
+
+// 用户保存的筛选条件
+const savedFilters = ref([])
 
 // 切换品牌选择
 const toggleBrand = async (brand) => {
@@ -237,10 +378,80 @@ const toggleBrand = async (brand) => {
   await updatePreferences()
 }
 
+// 设置价格区间
+const setPrice = (range) => {
+  preferences.value.budget = range
+  updatePreferences()
+}
+
+// 应用快速筛选
+const applyQuickFilter = (filter) => {
+  // 合并筛选条件
+  const newPreferences = { ...preferences.value, ...filter.filter }
+  // 应用新的筛选条件
+  Object.keys(newPreferences).forEach(key => {
+    preferences.value[key] = newPreferences[key]
+  })
+  updatePreferences()
+  ElMessage.success(`已应用"${filter.name}"筛选`)
+}
+
+// 保存当前筛选条件
+const saveCurrentFilter = async () => {
+  try {
+    const { value: filterName } = await ElMessageBox.prompt(
+      '请输入筛选名称',
+      '保存筛选',
+      {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        inputValidator: (value) => {
+          if (!value) {
+            return '筛选名称不能为空'
+          }
+          return true
+        }
+      }
+    )
+    
+    if (filterName) {
+      const newFilter = {
+        name: filterName,
+        filter: JSON.parse(JSON.stringify(preferences.value))
+      }
+      savedFilters.value.push(newFilter)
+      // 保存到本地存储
+      localStorage.setItem('savedFilters', JSON.stringify(savedFilters.value))
+      ElMessage.success('筛选条件已保存')
+    }
+  } catch (error) {
+    // 用户取消输入
+  }
+}
+
+// 应用保存的筛选条件
+const applySavedFilter = (filter) => {
+  // 应用保存的筛选条件
+  Object.keys(filter.filter).forEach(key => {
+    preferences.value[key] = filter.filter[key]
+  })
+  updatePreferences()
+  ElMessage.success(`已应用"${filter.name}"筛选`)
+}
+
+// 删除保存的筛选条件
+const removeSavedFilter = (index) => {
+  savedFilters.value.splice(index, 1)
+  // 更新本地存储
+  localStorage.setItem('savedFilters', JSON.stringify(savedFilters.value))
+  ElMessage.success('已删除筛选条件')
+}
+
 // 重置所有筛选条件
 const resetFilters = async () => {
   await phoneStore.reset()
   await phoneStore.generateRecommendations()
+  ElMessage.success('已重置所有筛选条件')
 }
 
 // 更新用户偏好并重新生成推荐
@@ -251,6 +462,7 @@ const updatePreferences = async () => {
 // 查看手机详情
 const viewDetail = (id) => {
   console.log('跳转到详情页，ID:', id)
+  // 简化路由导航，直接使用路径方式
   router.push(`/detail/${id}`)
 }
 
@@ -300,6 +512,13 @@ const goToFavorite = () => {
 
 // 初始化数据
 onMounted(async () => {
+  // 加载保存的筛选条件
+  const saved = localStorage.getItem('savedFilters')
+  if (saved) {
+    savedFilters.value = JSON.parse(saved)
+  }
+  
+  // 初始化数据
   await phoneStore.initialize()
   await phoneStore.generateRecommendations()
 })
@@ -393,32 +612,22 @@ onMounted(async () => {
   gap: 8px;
 }
 
-.reset-btn {
-  transition: all 0.3s ease;
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.reset-btn:hover {
-  transform: rotate(180deg);
+.filter-collapse {
+  --el-collapse-header-height: auto;
+  --el-collapse-header-bg-color: transparent;
+  --el-collapse-header-text-color: #303133;
+  --el-collapse-content-bg-color: transparent;
+  --el-collapse-border-color: rgba(0, 0, 0, 0.05);
 }
 
-.filter-section {
-  margin-bottom: 28px;
-  animation: fade-in 0.5s ease-out;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.filter-section h4 {
-  margin: 0 0 15px;
+.collapse-title {
+  margin: 0;
   font-size: 16px;
   color: #409EFF;
   display: flex;
@@ -426,58 +635,104 @@ onMounted(async () => {
   gap: 8px;
 }
 
-.brand-tags {
+.quick-filters {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.quick-filter-btn {
+  margin: 0;
+  flex-grow: 1;
+  min-width: calc(50% - 8px);
+}
+
+.saved-filter {
+  position: relative;
+  padding-right: 24px;
+}
+
+.delete-icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+.delete-icon:hover {
+  opacity: 1;
+  color: #f56c6c;
+}
+
+.price-range {
+  padding: 5px 0;
+}
+
+.range-values {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #f56c6c;
+}
+
+.popular-price-ranges {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.popular-price-ranges .el-button {
+  flex: 1;
+  min-width: calc(25% - 6px);
+  margin: 0;
+}
+
+.spec-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.spec-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.spec-label {
+  font-size: 14px;
+  color: #606266;
+  margin-bottom: 5px;
+}
+
+.usage-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
-.brand-tag {
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-weight: 500;
+.advanced-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.brand-tag:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.importance-rating .rating-row {
+.os-radio-group {
+  margin-top: 5px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  padding: 8px 10px;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 8px;
-  transition: all 0.3s ease;
 }
 
-.importance-rating .rating-row:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.importance-rating .rating-row span {
-  color: #606266;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.custom-rate {
-  --el-rate-icon-size: 18px;
-}
-
-.custom-select {
-  width: 100%;
-}
-
-.budget-slider {
-  --el-slider-height: 8px;
-  --el-slider-button-size: 20px;
+.mt-10 {
+  margin-top: 10px;
 }
 
 .results-card {
