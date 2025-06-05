@@ -669,21 +669,77 @@ onMounted(async () => {
 }
 
 .price-range {
-  padding: 5px 0;
+  padding: 10px 0 20px;
+  margin-bottom: 10px;
+  position: relative;
 }
 
 .range-values {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   font-weight: 500;
   color: #f56c6c;
+  padding: 0 8px 0 20px;
+  position: relative;
+}
+
+.range-values span:first-child {
+  text-align: left;
+}
+
+.range-values span:last-child {
+  text-align: right;
+  padding-right: 18px;
+  position: absolute;
+  right: 8px;
+}
+
+.budget-slider {
+  margin: 30px 0 24px;
+  padding: 0;
+  width: 96%;
+  margin-left: 2%;
+}
+
+.budget-slider :deep(.el-slider__runway) {
+  margin: 20px 0;
+  height: 6px;
+  width: 100%;
+}
+
+.budget-slider :deep(.el-slider__bar) {
+  height: 6px;
+}
+
+.budget-slider :deep(.el-slider__button) {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #42b983;
+}
+
+.budget-slider :deep(.el-slider__button-wrapper) {
+  top: -20px;
+  height: 40px;
+  width: 40px;
+  z-index: 2;
+}
+
+.budget-slider :deep(.el-slider__marks) {
+  top: 16px;
+  width: 100%;
+  left: 0;
+}
+
+.budget-slider :deep(.el-slider__marks-text) {
+  margin-top: 16px;
+  color: #606266;
 }
 
 .popular-price-ranges {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 25px;
   flex-wrap: wrap;
   gap: 8px;
 }

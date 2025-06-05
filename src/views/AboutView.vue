@@ -326,37 +326,37 @@ const teamMembers = ref([
   {
     name: '唐子豪',
     title: '项目总负责人',
-    avatar: '/images/唐子豪.png'
+    avatar: '/vue/images/唐子豪.png'
   },
   {
     name: '郑灿森',
     title: '数据分析工程师',
-    avatar: '/images/郑灿森.png'
+    avatar: '/vue/images/郑灿森.png'
   },
   {
     name: '陈烁翰',
     title: '算法工程师',
-    avatar: '/images/陈烁翰.png'
+    avatar: '/vue/images/陈烁翰.png'
   },
   {
     name: '刘鑫',
     title: '前端开发工程师',
-    avatar: '/images/刘鑫.png'
+    avatar: '/vue/images/刘鑫.png'
   },
   {
     name: '李景浩',
     title: '后端开发工程师',
-    avatar: '/images/李景浩.png'
+    avatar: '/vue/images/李景浩.png'
   },
   {
     name: '胡叶远',
     title: 'UI设计工程师',
-    avatar: '/images/胡叶远.png'
+    avatar: '/vue/images/胡叶远.png'
   },
   {
     name: '莫骏宇',
     title: '运维工程师',
-    avatar: '/images/莫骏宇.png'
+    avatar: '/vue/images/莫骏宇.png'
   }
 ])
 

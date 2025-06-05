@@ -271,41 +271,61 @@
         :class="{ 'animated': animationReady, 'visible': animatedElements.encyclopedia }">
         <h3 class="section-title">手机百科</h3>
         <div class="encyclopedia-content">
-          <div class="encyclopedia-card">
+          <div class="encyclopedia-card" @click="$router.push('/about')">
             <div class="encyclopedia-icon">📱</div>
             <h4>处理器知识</h4>
             <ul class="encyclopedia-list">
-              <li>骁龙8 Gen 3解析</li>
-              <li>A17 Pro芯片性能</li>
-              <li>天玑9300优势</li>
+              <li>骁龙8 Gen 3性能对比</li>
+              <li>A17 Pro与M系芯片分析</li>
+              <li>移动处理器选购指南</li>
+              <li>天玑9300发热控制解析</li>
             </ul>
+            <div class="read-more">
+              <span>了解更多</span>
+              <el-icon><ArrowRight /></el-icon>
           </div>
-          <div class="encyclopedia-card">
+          </div>
+          <div class="encyclopedia-card" @click="$router.push('/about')">
             <div class="encyclopedia-icon">📸</div>
             <h4>相机技术</h4>
             <ul class="encyclopedia-list">
-              <li>计算摄影原理</li>
-              <li>大底传感器优势</li>
-              <li>潜望式镜头进化</li>
+              <li>2024年旗舰手机相机横评</li>
+              <li>计算摄影AI算法解析</li>
+              <li>大底传感器的优与劣</li>
+              <li>潜望式长焦镜头进化史</li>
             </ul>
+            <div class="read-more">
+              <span>了解更多</span>
+              <el-icon><ArrowRight /></el-icon>
           </div>
-          <div class="encyclopedia-card">
+          </div>
+          <div class="encyclopedia-card" @click="$router.push('/about')">
             <div class="encyclopedia-icon">🔋</div>
             <h4>电池技术</h4>
             <ul class="encyclopedia-list">
-              <li>硅碳负极技术</li>
-              <li>100W快充原理</li>
-              <li>无线充电标准</li>
+              <li>硅碳负极电池技术详解</li>
+              <li>100W+超快充安全性分析</li>
+              <li>无线充电Qi2新标准</li>
+              <li>电池容量与实际续航关系</li>
             </ul>
+            <div class="read-more">
+              <span>了解更多</span>
+              <el-icon><ArrowRight /></el-icon>
           </div>
-          <div class="encyclopedia-card">
+          </div>
+          <div class="encyclopedia-card" @click="$router.push('/about')">
             <div class="encyclopedia-icon">🔒</div>
             <h4>安全知识</h4>
             <ul class="encyclopedia-list">
-              <li>3D人脸识别</li>
-              <li>屏下指纹技术</li>
-              <li>安全芯片对比</li>
+              <li>3D结构光人脸识别原理</li>
+              <li>超声波与光学指纹对比</li>
+              <li>安全芯片与隐私保护</li>
+              <li>手机安全使用完全指南</li>
             </ul>
+            <div class="read-more">
+              <span>了解更多</span>
+              <el-icon><ArrowRight /></el-icon>
+            </div>
           </div>
         </div>
       </div>
@@ -323,9 +343,26 @@
                 <div class="review-name">张先生</div>
                 <div class="review-stars">★★★★★</div>
               </div>
+              <div class="review-badge">摄影达人</div>
             </div>
             <div class="review-content">
               <p>选择的iPhone 16 Pro完全符合我的预期，推荐系统给出的建议非常准确。续航提升明显，相机系统出色，尤其是在暗光环境下的表现令人惊艳。</p>
+            </div>
+            <div class="review-metrics">
+              <div class="metric">
+                <span class="metric-label">相机体验</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 95%"></div>
+                </div>
+                <span class="metric-value">9.5</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">续航表现</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 85%"></div>
+                </div>
+                <span class="metric-value">8.5</span>
+              </div>
             </div>
             <div class="review-phone-tag">iPhone 16 Pro</div>
           </div>
@@ -337,9 +374,26 @@
                 <div class="review-name">王女士</div>
                 <div class="review-stars">★★★★☆</div>
               </div>
+              <div class="review-badge">游戏玩家</div>
             </div>
             <div class="review-content">
               <p>按照系统推荐购买了小米14 Ultra，相机表现超出预期，徕卡合作的徕卡四摄系统拍摄质量极佳。唯一不足是有点重，但整体非常满意，尤其是快充体验。</p>
+            </div>
+            <div class="review-metrics">
+              <div class="metric">
+                <span class="metric-label">游戏性能</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 98%"></div>
+                </div>
+                <span class="metric-value">9.8</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">散热控制</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 80%"></div>
+                </div>
+                <span class="metric-value">8.0</span>
+              </div>
             </div>
             <div class="review-phone-tag">小米 14 Ultra</div>
           </div>
@@ -351,9 +405,26 @@
                 <div class="review-name">李先生</div>
                 <div class="review-stars">★★★★★</div>
               </div>
+              <div class="review-badge">商务用户</div>
             </div>
             <div class="review-content">
               <p>系统推荐了华为Mate 60 Pro，国产系统的进步令人惊讶，HarmonyOS流畅度不输iOS，自研麒麟芯片性能优秀。鸿蒙生态日渐完善，应用体验丰富。</p>
+            </div>
+            <div class="review-metrics">
+              <div class="metric">
+                <span class="metric-label">系统流畅度</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 92%"></div>
+                </div>
+                <span class="metric-value">9.2</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">商务功能</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 95%"></div>
+                </div>
+                <span class="metric-value">9.5</span>
+              </div>
             </div>
             <div class="review-phone-tag">华为 Mate 60 Pro</div>
           </div>
@@ -365,41 +436,65 @@
                 <div class="review-name">赵女士</div>
                 <div class="review-stars">★★★★☆</div>
               </div>
+              <div class="review-badge">AI达人</div>
             </div>
             <div class="review-content">
               <p>根据系统推荐选择了三星Galaxy S24 Ultra，AI功能非常强大，实时翻译和对话摘要特别实用。S Pen手写笔功能精准，屏幕显示效果极佳。相机系统的远摄能力令人印象深刻。</p>
             </div>
+            <div class="review-metrics">
+              <div class="metric">
+                <span class="metric-label">AI功能</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 98%"></div>
+                </div>
+                <span class="metric-value">9.8</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">屏幕表现</span>
+                <div class="metric-bar">
+                  <div class="metric-fill" style="width: 96%"></div>
+                </div>
+                <span class="metric-value">9.6</span>
+              </div>
+            </div>
             <div class="review-phone-tag">三星 Galaxy S24 Ultra</div>
           </div>
 
-          <div class="review-card::before">
+          <div class="review-card professional-review">
             <div class="review-header">
               <div class="review-avatar">TW</div>
               <div class="review-info">
                 <div class="review-name">田评测师</div>
                 <div class="review-stars">★★★★★</div>
               </div>
+              <div class="review-badge pro-badge">专业评测</div>
             </div>
             <div class="review-content">
               <p>作为专业评测师，我对比测试了系统推荐的几款旗舰机型。从硬件规格、系统优化、相机表现、游戏性能到续航表现各个维度进行了详尽测试。结果显示，推荐系统的匹配度高达95%以上，准确捕捉用户需求并给出合理建议。</p>
             </div>
             <div class="review-metrics">
               <div class="metric">
-                <span class="metric-label">准确率</span>
+                <span class="metric-label">推荐准确率</span>
                 <div class="metric-bar">
                   <div class="metric-fill" style="width: 95%"></div>
                 </div>
-                <span class="metric-value">95%</span>
+                <span class="metric-value">9.5</span>
               </div>
               <div class="metric">
-                <span class="metric-label">专业度</span>
+                <span class="metric-label">专业度评分</span>
                 <div class="metric-bar">
                   <div class="metric-fill" style="width: 97%"></div>
                 </div>
-                <span class="metric-value">97%</span>
+                <span class="metric-value">9.7</span>
               </div>
             </div>
-            <div class="review-phone-tag">专业横评</div>
+            <div class="review-action">
+              <el-button class="action-btn mini-btn" @click="$router.push('/about')">
+                查看完整测评
+                <el-icon><ArrowRight /></el-icon>
+              </el-button>
+            </div>
+            <div class="review-phone-tag">专业横评报告</div>
           </div>
         </div>
       </div>
@@ -3157,6 +3252,103 @@ onUnmounted(() => {
   .review-content p::before {
     left: -20px;
     top: -10px;
+  }
+}
+
+/* 添加手机百科和评测专区新样式 */
+.read-more {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: #42b983;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.read-more:hover {
+  transform: translateX(5px);
+}
+
+.read-more .el-icon {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.read-more:hover .el-icon {
+  transform: translateX(3px);
+}
+
+.review-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(66, 185, 131, 0.1);
+  border-radius: 12px;
+  color: #42b983;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.pro-badge {
+  background: rgba(77, 114, 254, 0.1);
+  color: #4d72fe;
+}
+
+.professional-review {
+  flex: 0 0 100%;
+  border-top: 1px dashed rgba(66, 185, 131, 0.3);
+  padding-top: 25px;
+  margin-top: 10px;
+}
+
+.professional-review::before {
+  background: linear-gradient(to bottom, #4d72fe, transparent);
+}
+
+.review-action {
+  margin: 15px 0 10px 83px;
+}
+
+.mini-btn {
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #42b983, #2f9768);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(66, 185, 131, 0.2);
+}
+
+.mini-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(66, 185, 131, 0.3);
+}
+
+.mini-btn .el-icon {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.mini-btn:hover .el-icon {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .review-metrics,
+  .review-action {
+    margin-left: 0;
+  }
+  
+  .review-badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
   }
 }
 </style>
