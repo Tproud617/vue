@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // 解决基础路径问题
-const baseUrl = '/' // 改为根路径，方便开发调试
+const baseUrl = import.meta.env.MODE === 'production' ? '/vue/' : '/' // 生产环境使用/vue/，开发环境使用/
 
 const routes = [
   {
