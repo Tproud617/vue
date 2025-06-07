@@ -1,10 +1,13 @@
+<!-- 收藏页面组件 - 展示和管理用户收藏的手机 -->
 <template>
   <div class="favorite-view">
+    <!-- 背景渐变效果 -->
     <div class="bg-gradient-1"></div>
     <div class="bg-gradient-2"></div>
     <div class="bg-gradient-3"></div>
     
     <el-container>
+      <!-- 顶部标题栏 -->
       <el-header>
         <h1 class="header-title">
           <el-icon class="header-icon"><star /></el-icon>
@@ -24,6 +27,7 @@
       </el-header>
       
       <el-main>
+        <!-- 空状态展示 - 当收藏列表为空时显示 -->
         <div 
           v-if="favoritePhones.length === 0" 
           class="empty-container"
@@ -46,8 +50,10 @@
           </el-button>
         </div>
         
+        <!-- 收藏内容 - 当有收藏手机时显示 -->
         <transition name="fade-scale" v-else>
           <div class="favorite-container">
+          <!-- 收藏头部信息 -->
           <div class="favorite-header">
             <h2 class="favorite-title">已收藏 {{ favoritePhones.length }} 台手机</h2>
               <div class="favorite-sort">
@@ -59,6 +65,7 @@
               </div>
           </div>
           
+            <!-- 手机卡片网格 - 使用过渡动画 -->
             <transition-group name="phone-list" tag="div" class="phone-grid">
             <el-card 
               v-for="phone in favoritePhones" 
@@ -67,8 +74,10 @@
               shadow="hover"
             >
               <div class="phone-card-inner">
+                <!-- 手机图片展示区 -->
                 <div class="phone-image-container">
                   <img :src="phone.image" :alt="phone.name" class="phone-image">
+                  <!-- 操作按钮浮层 -->
                   <div class="actions-overlay">
                       <div class="action-buttons">
                     <el-button 
@@ -93,12 +102,14 @@
                     </div>
                   </div>
                   
+                <!-- 手机基本信息 -->
                 <h3 class="phone-title">{{ phone.name }}</h3>
                 <div class="phone-info">
                   <el-tag size="small" effect="dark" type="success" class="brand-badge">{{ phone.brand }}</el-tag>
                   <span class="price">¥{{ phone.price.toLocaleString() }}</span>
                 </div>
 
+                <!-- 手机规格信息 -->
                 <div class="phone-specs">
                   <div class="spec-item">
                     <el-tooltip content="存储容量" placement="top" effect="light">
@@ -114,6 +125,7 @@
                   </div>
                 </div>
 
+                <!-- 性能评分展示 -->
                 <div class="phone-ratings">
                   <div class="rating-item">
                     <span class="rating-label">相机</span>
@@ -129,6 +141,7 @@
                   </div>
                 </div>
 
+                <!-- 查看详情按钮 -->
                 <el-button 
                   type="primary" 
                   @click="viewDetail(phone.id)"
@@ -157,7 +170,7 @@ import { Delete, TopRight, Close, Star, View, Timer } from '@element-plus/icons-
 const router = useRouter()
 const phoneStore = usePhoneStore()
 
-// 获取收藏列表中的手机
+// 获取收藏列表中的手机数据
 const favoritePhones = computed(() => phoneStore.favoritePhones)
 
 // 从收藏列表中移除手机
@@ -174,7 +187,7 @@ const removeFromFavorite = (phoneId) => {
   })
 }
 
-// 清空收藏列表
+// 清空收藏列表 - 移除所有收藏的手机
 const clearFavoriteList = async () => {
   try {
     await ElMessageBox.confirm('确定要清空收藏列表吗？', '提示', {
@@ -189,12 +202,12 @@ const clearFavoriteList = async () => {
   }
 }
 
-// 跳转到推荐页面
+// 跳转到推荐页面 - 用于添加更多手机
 const goToRecommend = () => {
   router.push('/recommend')
 }
 
-// 查看手机详情
+// 查看手机详情 - 跳转到详情页面
 const viewDetail = (id) => {
   console.log('从收藏页跳转到详情页，ID:', id)
   router.push(`/detail/${id}`)

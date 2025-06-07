@@ -1,3 +1,4 @@
+<!-- 详情页面组件 - 展示单个手机的详细信息和参数 -->
 <template>
   <div class="detail-view">
     <!-- 背景效果 -->
@@ -12,13 +13,13 @@
       </div>
       
       <div class="content-wrapper">
-        <!-- 加载中 -->
+        <!-- 加载中状态 -->
         <div v-if="loading" class="loading-section">
           <div class="spinner"></div>
           <p>加载中...</p>
         </div>
         
-        <!-- 错误信息 -->
+        <!-- 错误信息展示 -->
         <div v-else-if="error" class="error-section">
           <h2>出错了</h2>
               <p>{{ error }}</p>
@@ -26,11 +27,11 @@
           <button @click="goBack" class="secondary-btn">返回列表</button>
         </div>
         
-        <!-- 详情内容 -->
+        <!-- 详情内容展示 - 当手机数据加载成功时显示 -->
         <div v-else-if="phone" class="detail-content">
-          <!-- 左侧：手机图片 -->
+          <!-- 左侧：手机图片展示区 -->
           <div class="phone-image-section">
-            <!-- 滑动查看更多图片 -->
+            <!-- 轮播图展示多个角度的图片 -->
             <el-carousel :interval="5000" indicator-position="outside" class="phone-carousel">
               <el-carousel-item v-for="(image, index) in phoneImages" :key="index">
                 <div class="phone-showcase" 
@@ -54,7 +55,7 @@
               </el-carousel-item>
             </el-carousel>
             
-            <!-- 颜色选择器 -->
+            <!-- 颜色选择器 - 选择不同颜色的手机 -->
             <div class="color-selector">
               <span class="color-title">选择颜色:</span>
               <div class="color-options">
@@ -69,16 +70,19 @@
             </div>
           </div>
           
-          <!-- 右侧：基本信息 -->
+          <!-- 右侧：手机详细信息展示 -->
           <div class="phone-info-section">
             <div class="info-main">
+              <!-- 品牌和价格 -->
               <div class="brand-price">
                 <span class="phone-brand">{{ phone.brand }}</span>
                 <span class="phone-price">¥{{ formatPrice(phone.price) }}</span>
               </div>
               
+              <!-- 手机名称 -->
               <h2 class="phone-name">{{ phone.name }}</h2>
               
+              <!-- 评分概览 -->
               <div class="rating-overview">
                 <div class="rating-stars">
                   <div class="star-group">
@@ -92,7 +96,7 @@
                 </div>
               </div>
               
-              <!-- 购买选项 -->
+              <!-- 购买选项 - 存储、配送等选择 -->
               <div class="purchase-options">
                 <div class="memory-options">
                   <span class="memory-title">存储配置:</span>
@@ -120,6 +124,7 @@
                 </div>
               </div>
               
+              <!-- 操作按钮区 - 购买、收藏等功能 -->
               <div class="action-buttons">
                 <button class="action-btn buy-btn" @click="buyNow">
                   立即购买
@@ -135,6 +140,7 @@
                 </button>
               </div>
                 
+              <!-- 标签页 - 展示不同类型的详细信息 -->
               <div class="tabs">
                 <div class="tab-header">
                   <div v-for="tab in tabs" :key="tab.id" 
@@ -146,7 +152,7 @@
                 </div>
                 
                 <div class="tab-content">
-                  <!-- 规格选项卡 -->
+                  <!-- 规格选项卡 - 展示手机硬件参数 -->
                   <div v-if="activeTab === 'specs'" class="specs-section">
                     <div class="specs-row">
                       <div class="spec-card">
@@ -218,7 +224,7 @@
                     </div>
                   </div>
                   
-                  <!-- 特点选项卡 -->
+                  <!-- 特点选项卡 - 展示手机特色功能 -->
                   <div v-else-if="activeTab === 'features'" class="features-section">
                     <h4 class="section-subtitle">产品特点</h4>
                     <ul class="features-list">
@@ -238,11 +244,11 @@
                     </div>
                   </div>
                   
-                  <!-- 评论选项卡（新增） -->
+                  <!-- 评论选项卡 - 显示用户评价 -->
                   <div v-else-if="activeTab === 'reviews'" class="reviews-section">
                     <h4 class="section-subtitle">用户评价</h4>
                     
-                    <!-- 添加评论 -->
+                    <!-- 添加评论表单 -->
                     <div class="add-review">
                       <h5>发表评论</h5>
                       <div class="review-form">
@@ -262,7 +268,7 @@
                       </div>
                     </div>
                     
-                    <!-- 评论列表 -->
+                    <!-- 评论列表展示 -->
                     <div class="reviews-list">
                       <div v-if="reviews.length === 0" class="no-reviews">
                         暂无评价，快来发表第一条评价吧！
@@ -295,7 +301,7 @@
           </div>
         </div>
         
-        <!-- 相关推荐 -->
+        <!-- 相关推荐 - 展示类似手机 -->
         <div v-if="phone && similarPhones.length" class="similar-phones">
           <h3 class="section-title">相关推荐</h3>
           <div class="similar-phones-grid">
@@ -309,7 +315,7 @@
           </div>
         </div>
         
-        <!-- 未找到手机 -->
+        <!-- 未找到手机提示 -->
         <div v-else-if="!phone && !loading" class="not-found-section">
           <h2>未找到手机</h2>
           <p>无法找到相关手机信息</p>
@@ -343,6 +349,7 @@ const router = useRouter()
 const route = useRoute()
 const phoneStore = usePhoneStore()
 
+// 手机数据状态
 const phone = ref(null)
 const loading = ref(true)
 const error = ref(null)
@@ -351,7 +358,7 @@ const error = ref(null)
     const selectedColor = ref(0)
     const tiltStyle = ref({})
     
-    // 新增的状态
+    // 用户界面状态
     const selectedMemory = ref(128) // 默认128GB
     const reviews = ref([]) // 评论数组
     const newReview = reactive({
@@ -360,7 +367,7 @@ const error = ref(null)
       username: '用户' + Math.floor(Math.random() * 10000)
     })
     
-    // 内存选项
+    // 内存选项配置
     const memoryOptions = [
       { label: '64GB', value: 64 },
       { label: '128GB', value: 128 },
@@ -374,7 +381,7 @@ const error = ref(null)
       return option ? option.label : phone.value.storage + 'GB'
     })
     
-    // 手机图片数组
+    // 手机图片数组 - 模拟多角度展示
     const phoneImages = computed(() => {
       if (!phone.value) return []
       // 这里实际项目中应该从后端获取多张图片
@@ -386,37 +393,37 @@ const error = ref(null)
       ]
     })
     
-    // 定义选项卡
+    // 定义标签页选项
     const tabs = [
       { id: 'specs', name: '规格参数' },
       { id: 'features', name: '产品特点' },
       { id: 'reviews', name: '用户评价' }
     ]
     
-    // 手机颜色选项
+    // 手机颜色选项 - 默认颜色列表
     const colors = ['#f5f7fa', '#303133', '#42b983', '#e6a23c', '#f56c6c']
     
-    // 选择颜色
+    // 选择颜色 - 切换手机颜色
     const selectColor = (index) => {
       selectedColor.value = index
     }
     
-    // 选择内存
+    // 选择内存 - 切换手机存储容量
     const selectMemory = (memory) => {
       selectedMemory.value = memory
     }
     
-    // 立即购买
+    // 立即购买 - 购买功能占位
     const buyNow = () => {
       ElMessage.success('购买功能开发中，敬请期待！')
     }
     
-    // 加入购物车
+    // 加入购物车 - 购物车功能占位
     const addToCart = () => {
       ElMessage.success('购买功能开发中，敬请期待！')
     }
     
-    // 提交评论
+    // 提交评论 - 添加新的用户评价
     const submitReview = () => {
       const review = {
         ...newReview,
@@ -429,14 +436,14 @@ const error = ref(null)
       ElMessage.success('评论已提交，感谢您的反馈！')
     }
     
-    // 格式化日期
+    // 格式化日期 - 将日期对象转换为字符串
     const formatDate = (date) => {
       if (!date) return ''
       const d = new Date(date)
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
     }
     
-    // 3D倾斜效果
+    // 3D倾斜效果 - 鼠标移动时改变手机展示角度
     const handleMouseMove = (e) => {
       if (!imageLoaded.value) return;
       
@@ -464,7 +471,7 @@ const error = ref(null)
       };
     };
     
-    // 重置倾斜效果
+    // 重置倾斜效果 - 鼠标离开时恢复初始状态
     const resetTilt = () => {
       tiltStyle.value = {
         transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
@@ -472,20 +479,20 @@ const error = ref(null)
       };
     };
     
-    // 获取平均评分
+    // 获取平均评分 - 计算手机的总体评分
     const getAverageRating = (phone) => {
       if (!phone) return 0;
       const avg = (phone.camera + phone.performance + phone.battery) / 3;
       return parseFloat(avg.toFixed(1));
     }
     
-    // 格式化价格
+    // 格式化价格 - 添加千位分隔符
     const formatPrice = (price) => {
       if (!price) return "0";
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     
-    // 相似手机列表
+    // 相似手机列表 - 获取同品牌的其他手机
     const similarPhones = computed(() => {
       if (!phone.value) return [];
       
@@ -498,7 +505,7 @@ const error = ref(null)
         .slice(0, 4);
     });
     
-    // 获取手机数据
+    // 获取手机数据 - 根据ID加载详细信息
     const fetchPhoneData = () => {
     loading.value = true
     error.value = null
@@ -532,17 +539,17 @@ const error = ref(null)
       }
     }
     
-    // 重新加载数据
+    // 重新加载数据 - 出错时重试
     const reloadData = () => {
       fetchPhoneData()
     }
     
-    // 返回推荐页面
+    // 返回推荐页面 - 导航回上一级
 const goBack = () => {
   router.push('/recommend')
 }
     
-    // 查看其他手机详情
+    // 查看其他手机详情 - 切换到其他手机
     const viewDetail = (id) => {
       router.push(`/detail/${id}`);
     }

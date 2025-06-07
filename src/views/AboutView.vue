@@ -1,19 +1,21 @@
+<!-- 关于页面组件 - 展示系统的详细信息、功能特点、团队信息和联系方式 -->
 <template>
   <div class="about-view">
-    <!-- Animated Background -->
+    <!-- 动画背景 - 提供渐变色和浮动效果 -->
     <div class="animated-bg">
       <div class="bg-gradient-1"></div>
       <div class="bg-gradient-2"></div>
     </div>
     
-    <!-- Header -->
+    <!-- 页面标题区域 - 带有动画效果的标题 -->
     <header class="page-header fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.header }">
       <h1 class="header-title">关于我们</h1>
+      <!-- 标题装饰线 - 增强视觉效果 -->
       <div class="header-decoration"></div>
     </header>
     
     <div class="content-container">
-      <!-- Main content -->
+      <!-- 主要内容区 - 描述系统的主要信息和使命 -->
       <section class="about-section main-info fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.mainInfo }">
         <div class="section-header">
           <div class="icon-container">
@@ -24,6 +26,7 @@
         
         <p class="tagline">帮助您找到最适合自己的智能手机</p>
         
+        <!-- 信息卡片 - 展示系统使命 -->
         <div class="info-card">
           <div class="card-content">
             <h3>我们的使命</h3>
@@ -32,10 +35,11 @@
         </div>
       </section>
       
-      <!-- Features -->
+      <!-- 核心功能区 - 展示系统主要特性 -->
       <section class="about-section features fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.features }">
         <h2 class="section-title">核心功能</h2>
         
+        <!-- 功能卡片网格 - 使用v-for循环渲染功能卡片 -->
         <div class="features-grid">
           <div class="feature-card" v-for="(feature, index) in features" :key="index">
             <div class="feature-icon" :style="{ background: feature.color }">
@@ -47,14 +51,16 @@
         </div>
       </section>
       
-      <!-- Data & Tech -->
+      <!-- 数据和技术区 - 展示数据来源和算法流程 -->
       <section class="about-section data-tech fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.dataTech }">
         <div class="two-columns">
+          <!-- 数据来源列 -->
           <div class="column">
             <h2 class="section-title">数据来源</h2>
             <div class="info-card">
               <div class="card-content">
                 <p>我们的数据来源于以下渠道：</p>
+                <!-- 数据源列表 - 使用自定义样式的列表 -->
                 <ul class="data-sources">
                   <li><span class="bullet"></span>各大厂商官方规格数据</li>
                   <li><span class="bullet"></span>专业评测机构的性能测试</li>
@@ -66,10 +72,12 @@
             </div>
           </div>
           
+          <!-- 推荐算法列 -->
           <div class="column">
             <h2 class="section-title">推荐算法</h2>
             <div class="info-card">
               <div class="card-content">
+                <!-- 算法流程步骤 - 直观展示推荐过程 -->
                 <div class="algorithm-process">
                   <div class="process-step">
                     <div class="step-number">1</div>
@@ -97,10 +105,11 @@
         </div>
       </section>
       
-      <!-- Timeline -->
+      <!-- 发展历程区 - 时间线展示项目发展 -->
       <section class="about-section timeline fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.timeline }">
         <h2 class="section-title">发展历程</h2>
         
+        <!-- 时间线容器 - 垂直方向展示发展里程碑 -->
         <div class="timeline-container">
           <div class="timeline-item" v-for="(item, index) in timeline" :key="index">
             <div class="timeline-marker" :class="{ 'active': index === 0 }"></div>
@@ -113,10 +122,11 @@
         </div>
       </section>
       
-      <!-- Team -->
+      <!-- 团队成员区 - 展示项目团队信息 -->
       <section class="about-section team fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.team }">
         <h2 class="section-title">我们的团队</h2>
         
+        <!-- 团队成员网格 - 使用v-for循环渲染成员卡片 -->
         <div class="team-grid">
           <div class="team-member" v-for="(member, index) in teamMembers" :key="index">
             <div class="member-avatar" :style="{ backgroundImage: `url(${member.avatar})` }">
@@ -128,10 +138,11 @@
         </div>
       </section>
       
-      <!-- Contact -->
+      <!-- 联系方式区 - 提供联系信息 -->
       <section class="about-section contact fade-up" v-bind:class="{ 'animated': true, 'visible': animatedElements.contact }">
         <h2 class="section-title">联系我们</h2>
         
+        <!-- 联系卡片 - 包含多种联系方式 -->
         <div class="contact-card">
           <div class="contact-methods">
             <div class="contact-method">
@@ -150,7 +161,7 @@
         </div>
       </section>
       
-      <!-- 修改按钮区域 - 增强可见性 -->
+      <!-- 导航按钮区 - 提供页面跳转功能 -->
       <div class="fixed-actions-wrapper">
         <div class="fixed-actions" :class="{ 'force-visible': true }">
           <button class="custom-button primary-button" @click="goHome">
@@ -185,6 +196,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+// 导航方法 - 页面跳转功能
 const goHome = () => {
   router.push('/')
 }
@@ -193,7 +205,7 @@ const goRecommend = () => {
   router.push('/recommend')
 }
 
-// 动画控制状态
+// 动画控制状态 - 管理各区域的滚动动画效果
 const animatedElements = ref({
   header: false,
   mainInfo: false,
@@ -205,17 +217,17 @@ const animatedElements = ref({
   actions: false
 })
 
-// 滚动监听功能
+// 滚动监听配置 - 定义监听元素进入视口的参数
 const observerOptions = {
   root: null, // 使用视口作为根
   rootMargin: '0px 0px -10% 0px', // 当元素进入视口的底部10%时触发
   threshold: 0.1 // 当元素10%的部分可见时触发
 }
 
-// 创建观察者
+// 创建观察者数组 - 用于存储所有滚动观察器
 let observers = []
 
-// 设置滚动观察
+// 设置滚动观察 - 监听元素进入视口并触发动画
 const setupScrollObservers = () => {
   // 清除之前的观察者
   observers.forEach(observer => observer.disconnect())
@@ -251,6 +263,7 @@ const setupScrollObservers = () => {
   })
 }
 
+// 生命周期钩子 - 组件挂载时初始化
 onMounted(() => {
   // 设置页面初始位置
   window.scrollTo(0, 0)
@@ -264,12 +277,13 @@ onMounted(() => {
   }, 300)
 })
 
+// 组件卸载时清理资源
 onUnmounted(() => {
   // 清除所有观察者
   observers.forEach(observer => observer.disconnect())
 })
 
-// Features data
+// 功能特点数据
 const features = ref([
   {
     icon: 'DataAnalysis',
@@ -297,7 +311,7 @@ const features = ref([
   }
 ])
 
-// Timeline data
+// 时间线数据 - 展示项目发展历程
 const timeline = ref([
   {
     date: '2025年6月',
@@ -321,7 +335,7 @@ const timeline = ref([
   }
 ])
 
-// Team members data
+// 团队成员数据 - 展示项目团队信息
 const teamMembers = ref([
   {
     name: '唐子豪',
@@ -360,7 +374,7 @@ const teamMembers = ref([
   }
 ])
 
-// Contact methods data
+// 联系方式数据 - 展示联系信息
 const contactMethods = ref([
   {
     icon: 'Message',
@@ -388,7 +402,7 @@ const contactMethods = ref([
   align-items: center;
 }
 
-/* 淡入上升动画 - 类似首页的效果 */
+/* 淡入上升动画 - 元素进入视口时的动画效果 */
 .fade-up {
   opacity: 0;
   transform: translateY(40px);
@@ -408,7 +422,7 @@ const contactMethods = ref([
   pointer-events: auto;
 }
 
-/* Animated background - 更新为与首页一致的样式 */
+/* 动画背景 - 渐变色背景和浮动效果 */
 .animated-bg {
   position: fixed;
   top: 0;
@@ -419,6 +433,7 @@ const contactMethods = ref([
   z-index: -1;
 }
 
+/* 背景渐变元素 - 创建浮动效果 */
 .bg-gradient-1,
 .bg-gradient-2 {
   position: absolute;
@@ -447,6 +462,7 @@ const contactMethods = ref([
   animation: float-2 20s ease-in-out infinite alternate;
 }
 
+/* 浮动动画 - 背景渐变的移动效果 */
 @keyframes float-1 {
   0% {
     transform: translate(0, 0);
@@ -465,7 +481,7 @@ const contactMethods = ref([
   }
 }
 
-/* Header - 增强标题动画效果 */
+/* 标题区样式 - 增强标题的视觉效果 */
 .page-header {
   text-align: center;
   padding: 60px 0 20px;
@@ -491,11 +507,13 @@ const contactMethods = ref([
   text-rendering: geometricPrecision;
 }
 
+/* 标题悬停效果 */
 .header-title:hover {
   transform: scale(1.05);
   filter: drop-shadow(0 3px 6px rgba(66, 185, 131, 0.5));
 }
 
+/* 标题下方装饰线 */
 .header-decoration {
   width: 120px;
   height: 4px;
@@ -504,6 +522,7 @@ const contactMethods = ref([
   border-radius: 2px;
 }
 
+/* 标题闪烁动画 */
 @keyframes shimmer {
   0% {
     background-position: -100% 0;
@@ -513,7 +532,7 @@ const contactMethods = ref([
   }
 }
 
-/* Content Container */
+/* 内容容器 - 控制页面内容的宽度和间距 */
 .content-container {
   max-width: 1200px;
   margin: 0 auto;

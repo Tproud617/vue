@@ -1,10 +1,12 @@
+<!-- 推荐页面组件 - 根据用户偏好筛选并推荐手机 -->
 <template>
   <div class="recommend-view">
+    <!-- 背景渐变效果 -->
     <div class="bg-gradient-1"></div>
     <div class="bg-gradient-2"></div>
     
     <el-row :gutter="30">
-      <!-- 左侧筛选区域 -->
+      <!-- 左侧筛选区域 - 用户可设置筛选条件 -->
       <el-col :xs="24" :sm="24" :md="8" :lg="6" :xl="5">
         <el-card class="filter-card" shadow="hover">
           <template #header>
@@ -23,7 +25,7 @@
             </div>
           </template>
           
-          <!-- 快速筛选预设 -->
+          <!-- 快速筛选预设 - 提供常用筛选条件组合 -->
           <div class="filter-section" v-if="savedFilters.length > 0 || quickFilters.length > 0">
             <h4><el-icon><magic-stick /></el-icon> 快速筛选</h4>
             <div class="quick-filters">
@@ -51,7 +53,7 @@
             </div>
           </div>
           
-          <!-- 折叠筛选面板 -->
+          <!-- 折叠筛选面板 - 详细筛选选项 -->
           <el-collapse v-model="activeCollapse" accordion class="filter-collapse">
             <!-- 品牌筛选 -->
             <el-collapse-item name="brand">
@@ -72,7 +74,7 @@
               </div>
             </el-collapse-item>
 
-            <!-- 价格筛选 -->
+            <!-- 价格筛选 - 通过滑块设置价格范围 -->
             <el-collapse-item name="price">
               <template #title>
                 <h4 class="collapse-title"><el-icon><money /></el-icon> 价格区间</h4>
@@ -101,7 +103,7 @@
               </div>
             </el-collapse-item>
 
-            <!-- 重要性评分 -->
+            <!-- 重要性评分 - 设置各项性能的重要程度 -->
             <el-collapse-item name="performance">
               <template #title>
                 <h4 class="collapse-title"><el-icon><star /></el-icon> 性能需求</h4>
@@ -126,7 +128,7 @@
               </div>
             </el-collapse-item>
 
-            <!-- 存储和内存 -->
+            <!-- 存储和内存 - 硬件配置筛选 -->
             <el-collapse-item name="storage">
               <template #title>
                 <h4 class="collapse-title"><el-icon><folder /></el-icon> 硬件配置</h4>
@@ -168,7 +170,7 @@
               </div>
             </el-collapse-item>
 
-            <!-- 使用场景 -->
+            <!-- 使用场景 - 按照用途筛选 -->
             <el-collapse-item name="usage">
               <template #title>
                 <h4 class="collapse-title"><el-icon><connection /></el-icon> 使用场景</h4>
@@ -185,7 +187,7 @@
               </div>
             </el-collapse-item>
             
-            <!-- 高级筛选 -->
+            <!-- 高级筛选 - 额外的功能特性筛选 -->
             <el-collapse-item name="advanced">
               <template #title>
                 <h4 class="collapse-title"><el-icon><setting /></el-icon> 高级选项</h4>
@@ -218,7 +220,7 @@
         </el-card>
       </el-col>
 
-      <!-- 右侧推荐结果 -->
+      <!-- 右侧推荐结果 - 展示符合条件的手机 -->
       <el-col :xs="24" :sm="24" :md="16" :lg="18" :xl="19">
         <el-card shadow="hover" v-loading="loading" class="results-card">
           <template #header>
@@ -228,7 +230,7 @@
             </div>
           </template>
 
-          <!-- 手机列表 -->
+          <!-- 手机列表 - 网格布局展示推荐手机 -->
           <div v-if="recommendations.length > 0" class="phone-grid">
             <el-card 
               v-for="phone in recommendations" 
@@ -237,11 +239,14 @@
               shadow="hover"
             >
               <div class="phone-card-inner">
+                <!-- 手机图片区域 -->
                 <div class="phone-image-container">
               <img :src="phone.image" :alt="phone.name" class="phone-image">
+                  <!-- 匹配程度标识 -->
                   <div class="match-badge" :class="getMatchClass(phone.matchScore)">
                     {{ Math.min(100, Math.round((phone.matchScore / 25) * 100)) }}%
                   </div>
+                  <!-- 收藏按钮 -->
                   <button 
                     class="favorite-btn" 
                     :class="{'is-favorite': isInFavoriteList(phone.id)}"
@@ -257,7 +262,7 @@
                 <span class="price">¥{{ phone.price.toLocaleString() }}</span>
               </div>
 
-              <!-- 匹配分数 -->
+              <!-- 匹配分数进度条 -->
               <div class="match-score">
                 <el-progress 
                   :percentage="Math.min(100, (phone.matchScore / 25) * 100)"
@@ -268,7 +273,7 @@
                 />
               </div>
 
-              <!-- 手机参数 -->
+              <!-- 手机基本参数展示 -->
               <div class="phone-specs">
                 <div class="spec-item">
                     <el-tooltip content="存储容量" placement="top" effect="light">
@@ -284,6 +289,7 @@
                 </div>
               </div>
 
+              <!-- 性能评分展示 -->
               <div class="phone-ratings">
                 <div class="rating-item">
                   <span class="rating-label">相机</span>
@@ -313,6 +319,7 @@
                 </el-tag>
               </div>
 
+              <!-- 查看详情按钮 -->
               <el-button 
                 type="primary" 
                 @click="viewDetail(phone.id)"
@@ -324,6 +331,7 @@
               </div>
             </el-card>
           </div>
+          <!-- 无结果提示 -->
           <el-empty v-else description="暂无符合条件的手机" :image-size="200"></el-empty>
         </el-card>
       </el-col>
@@ -345,10 +353,10 @@ const phoneStore = usePhoneStore()
 const { loading, recommendations } = storeToRefs(phoneStore)
 const { preferences, availableBrands } = storeToRefs(phoneStore)
 
-// 筛选面板状态
+// 筛选面板状态 - 控制折叠面板的展开状态
 const activeCollapse = ref(['brand', 'price'])
 
-// 价格区间标记
+// 价格区间标记 - 滑块上的刻度标记
 const priceMarks = {
   1000: '1K',
   5000: '5K',
@@ -356,7 +364,7 @@ const priceMarks = {
   12000: '12K'
 }
 
-// 快速筛选预设
+// 快速筛选预设 - 提供常用的筛选组合
 const quickFilters = ref([
   { name: '性价比之选', type: 'success', filter: { budget: [2000, 4000], performance: 4, camera: 3, battery: 4 } },
   { name: '拍照旗舰', type: 'danger', filter: { budget: [4000, 12000], camera: 5, usage: ['拍照'] } },
@@ -364,10 +372,10 @@ const quickFilters = ref([
   { name: '轻薄便携', type: 'info', filter: { screenSize: 'small', battery: 3 } }
 ])
 
-// 用户保存的筛选条件
+// 用户保存的筛选条件 - 存储用户自定义的筛选组合
 const savedFilters = ref([])
 
-// 切换品牌选择
+// 切换品牌选择 - 添加或移除所选品牌
 const toggleBrand = async (brand) => {
   const index = preferences.value.brand.indexOf(brand)
   if (index > -1) {
@@ -378,13 +386,13 @@ const toggleBrand = async (brand) => {
   await updatePreferences()
 }
 
-// 设置价格区间
+// 设置价格区间 - 应用预设价格范围
 const setPrice = (range) => {
   preferences.value.budget = range
   updatePreferences()
 }
 
-// 应用快速筛选
+// 应用快速筛选 - 使用预设的筛选条件
 const applyQuickFilter = (filter) => {
   // 合并筛选条件
   const newPreferences = { ...preferences.value, ...filter.filter }
@@ -396,7 +404,7 @@ const applyQuickFilter = (filter) => {
   ElMessage.success(`已应用"${filter.name}"筛选`)
 }
 
-// 保存当前筛选条件
+// 保存当前筛选条件 - 将当前设置保存为自定义筛选
 const saveCurrentFilter = async () => {
   try {
     const { value: filterName } = await ElMessageBox.prompt(
@@ -429,7 +437,7 @@ const saveCurrentFilter = async () => {
   }
 }
 
-// 应用保存的筛选条件
+// 应用保存的筛选条件 - 使用之前保存的设置
 const applySavedFilter = (filter) => {
   // 应用保存的筛选条件
   Object.keys(filter.filter).forEach(key => {
@@ -447,26 +455,26 @@ const removeSavedFilter = (index) => {
   ElMessage.success('已删除筛选条件')
 }
 
-// 重置所有筛选条件
+// 重置所有筛选条件 - 恢复默认设置
 const resetFilters = async () => {
   await phoneStore.reset()
   await phoneStore.generateRecommendations()
   ElMessage.success('已重置所有筛选条件')
 }
 
-// 更新用户偏好并重新生成推荐
+// 更新用户偏好并重新生成推荐 - 当筛选条件变化时调用
 const updatePreferences = async () => {
   await phoneStore.generateRecommendations()
 }
 
-// 查看手机详情
+// 查看手机详情 - 跳转到详情页
 const viewDetail = (id) => {
   console.log('跳转到详情页，ID:', id)
   // 简化路由导航，直接使用路径方式
   router.push(`/detail/${id}`)
 }
 
-// 获取匹配状态
+// 获取匹配状态 - 根据匹配分数返回状态样式
 const getMatchStatus = (score) => {
   const percentage = (score / 25) * 100
   if (percentage >= 80) return 'success'
@@ -474,7 +482,7 @@ const getMatchStatus = (score) => {
   return 'exception'
 }
 
-// 获取匹配徽章样式
+// 获取匹配徽章样式 - 根据匹配分数返回徽章样式
 const getMatchClass = (score) => {
   const percentage = (score / 25) * 100
   if (percentage >= 80) return 'match-excellent'
@@ -482,14 +490,14 @@ const getMatchClass = (score) => {
   return 'match-fair'
 }
 
-// Check if a phone is in the favorite list
+// 检查手机是否在收藏列表中
 const isInFavoriteList = (phoneId) => {
   return phoneStore.favoriteList.includes(phoneId)
 }
 
-// Toggle a phone's favorite status
+// 切换手机收藏状态 - 添加或移除收藏
 const toggleFavorite = (event, phoneId) => {
-  event.stopPropagation() // Prevent card click event
+  event.stopPropagation() // 防止卡片点击事件传播
   
   if (phoneStore.toggleFavorite(phoneId)) {
     if (isInFavoriteList(phoneId)) {
@@ -510,7 +518,7 @@ const goToFavorite = () => {
   router.push('/favorite')
 }
 
-// 初始化数据
+// 初始化数据 - 组件挂载时执行
 onMounted(async () => {
   // 加载保存的筛选条件
   const saved = localStorage.getItem('savedFilters')

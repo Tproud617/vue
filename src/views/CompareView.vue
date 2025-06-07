@@ -1,10 +1,13 @@
+<!-- 对比页面组件 - 用于比较多台手机的详细参数 -->
 <template>
   <div class="compare-view">
+    <!-- 背景渐变效果 -->
     <div class="bg-gradient-1"></div>
     <div class="bg-gradient-2"></div>
     <div class="bg-gradient-3"></div>
     
     <el-container>
+      <!-- 顶部标题栏 -->
       <el-header>
         <h1 class="header-title">
           <el-icon class="header-icon"><data-analysis /></el-icon>
@@ -24,6 +27,7 @@
       </el-header>
       
       <el-main>
+        <!-- 空状态展示 - 当对比列表为空时显示 -->
         <div 
           v-if="comparePhones.length === 0" 
           class="empty-container"
@@ -47,8 +51,10 @@
           </el-button>
         </div>
         
+        <!-- 对比内容 - 当有手机可对比时显示 -->
         <transition name="fade-scale" v-else>
           <div class="compare-container">
+          <!-- 对比头部信息 -->
           <div class="compare-header">
             <h2 class="compare-title">已添加 {{ comparePhones.length }} 台手机</h2>
             <el-tag type="info" effect="dark" class="compare-tag">
@@ -56,15 +62,18 @@
             </el-tag>
           </div>
           
+            <!-- 手机卡片列表 - 使用过渡动画 -->
             <transition-group name="phone-list" tag="div" class="phone-cards">
             <div 
               v-for="(phone, index) in comparePhones" 
               :key="phone.id"
               class="phone-card"
             >
+              <!-- 手机图片展示区 -->
               <div class="phone-image-wrapper">
                 <img :src="phone.image" :alt="phone.name" class="phone-image">
                   <div class="phone-model-shadow"></div>
+                <!-- 移除按钮浮层 -->
                 <div class="remove-overlay">
                   <el-button 
                     type="danger" 
@@ -84,6 +93,7 @@
                 </div>
             </div>
             
+              <!-- 添加更多手机的卡片 -->
               <div v-if="comparePhones.length < 4" :key="'add'" class="add-more-card" @click="goToRecommend">
               <div class="add-icon-container">
                 <el-icon class="add-icon"><plus /></el-icon>
@@ -92,6 +102,7 @@
             </div>
             </transition-group>
           
+            <!-- 参数对比表格 -->
             <div class="compare-table-container">
           <el-table 
             :data="tableData" 
@@ -102,6 +113,7 @@
             highlight-current-row
             :header-cell-style="{background:'#f9fbff', color: '#409EFF'}"
           >
+            <!-- 参数名称列 - 固定在左侧 -->
             <el-table-column 
               prop="property" 
               label="参数项" 
@@ -111,6 +123,7 @@
               align="center"
               class-name="property-column"
             />
+            <!-- 动态生成每台手机的参数列 -->
             <el-table-column 
               v-for="(phone, index) in comparePhones" 
               :key="phone.id"
@@ -139,6 +152,7 @@
           </el-table>
             </div>
           
+          <!-- 页面底部操作区 -->
           <div class="compare-actions">
             <el-button @click="goToRecommend" type="primary" class="action-btn">
               <el-icon><back /></el-icon>
@@ -162,10 +176,10 @@ import { Delete, Plus, Close, DataAnalysis, Back } from '@element-plus/icons-vue
 const router = useRouter()
 const phoneStore = usePhoneStore()
 
-// 获取对比列表中的手机
+// 获取对比列表中的手机数据
 const comparePhones = computed(() => phoneStore.comparePhones)
 
-// 生成表格数据
+// 生成表格数据 - 将手机参数处理成可比较的格式
 const tableData = computed(() => {
   const properties = [
     { property: '品牌', key: 'brand', highlight: true },
@@ -235,7 +249,7 @@ const isHighlightedValue = (row, index) => {
   return isBest
 }
 
-// 移除手机
+// 移除手机 - 从对比列表中删除手机
 const removePhone = (phoneId) => {
   ElMessageBox.confirm('确定要从对比列表中移除这台手机吗？', '提示', {
     confirmButtonText: '确定',
@@ -249,7 +263,7 @@ const removePhone = (phoneId) => {
   })
 }
 
-// 清空对比列表
+// 清空对比列表 - 移除所有对比中的手机
 const clearCompareList = async () => {
   try {
     await ElMessageBox.confirm('确定要清空对比列表吗？', '提示', {
@@ -264,7 +278,7 @@ const clearCompareList = async () => {
   }
 }
 
-// 跳转到推荐页面
+// 跳转到推荐页面 - 用于添加更多手机或返回
 const goToRecommend = () => {
   router.push('/recommend')
 }

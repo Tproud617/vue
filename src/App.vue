@@ -1,5 +1,7 @@
+<!-- 应用根组件 - 定义全局导航栏和路由视图容器 -->
 <template>
   <div class="app-container">
+    <!-- 顶部导航栏 - 全局菜单 -->
     <div class="nav-bar">
       <el-menu 
         mode="horizontal" 
@@ -7,14 +9,17 @@
         :default-active="$route.path"
         class="custom-menu"
       >
+        <!-- 首页导航项 -->
         <el-menu-item index="/">
           <el-icon><HomeFilled /></el-icon>
           <span>首页</span>
         </el-menu-item>
+        <!-- 推荐页导航项 -->
         <el-menu-item index="/recommend">
           <el-icon><Search /></el-icon>
           <span>推荐</span>
         </el-menu-item>
+        <!-- 对比页导航项 - 带有数量徽章 -->
         <el-menu-item index="/compare">
           <el-icon><Operation /></el-icon>
           <span>对比</span>
@@ -24,6 +29,7 @@
             </transition>
           </div>
         </el-menu-item>
+        <!-- 收藏页导航项 - 带有数量徽章 -->
         <el-menu-item index="/favorite">
           <el-icon><Star /></el-icon>
           <span>收藏</span>
@@ -33,6 +39,7 @@
             </transition>
           </div>
         </el-menu-item>
+        <!-- 关于页导航项 -->
         <el-menu-item index="/about">
           <el-icon><InfoFilled /></el-icon>
           <span>关于</span>
@@ -40,6 +47,7 @@
       </el-menu>
     </div>
     
+    <!-- 路由视图 - 带有页面切换动画 -->
     <router-view v-slot="{ Component }">
       <transition name="fade-slide" mode="out-in">
         <component :is="Component" />
@@ -57,10 +65,10 @@ import { HomeFilled, Search, Operation, Star, InfoFilled } from '@element-plus/i
 const router = useRouter()
 const phoneStore = usePhoneStore()
 
-// 计算对比列表中的手机数量
+// 计算对比列表中的手机数量 - 用于显示徽章
 const compareCount = computed(() => phoneStore.compareList.length)
 
-// 计算收藏列表中的手机数量
+// 计算收藏列表中的手机数量 - 用于显示徽章
 const favoriteCount = computed(() => phoneStore.favoriteList.length)
 
 onMounted(() => {
@@ -69,7 +77,7 @@ onMounted(() => {
     localStorage.setItem('test', 'test')
     localStorage.removeItem('test')
     
-    // 初始化手机商店数据
+    // 初始化手机商店数据 - 加载持久化的用户数据
     phoneStore.initialize()
   } catch (e) {
     console.warn('浏览器不支持localStorage，数据将无法持久化保存')
@@ -78,12 +86,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 应用容器样式 - 确保最小高度占满全屏 */
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+/* 导航栏样式 - 固定在顶部 */
 .nav-bar {
   position: sticky;
   top: 0;
@@ -92,6 +102,7 @@ onMounted(() => {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+/* 自定义菜单样式 - 半透明渐变效果和毛玻璃 */
 .custom-menu {
   display: flex;
   align-items: center;
@@ -115,7 +126,7 @@ onMounted(() => {
   position: relative;
 }
 
-/* 添加菜单项底部指示线动画 */
+/* 添加菜单项底部指示线动画 - 选中和悬停效果 */
 .el-menu-item::after {
   content: '';
   position: absolute;
@@ -134,17 +145,20 @@ onMounted(() => {
   width: 70%;
 }
 
+/* 激活菜单项样式 */
 .el-menu-item.is-active {
   color: #42b983 !important;
   font-weight: 600;
 }
 
+/* 菜单项悬停效果 */
 .el-menu-item:hover {
   background-color: rgba(66, 185, 131, 0.05) !important;
   color: #42b983 !important;
   transform: translateY(-2px);
 }
 
+/* 菜单图标样式和动画 */
 .el-menu-item .el-icon {
   font-size: 1.1rem;
   margin-right: 2px;
@@ -155,6 +169,7 @@ onMounted(() => {
   transform: scale(1.2);
 }
 
+/* 徽章容器样式 */
 .badge-container {
   position: relative;
   width: 20px;
@@ -162,6 +177,7 @@ onMounted(() => {
   margin-left: 4px;
 }
 
+/* 徽章位置设置 */
 .compare-badge, .favorite-badge {
   position: absolute;
   top: -8px;
@@ -169,17 +185,19 @@ onMounted(() => {
   transform: translate(0, 0);
 }
 
+/* 对比徽章样式 */
 .compare-badge :deep(.el-badge__content) {
   background-color: #409EFF;
   box-shadow: 0 4px 8px rgba(64, 158, 255, 0.3);
 }
 
+/* 收藏徽章样式 */
 .favorite-badge :deep(.el-badge__content) {
   background-color: #f56c6c;
   box-shadow: 0 4px 8px rgba(245, 108, 108, 0.3);
 }
 
-/* 徽章弹出动画 */
+/* 徽章弹出动画 - 当数量变化时 */
 .badge-pop-enter-active, .badge-pop-leave-active {
   transition: all 0.3s cubic-bezier(0, 1.44, 0.84, 1.15);
 }
@@ -189,7 +207,7 @@ onMounted(() => {
   transform: scale(0.5);
 }
 
-/* 路由过渡效果 */
+/* 路由页面过渡效果 - 淡入上滑动画 */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -201,7 +219,7 @@ onMounted(() => {
   transform: translateY(20px);
 }
 
-/* 响应式调整 */
+/* 响应式调整 - 适配移动设备 */
 @media (max-width: 768px) {
   .el-menu-item {
     padding: 0 15px !important;
