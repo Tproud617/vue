@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue手机推荐系统</title>
+  <script>    // 单页应用的GitHub Pages 404重定向
+    (function() {
+      const segmentCount = 1; // 仓库名为vue，所以段数为1
+      const location = window.location;
+      const paths = location.pathname.split('/').filter(p => p);
+      
+      // 如果路径以vue开头，则移除它，后续会重新加上
+      if (paths[0] === 'vue') {
+        paths.shift();
+      }
+      
+      // 构造新的路径
+      const redirectPath = '/vue/' + paths.join('/');
+      
+      // 保留查询字符串和哈希
+      const queryString = location.search || '';
+      const hash = location.hash || '';
+      
+      // 重定向到正确的URL
+      window.location.replace(redirectPath + queryString + hash);
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+</body>
+</html>
