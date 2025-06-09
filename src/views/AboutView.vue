@@ -393,558 +393,493 @@ const contactMethods = ref([
 
 <style scoped>
 .about-view {
-  min-height: 100vh;
-  background-color: #f5f7fa;
-  position: relative;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-height: 100vh; /* 设置最小高度为视口高度，确保页面至少充满整个屏幕 */
+  background-color: #f5f7fa; /* 设置背景颜色为浅灰色 */
+  position: relative; /* 设置相对定位，作为子元素定位的参考点 */
+  overflow-x: hidden; /* 隐藏水平方向溢出内容 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  align-items: center; /* 水平居中对齐 */
 }
 
 /* 淡入上升动画 - 元素进入视口时的动画效果 */
 .fade-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0s;
-  pointer-events: none;
-  will-change: opacity, transform;
+  opacity: 0; /* 设置不透明度为0，初始状态完全透明 */
+  transform: translateY(40px); /* 初始状态向下偏移40像素 */
+  transition: all 0s; /* 设置过渡效果为0秒，初始状态没有过渡效果 */
+  pointer-events: none; /* 禁用鼠标事件，使元素不响应鼠标操作 */
+  will-change: opacity, transform; /* 提示浏览器将要变化的属性，优化性能 */
 }
 
 .fade-up.animated {
   transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), 
-              transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+              transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); /* 添加不透明度和位移的过渡效果，持续0.6秒 */
 }
 
 .fade-up.animated.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+  opacity: 1; /* 设置不透明度为1，元素完全可见 */
+  transform: translateY(0); /* 恢复原位，不再偏移 */
+  pointer-events: auto; /* 启用鼠标事件，使元素可以响应鼠标操作 */
 }
 
 /* 动画背景 - 渐变色背景和浮动效果 */
 .animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(245, 247, 250, 0.97) 0%, rgba(195, 207, 226, 0.97) 100%);
-  z-index: -1;
+  position: fixed; /* 设置固定定位，相对于视口 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  width: 100%; /* 宽度占满整个视口 */
+  height: 100%; /* 高度占满整个视口 */
+  background: linear-gradient(135deg, rgba(245, 247, 250, 0.97) 0%, rgba(195, 207, 226, 0.97) 100%); /* 设置135度角的渐变背景 */
+  z-index: -1; /* 设置层级为-1，确保在其他内容之下 */
 }
 
 /* 背景渐变元素 - 创建浮动效果 */
 .bg-gradient-1,
 .bg-gradient-2 {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  z-index: 0;
-  opacity: 0.5;
-  will-change: transform;
+  position: absolute; /* 设置绝对定位，相对于父元素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  filter: blur(70px); /* 添加70像素的模糊效果 */
+  z-index: 0; /* 设置层级为0 */
+  opacity: 0.5; /* 设置不透明度为0.5 */
+  will-change: transform; /* 提示浏览器将要变化的属性，优化性能 */
 }
 
 .bg-gradient-1 {
-  background: radial-gradient(circle, rgba(66, 185, 131, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 50vw;
-  height: 50vw;
-  top: -10vw;
-  right: -10vw;
-  animation: float-1 15s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(66, 185, 131, 0.3) 0%, rgba(255, 255, 255, 0) 70%); /* 设置径向渐变背景，从中心向外扩散 */
+  width: 50vw; /* 设置宽度为视口宽度的50% */
+  height: 50vw; /* 设置高度为视口宽度的50% */
+  top: -10vw; /* 顶部位置偏移-10vw */
+  right: -10vw; /* 右侧位置偏移-10vw */
+  animation: float-1 15s ease-in-out infinite alternate; /* 应用float-1动画，持续15秒，无限循环，交替方向 */
 }
 
 .bg-gradient-2 {
-  background: radial-gradient(circle, rgba(91, 143, 249, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 60vw;
-  height: 60vw;
-  bottom: -20vw;
-  left: -20vw;
-  animation: float-2 20s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(91, 143, 249, 0.3) 0%, rgba(255, 255, 255, 0) 70%); /* 设置径向渐变背景，从中心向外扩散 */
+  width: 60vw; /* 设置宽度为视口宽度的60% */
+  height: 60vw; /* 设置高度为视口宽度的60% */
+  bottom: -20vw; /* 底部位置偏移-20vw */
+  left: -20vw; /* 左侧位置偏移-20vw */
+  animation: float-2 20s ease-in-out infinite alternate; /* 应用float-2动画，持续20秒，无限循环，交替方向 */
 }
 
 /* 浮动动画 - 背景渐变的移动效果 */
 @keyframes float-1 {
   0% {
-    transform: translate(0, 0);
+    transform: translate(0, 0); /* 动画开始时不位移 */
   }
   100% {
-    transform: translate(-5vw, 5vw);
+    transform: translate(-5vw, 5vw); /* 动画结束时向左下移动 */
   }
 }
 
 @keyframes float-2 {
   0% {
-    transform: translate(0, 0);
+    transform: translate(0, 0); /* 动画开始时不位移 */
   }
   100% {
-    transform: translate(5vw, -5vw);
+    transform: translate(5vw, -5vw); /* 动画结束时向右上移动 */
   }
 }
 
 /* 标题区样式 - 增强标题的视觉效果 */
 .page-header {
-  text-align: center;
-  padding: 60px 0 20px;
-  position: relative;
-  margin-bottom: 40px;
-  width: 100%;
+  text-align: center; /* 文字居中对齐 */
+  padding: 60px 0 20px; /* 设置内边距，上60像素，左右0，下20像素 */
+  position: relative; /* 设置相对定位 */
+  margin-bottom: 40px; /* 设置下边距为40像素 */
+  width: 100%; /* 宽度占满父元素 */
 }
 
 .header-title {
-  font-size: 3.5rem;
-  font-weight: 800;
-  background: linear-gradient(to right, #37a873, #287057, #37a873);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
-  letter-spacing: 0px;
-  animation: shimmer 5s infinite;
-  background-size: 200% 100%;
-  display: inline-block;
-  filter: drop-shadow(0 2px 4px rgba(66, 185, 131, 0.3));
-  transition: all 0.5s ease;
-  text-rendering: geometricPrecision;
+  font-size: 3.5rem; /* 设置字体大小为3.5倍根元素字体大小 */
+  font-weight: 800; /* 设置字体粗细为800 */
+  background: linear-gradient(to right, #37a873, #287057, #37a873); /* 设置从左到右的渐变背景 */
+  -webkit-background-clip: text; /* 设置背景裁剪为文本 */
+  -webkit-text-fill-color: transparent; /* 设置文本填充颜色为透明 */
+  background-clip: text; /* 设置背景裁剪为文本 */
+  margin: 0; /* 移除默认边距 */
+  letter-spacing: 0px; /* 设置字母间距为0 */
+  animation: shimmer 5s infinite; /* 应用shimmer动画，持续5秒，无限循环 */
+  background-size: 200% 100%; /* 设置背景大小，宽度为元素的2倍，高度与元素相同 */
+  display: inline-block; /* 设置为行内块元素 */
+  filter: drop-shadow(0 2px 4px rgba(66, 185, 131, 0.3)); /* 添加投影效果 */
+  transition: all 0.5s ease; /* 添加所有属性变化的过渡效果，持续0.5秒 */
+  text-rendering: geometricPrecision; /* 设置文本渲染方式为几何精确度 */
 }
 
 /* 标题悬停效果 */
 .header-title:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 3px 6px rgba(66, 185, 131, 0.5));
+  transform: scale(1.05); /* 鼠标悬停时放大1.05倍 */
+  filter: drop-shadow(0 3px 6px rgba(66, 185, 131, 0.5)); /* 增强投影效果 */
 }
 
 /* 标题下方装饰线 */
 .header-decoration {
-  width: 120px;
-  height: 4px;
-  background: linear-gradient(to right, transparent, #42b983, transparent);
-  margin: 15px auto 0;
-  border-radius: 2px;
+  width: 120px; /* 设置宽度为120像素 */
+  height: 4px; /* 设置高度为4像素 */
+  background: linear-gradient(to right, transparent, #42b983, transparent); /* 设置从左到右的渐变背景 */
+  margin: 15px auto 0; /* 设置上边距为15像素，左右自动居中，下边距为0 */
+  border-radius: 2px; /* 设置边框圆角为2像素 */
 }
 
 /* 标题闪烁动画 */
 @keyframes shimmer {
   0% {
-    background-position: -100% 0;
+    background-position: -100% 0; /* 动画开始时，背景位置在左侧外部 */
   }
   100% {
-    background-position: 200% 0;
+    background-position: 200% 0; /* 动画结束时，背景位置移动到右侧外部，形成闪烁效果 */
   }
 }
 
 /* 内容容器 - 控制页面内容的宽度和间距 */
 .content-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
-  width: 100%;
+  max-width: 1200px; /* 设置最大宽度为1200像素 */
+  margin: 0 auto; /* 上下边距为0，左右自动居中 */
+  padding: 0 20px 60px; /* 设置内边距，上0，左右20像素，下60像素 */
+  width: 100%; /* 宽度占满父元素 */
 }
 
 /* Sections - 移除内置动画，使用新的滚动动画 */
 .about-section {
-  margin-bottom: 80px;
-  width: 100%;
+  margin-bottom: 80px; /* 设置下边距为80像素 */
+  width: 100%; /* 宽度占满父元素 */
 }
 
 /* Main Info */
 .main-info {
-  text-align: center;
+  text-align: center; /* 文字居中对齐 */
 }
 
 .section-header {
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* 设置下边距为20像素 */
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
-  color: #303133;
-  margin: 15px 0;
-  transition: color 0.3s ease;
+  font-size: 2.5rem; /* 设置字体大小为2.5倍根元素字体大小 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  margin: 15px 0; /* 设置上下边距为15像素，左右边距为0 */
+  transition: color 0.3s ease; /* 添加颜色变化的过渡效果，持续0.3秒 */
 }
 
 .section-header:hover h2 {
-  color: #42b983;
+  color: #42b983; /* 鼠标悬停时，文字颜色变为绿色 */
 }
 
 .icon-container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 15px 35px rgba(66, 185, 131, 0.2);
-  margin-bottom: 20px;
-  position: relative;
-  animation: pulse 3s infinite;
-  transition: transform 0.3s ease;
+  display: inline-flex; /* 设置为行内弹性容器 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  width: 96px; /* 设置宽度为96像素 */
+  height: 96px; /* 设置高度为96像素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  background: white; /* 设置背景颜色为白色 */
+  box-shadow: 0 15px 35px rgba(66, 185, 131, 0.2); /* 添加阴影效果 */
+  margin-bottom: 20px; /* 设置下边距为20像素 */
+  position: relative; /* 设置相对定位 */
+  animation: pulse 3s infinite; /* 应用pulse动画，持续3秒，无限循环 */
+  transition: transform 0.3s ease; /* 添加变换的过渡效果，持续0.3秒 */
 }
 
 .icon-container:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 20px 40px rgba(66, 185, 131, 0.3);
+  transform: scale(1.1) rotate(5deg); /* 鼠标悬停时放大1.1倍并旋转5度 */
+  box-shadow: 0 20px 40px rgba(66, 185, 131, 0.3); /* 增强阴影效果 */
 }
 
 .icon-container::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 1px solid rgba(66, 185, 131, 0.3);
-  animation: ripple 2s infinite;
+  content: ''; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  width: 100%; /* 宽度占满父元素 */
+  height: 100%; /* 高度占满父元素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  border: 1px solid rgba(66, 185, 131, 0.3); /* 添加1像素宽的绿色边框 */
+  animation: ripple 2s infinite; /* 应用ripple动画，持续2秒，无限循环 */
 }
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(66, 185, 131, 0.4);
+    box-shadow: 0 0 0 0 rgba(66, 185, 131, 0.4); /* 动画开始时，阴影较小 */
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(66, 185, 131, 0);
+    box-shadow: 0 0 0 15px rgba(66, 185, 131, 0); /* 动画进行70%时，阴影扩大并渐隐 */
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(66, 185, 131, 0);
+    box-shadow: 0 0 0 0 rgba(66, 185, 131, 0); /* 动画结束时，阴影完全消失 */
   }
 }
 
 @keyframes ripple {
   0% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(1); /* 动画开始时，伪元素与父元素同大小 */
+    opacity: 1; /* 动画开始时完全不透明 */
   }
   100% {
-    transform: scale(1.5);
-    opacity: 0;
+    transform: scale(1.5); /* 动画结束时，伪元素放大1.5倍 */
+    opacity: 0; /* 动画结束时完全透明 */
   }
 }
 
 .tagline {
-  font-size: 1.5rem;
-  color: #606266;
-  margin-bottom: 30px;
-  font-weight: 300;
+  font-size: 1.5rem; /* 设置字体大小为1.5倍根元素字体大小 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  margin-bottom: 30px; /* 设置下边距为30像素 */
+  font-weight: 300; /* 设置字体粗细为300 */
 }
 
 /* Cards - 增强交互效果 */
 .info-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 16px; /* 设置边框圆角为16像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 添加阴影效果 */
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease; /* 添加变换和阴影的过渡效果 */
 }
 
 .info-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(66, 185, 131, 0.15);
+  transform: translateY(-10px); /* 鼠标悬停时向上移动10像素 */
+  box-shadow: 0 20px 40px rgba(66, 185, 131, 0.15); /* 增强阴影效果 */
 }
 
 .card-content {
-  padding: 25px;
+  padding: 25px; /* 设置内边距为25像素 */
 }
 
 .main-info .card-content h3 {
-  font-size: 1.4rem;
-  color: #42b983;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-  transition: all 0.3s ease;
+  font-size: 1.4rem; /* 设置字体大小为1.4倍根元素字体大小 */
+  color: #42b983; /* 设置文字颜色为绿色 */
+  margin-bottom: 15px; /* 设置下边距为15像素 */
+  position: relative; /* 设置相对定位 */
+  display: inline-block; /* 设置为行内块元素 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
 }
 
 .main-info .card-content h3::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(to right, #42b983, transparent);
-  transition: width 0.3s ease;
+  content: ''; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  bottom: -5px; /* 底部位置偏移-5像素 */
+  left: 0; /* 左侧对齐 */
+  width: 0; /* 初始宽度为0 */
+  height: 2px; /* 设置高度为2像素 */
+  background: linear-gradient(to right, #42b983, transparent); /* 设置从左到右的渐变背景 */
+  transition: width 0.3s ease; /* 添加宽度变化的过渡效果，持续0.3秒 */
 }
 
 .main-info .card-content:hover h3::after {
-  width: 100%;
+  width: 100%; /* 鼠标悬停时，伪元素宽度扩展到100% */
 }
 
 .main-info .card-content p {
-  color: #606266;
-  line-height: 1.8;
-  font-size: 1.05rem;
+  color: #606266; /* 设置文字颜色为灰色 */
+  line-height: 1.8; /* 设置行高为1.8倍字体大小 */
+  font-size: 1.05rem; /* 设置字体大小为1.05倍根元素字体大小 */
 }
 
 /* Features - 增强卡片交互性 */
 .features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 25px;
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 设置网格列，自动适应，最小宽度250像素，最大1等份 */
+  grid-gap: 25px; /* 设置网格间距为25像素 */
 }
 
 .feature-card {
-  background: white;
-  border-radius: 16px;
-  padding: 25px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translateZ(0);
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 16px; /* 设置边框圆角为16像素 */
+  padding: 25px; /* 设置内边距为25像素 */
+  text-align: center; /* 文字居中对齐 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* 添加阴影效果 */
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* 添加所有属性的过渡效果 */
+  height: 100%; /* 高度占满父元素 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  align-items: center; /* 水平居中对齐 */
+  transform: translateZ(0); /* 启用GPU加速 */
 }
 
 .feature-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-12px) scale(1.02); /* 鼠标悬停时向上移动12像素并放大1.02倍 */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); /* 增强阴影效果 */
 }
 
 .feature-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: white;
-  transition: all 0.3s ease;
+  width: 70px; /* 设置宽度为70像素 */
+  height: 70px; /* 设置高度为70像素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  margin-bottom: 20px; /* 设置下边距为20像素 */
+  color: white; /* 设置文字颜色为白色 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
 }
 
 .feature-card:hover .feature-icon {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.1) rotate(5deg); /* 鼠标悬停时，图标放大1.1倍并旋转5度 */
 }
 
 .feature-card h3 {
-  font-size: 1.25rem;
-  color: #303133;
-  margin: 0 0 15px;
-  position: relative;
-  display: inline-block;
-  transition: color 0.3s ease;
+  font-size: 1.25rem; /* 设置字体大小为1.25倍根元素字体大小 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  margin: 0 0 15px; /* 设置下边距为15像素 */
+  position: relative; /* 设置相对定位 */
+  display: inline-block; /* 设置为行内块元素 */
+  transition: color 0.3s ease; /* 添加颜色变化的过渡效果，持续0.3秒 */
 }
 
 .feature-card:hover h3 {
-  color: #42b983;
+  color: #42b983; /* 鼠标悬停时，文字颜色变为绿色 */
 }
 
 .feature-card p {
-  color: #606266;
-  line-height: 1.7;
-  flex-grow: 1;
+  color: #606266; /* 设置文字颜色为灰色 */
+  line-height: 1.7; /* 设置行高为1.7倍字体大小 */
+  flex-grow: 1; /* 允许元素在需要时拉伸，占据剩余空间 */
 }
 
-/* 其他样式保持不变，以下是新增或修改的样式 */
+/* 数据和技术双列布局恢复 */
+.data-tech .two-columns {
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 设置网格列，自动适应，最小宽度280像素，最大1等份 */
+  grid-gap: 30px; /* 设置网格间距为30像素 */
+}
+
+/* 数据来源卡片增强 */
+.data-sources {
+  list-style: none; /* 移除列表样式 */
+  padding: 0; /* 移除内边距 */
+  margin: 20px 0; /* 设置上下边距为20像素 */
+}
 
 /* 数据来源卡片增强 */
 .data-sources li {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-  font-size: 1.05rem;
-  color: #606266;
-  transition: transform 0.3s ease;
+  padding: 10px 0; /* 设置上下内边距为10像素 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  font-size: 1.05rem; /* 设置字体大小为1.05倍根元素字体大小 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  transition: transform 0.3s ease; /* 添加变换的过渡效果，持续0.3秒 */
 }
 
 .data-sources li:hover {
-  transform: translateX(5px);
-  color: #303133;
+  transform: translateX(5px); /* 鼠标悬停时向右移动5像素 */
+  color: #303133; /* 鼠标悬停时，文字颜色变为深灰色 */
 }
 
 .bullet {
-  width: 10px;
-  height: 10px;
-  background: #42b983;
-  border-radius: 50%;
-  margin-right: 15px;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
+  width: 10px; /* 设置宽度为10像素 */
+  height: 10px; /* 设置高度为10像素 */
+  background: #42b983; /* 设置背景颜色为绿色 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  margin-right: 15px; /* 设置右边距为15像素 */
+  flex-shrink: 0; /* 防止弹性收缩 */
+  transition: transform 0.3s ease; /* 添加变换的过渡效果，持续0.3秒 */
 }
 
 .data-sources li:hover .bullet {
-  transform: scale(1.3);
+  transform: scale(1.3); /* 鼠标悬停时，圆点放大1.3倍 */
 }
 
 /* 算法流程动画增强 */
 .process-step {
-  display: flex;
-  align-items: center;
-  padding: 12px 0;
-  transition: all 0.3s ease;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  padding: 12px 0; /* 设置上下内边距为12像素 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
 }
 
 .process-step:hover {
-  transform: translateX(8px);
+  transform: translateX(8px); /* 鼠标悬停时向右移动8像素 */
 }
 
 .step-number {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #42b983, #2f9768);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-right: 15px;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
+  width: 36px; /* 设置宽度为36像素 */
+  height: 36px; /* 设置高度为36像素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  background: linear-gradient(135deg, #42b983, #2f9768); /* 设置渐变背景 */
+  color: white; /* 设置文字颜色为白色 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  font-weight: bold; /* 设置字体粗细为粗体 */
+  margin-right: 15px; /* 设置右边距为15像素 */
+  flex-shrink: 0; /* 防止弹性收缩 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
 }
 
 .process-step:hover .step-number {
-  transform: scale(1.2);
-  box-shadow: 0 5px 15px rgba(66, 185, 131, 0.3);
+  transform: scale(1.2); /* 鼠标悬停时放大1.2倍 */
+  box-shadow: 0 5px 15px rgba(66, 185, 131, 0.3); /* 添加阴影效果 */
 }
 
-/* 时间线项目增强 */
-.timeline-item {
-  position: relative;
-  padding-left: 50px;
-  margin-bottom: 35px;
+.process-connector {
+  width: 2px; /* 设置宽度为2像素 */
+  height: 20px; /* 设置高度为20像素 */
+  background: #42b983; /* 设置背景颜色为绿色 */
+  margin-left: 18px; /* 设置左边距为18像素 */
 }
 
-.timeline-marker {
-  position: absolute;
-  top: 0;
-  left: 13px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: white;
-  border: 2px solid #dcdfe6;
-  z-index: 1;
-  transition: all 0.3s ease;
+.step-info {
+  color: #303133; /* 设置文字颜色为深灰色 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  font-size: 1.1rem; /* 设置字体大小为1.1倍根元素字体大小 */
 }
 
-.timeline-item:hover .timeline-marker {
-  transform: scale(1.5);
-  background: #42b983;
-  border-color: #42b983;
-  box-shadow: 0 0 0 4px rgba(66, 185, 131, 0.2);
-}
-
-.timeline-content {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.timeline-item:hover .timeline-content {
-  transform: translateX(8px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* 团队成员卡片增强 */
-.team-member {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  text-align: center;
-}
-
-.team-member:hover {
-  transform: translateY(-15px) scale(1.03);
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
-}
-
-.member-avatar {
-  height: 200px;
-  background-color: #f0f2f5; /* 暂时用背景色替代图片 */
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #42b983;
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.member-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 50%);
-}
-
-.team-member h3 {
-  font-size: 1.2rem;
-  margin: 15px 0 5px;
-  color: #303133;
-}
-
-.member-title {
-  color: #909399;
-  font-size: 0.9rem;
-  margin: 0 0 15px;
-}
-
-/* 恢复团队网格布局 */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 25px;
+.update-info {
+  font-style: italic; /* 设置字体样式为斜体 */
+  color: #909399; /* 设置文字颜色为灰色 */
+  margin-top: 15px; /* 设置上边距为15像素 */
+  font-size: 0.9rem; /* 设置字体大小为0.9倍根元素字体大小 */
 }
 
 /* 联系卡片样式恢复 */
 .contact-card {
-  background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  padding: 30px;
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 16px; /* 设置边框圆角为16像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 添加阴影效果 */
+  padding: 30px; /* 设置内边距为30像素 */
 }
 
 .contact-methods {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-gap: 20px;
-  margin-bottom: 30px;
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 设置网格列，自动适应，最小宽度280像素，最大1等份 */
+  grid-gap: 20px; /* 设置网格间距为20像素 */
+  margin-bottom: 30px; /* 设置下边距为30像素 */
 }
 
 .contact-method {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: all 0.3s ease;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 15px; /* 设置元素间距为15像素 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
 }
 
 .contact-method:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px); /* 鼠标悬停时向上移动5像素 */
 }
 
 .contact-method .el-icon {
-  color: #42b983;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
+  color: #42b983; /* 设置图标颜色为绿色 */
+  flex-shrink: 0; /* 防止弹性收缩 */
+  transition: transform 0.3s ease; /* 添加变换的过渡效果，持续0.3秒 */
 }
 
 .contact-method:hover .el-icon {
-  transform: scale(1.2);
+  transform: scale(1.2); /* 鼠标悬停时，图标放大1.2倍 */
 }
 
 .contact-method p {
-  margin: 0;
-  color: #606266;
+  margin: 0; /* 移除默认边距 */
+  color: #606266; /* 设置文字颜色为灰色 */
 }
 
 .contact-method a {
-  color: #409eff;
-  text-decoration: none;
-  transition: color 0.3s;
+  color: #409eff; /* 设置链接颜色为蓝色 */
+  text-decoration: none; /* 移除下划线 */
+  transition: color 0.3s; /* 添加颜色变化的过渡效果，持续0.3秒 */
 }
 
 .contact-method a:hover {
-  color: #337ecc;
+  color: #337ecc; /* 鼠标悬停时，链接颜色变深 */
 }
 
 /* 底部按钮容器和按钮样式完整修复 */
@@ -997,248 +932,323 @@ const contactMethods = ref([
 
 /* 时间线容器样式恢复 */
 .timeline-container {
-  position: relative;
-  padding: 20px 0;
+  position: relative; /* 设置相对定位 */
+  padding: 20px 0; /* 设置上下内边距为20像素 */
 }
 
 .timeline-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 20px;
-  width: 2px;
-  background: #dcdfe6;
+  content: ''; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  top: 0; /* 顶部对齐 */
+  bottom: 0; /* 底部对齐 */
+  left: 20px; /* 左侧位置偏移20像素 */
+  width: 2px; /* 设置宽度为2像素 */
+  background: #dcdfe6; /* 设置背景颜色为灰色 */
 }
 
 .timeline-date {
-  display: inline-block;
-  padding: 4px 10px;
-  background: #f0f9eb;
-  color: #67c23a;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+  display: inline-block; /* 设置为行内块元素 */
+  padding: 4px 10px; /* 设置内边距，上下4像素，左右10像素 */
+  background: #f0f9eb; /* 设置背景颜色为浅绿色 */
+  color: #67c23a; /* 设置文字颜色为绿色 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  font-size: 0.9rem; /* 设置字体大小为0.9倍根元素字体大小 */
+  margin-bottom: 10px; /* 设置下边距为10像素 */
 }
 
 .timeline-title {
-  font-size: 1.2rem;
-  margin: 0 0 10px;
-  color: #303133;
+  font-size: 1.2rem; /* 设置字体大小为1.2倍根元素字体大小 */
+  margin: 0 0 10px; /* 设置下边距为10像素 */
+  color: #303133; /* 设置文字颜色为深灰色 */
 }
 
 .timeline-description {
-  color: #606266;
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* 数据和技术双列布局恢复 */
-.data-tech .two-columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-gap: 30px;
-}
-
-.data-sources {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-}
-
-.update-info {
-  font-style: italic;
-  color: #909399;
-  margin-top: 15px;
-  font-size: 0.9rem;
-}
-
-.process-connector {
-  width: 2px;
-  height: 20px;
-  background: #42b983;
-  margin-left: 18px;
-}
-
-.step-info {
-  color: #303133;
-  font-weight: 500;
-  font-size: 1.1rem;
+  color: #606266; /* 设置文字颜色为灰色 */
+  margin: 0; /* 移除默认边距 */
+  line-height: 1.5; /* 设置行高为1.5倍字体大小 */
 }
 
 /* 统一设置标题样式，与首页保持一致 */
 .section-title {
-  font-size: 1.6rem;
-  color: #303133;
-  text-align: center;
-  margin-bottom: 30px;
-  position: relative;
+  font-size: 1.6rem; /* 设置字体大小为1.6倍根元素字体大小 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  text-align: center; /* 文字居中对齐 */
+  margin-bottom: 30px; /* 设置下边距为30像素 */
+  position: relative; /* 设置相对定位 */
 }
 
 .section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(to right, #42b983, #2f9768);
-  border-radius: 2px;
+  content: ''; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  bottom: -8px; /* 底部位置偏移-8像素 */
+  left: 50%; /* 左侧位置为50% */
+  transform: translateX(-50%); /* 水平居中 */
+  width: 60px; /* 设置宽度为60像素 */
+  height: 3px; /* 设置高度为3像素 */
+  background: linear-gradient(to right, #42b983, #2f9768); /* 设置从左到右的渐变背景 */
+  border-radius: 2px; /* 设置边框圆角为2像素 */
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .page-header {
-    padding: 30px 0;
+    padding: 30px 0; /* 减少内边距，上下30像素 */
   }
   
   .header-title {
-    font-size: 2.5rem;
+    font-size: 2.5rem; /* 减小标题字体大小为2.5倍根元素字体大小 */
   }
   
   .section-title {
-    font-size: 1.4rem;
+    font-size: 1.4rem; /* 减小标题字体大小为1.4倍根元素字体大小 */
   }
   
   .section-header h2 {
-    font-size: 2rem;
+    font-size: 2rem; /* 减小标题字体大小为2倍根元素字体大小 */
   }
   
   .tagline {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* 减小标语字体大小为1.2倍根元素字体大小 */
   }
   
   .content-container {
-    padding: 0 15px 40px;
+    padding: 0 15px 40px; /* 减少内边距，左右15像素，下40像素 */
   }
   
   .about-section {
-    margin-bottom: 50px;
+    margin-bottom: 50px; /* 减少下边距为50像素 */
   }
   
   .card-content {
-    padding: 20px;
+    padding: 20px; /* 减少内边距为20像素 */
   }
   
   .timeline-item {
-    padding-left: 40px;
+    padding-left: 40px; /* 减少左内边距为40像素 */
   }
   
   .contact-methods {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 改为单列布局 */
   }
   
   .actions-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
+    flex-direction: column; /* 改为垂直排列 */
+    align-items: stretch; /* 水平拉伸对齐 */
+    gap: 15px; /* 设置元素间距为15像素 */
   }
   
   .action-button {
-    width: 100%;
+    width: 100%; /* 宽度占满父元素 */
   }
   
   .icon-container {
-    width: 80px;
-    height: 80px;
+    width: 80px; /* 减小宽度为80像素 */
+    height: 80px; /* 减小高度为80像素 */
   }
 }
 
 @media (max-width: 480px) {
   .features-grid,
   .team-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 改为单列布局 */
   }
   
   .timeline-content {
-    padding: 15px;
+    padding: 15px; /* 减少内边距为15像素 */
   }
   
   .timeline-title {
-    font-size: 1.1rem;
+    font-size: 1.1rem; /* 减小字体大小为1.1倍根元素字体大小 */
   }
 }
 
 /* 全新自定义按钮样式 */
 .fixed-actions-wrapper {
-  width: 100%;
-  display: block;
-  margin: 40px 0 60px;
-  position: relative;
-  z-index: 100;
+  width: 100%; /* 宽度占满父元素 */
+  display: block; /* 设置为块级元素 */
+  margin: 40px 0 60px; /* 设置上边距为40像素，下边距为60像素 */
+  position: relative; /* 设置相对定位 */
+  z-index: 100; /* 设置层级为100，确保在其他内容之上 */
 }
 
 .fixed-actions {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 20px !important;
-  width: 100% !important;
-  flex-wrap: wrap !important;
-  opacity: 1 !important;
-  transform: none !important;
-  pointer-events: auto !important;
+  display: flex !important; /* 使用弹性布局 */
+  justify-content: center !important; /* 水平居中对齐 */
+  gap: 20px !important; /* 设置元素间距为20像素 */
+  width: 100% !important; /* 宽度占满父元素 */
+  flex-wrap: wrap !important; /* 允许元素换行 */
+  opacity: 1 !important; /* 设置不透明度为1 */
+  transform: none !important; /* 不应用变换 */
+  pointer-events: auto !important; /* 启用鼠标事件 */
 }
 
 .force-visible {
-  opacity: 1 !important;
-  transform: none !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
+  opacity: 1 !important; /* 设置不透明度为1 */
+  transform: none !important; /* 不应用变换 */
+  pointer-events: auto !important; /* 启用鼠标事件 */
+  visibility: visible !important; /* 设置可见性为可见 */
 }
 
 .custom-button {
-  padding: 14px 28px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-  font-size: 1.1rem !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
-  position: relative !important;
-  overflow: hidden !important;
-  min-width: 180px !important;
-  border: none !important;
-  color: white !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  padding: 14px 28px !important; /* 设置内边距，上下14像素，左右28像素 */
+  display: flex !important; /* 使用弹性布局 */
+  align-items: center !important; /* 垂直居中对齐 */
+  justify-content: center !important; /* 水平居中对齐 */
+  gap: 10px !important; /* 设置元素间距为10像素 */
+  font-size: 1.1rem !important; /* 设置字体大小为1.1倍根元素字体大小 */
+  border-radius: 8px !important; /* 设置边框圆角为8像素 */
+  font-weight: 600 !important; /* 设置字体粗细为600 */
+  cursor: pointer !important; /* 鼠标悬停时显示指针 */
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important; /* 添加所有属性的过渡效果 */
+  position: relative !important; /* 设置相对定位 */
+  overflow: hidden !important; /* 隐藏溢出内容 */
+  min-width: 180px !important; /* 设置最小宽度为180像素 */
+  border: none !important; /* 移除边框 */
+  color: white !important; /* 设置文字颜色为白色 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important; /* 添加阴影效果 */
 }
 
 .custom-button:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-5px) !important; /* 鼠标悬停时向上移动5像素 */
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15) !important; /* 增强阴影效果 */
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #409EFF, #337ecc) !important;
+  background: linear-gradient(135deg, #409EFF, #337ecc) !important; /* 设置渐变背景 */
 }
 
 .success-button {
-  background: linear-gradient(135deg, #42b983, #2f9768) !important;
+  background: linear-gradient(135deg, #42b983, #2f9768) !important; /* 设置渐变背景 */
 }
 
 .custom-button::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  content: '' !important; /* 为伪元素添加内容 */
+  position: absolute !important; /* 设置绝对定位 */
+  top: 0 !important; /* 顶部对齐 */
+  left: 0 !important; /* 左侧对齐 */
+  width: 100% !important; /* 宽度占满父元素 */
+  height: 100% !important; /* 高度占满父元素 */
   background: linear-gradient(120deg, 
     rgba(255, 255, 255, 0) 0%, 
     rgba(255, 255, 255, 0.3) 50%, 
-    rgba(255, 255, 255, 0) 100%) !important;
-  transform: translateX(-100%) !important;
-  transition: transform 0.6s ease !important;
+    rgba(255, 255, 255, 0) 100%) !important; /* 设置渐变背景，创建光效 */
+  transform: translateX(-100%) !important; /* 初始位置在元素左侧外部 */
+  transition: transform 0.6s ease !important; /* 添加变换的过渡效果，持续0.6秒 */
 }
 
 .custom-button:hover::before {
-  transform: translateX(100%) !important;
+  transform: translateX(100%) !important; /* 鼠标悬停时，伪元素移动到右侧外部，形成扫光效果 */
 }
 
 .custom-button .el-icon {
-  font-size: 1.2rem !important;
+  font-size: 1.2rem !important; /* 设置字体大小为1.2倍根元素字体大小 */
+}
+
+.timeline-item {
+  padding-left: 50px; /* 设置左内边距为50像素 */
+  position: relative; /* 设置相对定位 */
+  margin-bottom: 20px; /* 设置下边距为20像素 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
+}
+
+.timeline-marker {
+  position: absolute; /* 设置绝对定位 */
+  left: 15px; /* 左侧位置偏移15像素 */
+  top: 8px; /* 顶部位置偏移8像素 */
+  width: 12px; /* 设置宽度为12像素 */
+  height: 12px; /* 设置高度为12像素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  background: #fff; /* 设置背景颜色为白色 */
+  border: 2px solid #42b983; /* 添加2像素宽的绿色边框 */
+  z-index: 1; /* 设置层级为1，确保在时间线前景中 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
+}
+
+.timeline-marker.active {
+  background: #42b983; /* 设置激活状态背景颜色为绿色 */
+  transform: scale(1.2); /* 放大1.2倍 */
+  box-shadow: 0 0 10px rgba(66, 185, 131, 0.5); /* 添加阴影效果 */
+}
+
+.timeline-content {
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  padding: 20px; /* 设置内边距为20像素 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* 添加阴影效果 */
+  transition: all 0.3s ease; /* 添加所有属性的过渡效果，持续0.3秒 */
+}
+
+.timeline-item:hover .timeline-content {
+  box-shadow: 0 8px 25px rgba(66, 185, 131, 0.15); /* 鼠标悬停时增强阴影效果 */
+  transform: translateY(-5px); /* 向上移动5像素 */
+}
+
+.timeline-item:hover .timeline-marker {
+  transform: scale(1.3); /* 放大1.3倍 */
+  border-color: #287057; /* 改变边框颜色为深绿色 */
+}
+
+/* 团队成员卡片 */
+.team-grid {
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* 设置网格列，自动填充，最小宽度220像素，最大1等份 */
+  grid-gap: 30px; /* 设置网格间距为30像素 */
+}
+
+.team-member {
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 16px; /* 设置边框圆角为16像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* 添加阴影效果 */
+  text-align: center; /* 文字居中对齐 */
+  padding-bottom: 20px; /* 设置下内边距为20像素 */
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* 添加所有属性的过渡效果 */
+  position: relative; /* 设置相对定位 */
+}
+
+.team-member:hover {
+  transform: translateY(-10px); /* 鼠标悬停时向上移动10像素 */
+  box-shadow: 0 15px 30px rgba(66, 185, 131, 0.2); /* 增强阴影效果 */
+}
+
+.member-avatar {
+  width: 100%; /* 宽度占满父元素 */
+  height: 220px; /* 设置高度为220像素 */
+  background-size: cover; /* 背景图片覆盖整个区域 */
+  background-position: center; /* 背景图片居中 */
+  position: relative; /* 设置相对定位 */
+  margin-bottom: 15px; /* 设置下边距为15像素 */
+}
+
+.member-overlay {
+  position: absolute; /* 设置绝对定位 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  width: 100%; /* 宽度占满父元素 */
+  height: 100%; /* 高度占满父元素 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%); /* 设置从上到下的渐变背景 */
+  opacity: 0.5; /* 设置不透明度为0.5 */
+  transition: opacity 0.3s ease; /* 添加不透明度变化的过渡效果，持续0.3秒 */
+}
+
+.team-member:hover .member-overlay {
+  opacity: 0.2; /* 鼠标悬停时，降低不透明度为0.2，使图像更清晰 */
+}
+
+.team-member h3 {
+  font-size: 1.2rem; /* 设置字体大小为1.2倍根元素字体大小 */
+  margin: 8px 0 5px; /* 设置上边距为8像素，下边距为5像素 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  transition: color 0.3s ease; /* 添加颜色变化的过渡效果，持续0.3秒 */
+}
+
+.team-member:hover h3 {
+  color: #42b983; /* 鼠标悬停时，文字颜色变为绿色 */
+}
+
+.member-title {
+  font-size: 0.95rem; /* 设置字体大小为0.95倍根元素字体大小 */
+  color: #909399; /* 设置文字颜色为灰色 */
+  margin: 0; /* 移除默认边距 */
 }
 </style>

@@ -633,345 +633,345 @@ const addToCompare = () => {
 
 <style scoped>
 .detail-view {
-  min-height: 100vh;
-  background: #f5f7fa;
-  position: relative;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  padding: 20px;
+  min-height: 100vh; /* 设置最小高度为视口高度，确保页面至少充满整个屏幕 */
+  background: #f5f7fa; /* 设置背景颜色为浅灰色 */
+  position: relative; /* 设置相对定位，作为子元素定位的参考点 */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; /* 设置字体系列，优先使用系统默认字体 */
+  padding: 20px; /* 设置内边距为20像素 */
 }
 
 .bg-gradient {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  z-index: -1;
+  position: absolute; /* 设置绝对定位，相对于最近的定位父元素 */
+  top: 0; /* 顶部对齐父元素 */
+  left: 0; /* 左侧对齐父元素 */
+  right: 0; /* 右侧对齐父元素 */
+  bottom: 0; /* 底部对齐父元素 */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* 设置135度角的渐变背景 */
+  z-index: -1; /* 设置层级为-1，确保在其他内容之下 */
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  max-width: 1200px; /* 设置最大宽度为1200像素 */
+  margin: 0 auto; /* 设置上下边距为0，左右自动居中 */
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 16px; /* 设置边框圆角为16像素 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 设置阴影效果 */
+  overflow: hidden; /* 隐藏溢出内容 */
 }
 
 .header-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(to right, #42b983, #2f9768);
-  color: white;
+  display: flex; /* 使用弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中对齐 */
+  padding: 20px; /* 设置内边距为20像素 */
+  background: linear-gradient(to right, #42b983, #2f9768); /* 从左到右的渐变背景 */
+  color: white; /* 文字颜色为白色 */
 }
 
 .header-bar h1 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin: 0; /* 移除默认边距 */
+  font-size: 24px; /* 设置字体大小为24像素 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  letter-spacing: 0.5px; /* 设置字母间距为0.5像素 */
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2); /* 半透明白色背景 */
+  border: none; /* 移除边框 */
+  padding: 8px 16px; /* 设置内边距，上下8像素，左右16像素 */
+  border-radius: 6px; /* 设置边框圆角为6像素 */
+  color: white; /* 文字颜色为白色 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 6px; /* 设置元素间距为6像素 */
+  font-weight: 500; /* 设置字体粗细为500 */
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateX(-5px);
+  background: rgba(255, 255, 255, 0.3); /* 悬停时背景色更亮 */
+  transform: translateX(-5px); /* 向左移动5像素 */
 }
 
 .content-wrapper {
-  padding: 30px;
+  padding: 30px; /* 设置内边距为30像素 */
 }
 
 .loading-section,
 .error-section,
 .not-found-section {
-  text-align: center;
-  padding: 50px 20px;
+  text-align: center; /* 文字居中对齐 */
+  padding: 50px 20px; /* 设置内边距，上下50像素，左右20像素 */
 }
 
 .spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(66, 185, 131, 0.1);
-  border-left-color: #42b983;
-  border-radius: 50%;
-  margin: 0 auto 20px;
-  animation: spin 1s linear infinite;
+  width: 50px; /* 设置宽度为50像素 */
+  height: 50px; /* 设置高度为50像素 */
+  border: 5px solid rgba(66, 185, 131, 0.1); /* 设置5像素宽的淡绿色边框 */
+  border-left-color: #42b983; /* 设置左边框为绿色，形成加载效果 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  margin: 0 auto 20px; /* 设置上边距为0，左右自动居中，下边距为20像素 */
+  animation: spin 1s linear infinite; /* 应用名为spin的动画，持续1秒，线性变化，无限循环 */
 }
 
 @keyframes spin {
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg); /* 定义动画终点为旋转360度 */
   }
 }
 
 .detail-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  margin-bottom: 40px;
+  display: flex; /* 使用弹性布局 */
+  flex-wrap: wrap; /* 允许元素换行 */
+  gap: 40px; /* 设置元素间距为40像素 */
+  margin-bottom: 40px; /* 设置下边距为40像素 */
 }
 
 .phone-image-section {
-  flex: 1;
-  min-width: 300px;
+  flex: 1; /* 弹性增长系数为1 */
+  min-width: 300px; /* 设置最小宽度为300像素 */
 }
 
 /* 新的3D展示区域 */
 .phone-showcase {
-  position: relative;
-  width: 100%;
+  position: relative; /* 设置相对定位 */
+  width: 100%; /* 宽度占满父元素 */
   height: 420px; /* 增加展示区域高度 */
-  border-radius: 20px;
-  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+  border-radius: 20px; /* 设置边框圆角为20像素 */
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef); /* 设置145度角渐变背景 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05); /* 设置内阴影效果 */
   padding-bottom: 60px; /* 增加底部内边距 */
 }
 
 .phone-display {
-  position: relative;
-  width: 60%;
+  position: relative; /* 设置相对定位 */
+  width: 60%; /* 宽度为父元素的60% */
   height: 60%; /* 进一步减小高度 */
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d; /* 保留3D变换效果 */
+  will-change: transform; /* 提示浏览器元素的transform属性会变化，优化性能 */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* 添加transform属性变化的过渡效果 */
   margin-top: -50px; /* 进一步向上移动显示区域 */
 }
 
 .phone-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.2));
-  transition: all 0.5s ease;
-  transform-style: preserve-3d;
+  width: 100%; /* 宽度占满父元素 */
+  height: 100%; /* 高度占满父元素 */
+  object-fit: contain; /* 保持图片比例，确保完整显示 */
+  filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.2)); /* 添加投影效果 */
+  transition: all 0.5s ease; /* 所有属性变化添加0.5秒过渡效果 */
+  transform-style: preserve-3d; /* 保留3D变换效果 */
   max-height: 85%; /* 略微减小最大高度 */
-  margin-bottom: 40px;
+  margin-bottom: 40px; /* 设置下边距为40像素 */
 }
 
 .phone-shadow {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  width: 70%;
-  height: 20px;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 50%;
-  filter: blur(15px);
-  transform: translateX(-50%) rotateX(90deg);
-  opacity: 0.6;
+  position: absolute; /* 设置绝对定位 */
+  bottom: -20px; /* 底部位置偏移-20像素 */
+  left: 50%; /* 左侧位置为父元素的50% */
+  width: 70%; /* 宽度为父元素的70% */
+  height: 20px; /* 高度为20像素 */
+  background: rgba(0, 0, 0, 0.15); /* 设置半透明黑色背景 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成椭圆 */
+  filter: blur(15px); /* 添加15像素的模糊效果 */
+  transform: translateX(-50%) rotateX(90deg); /* 水平居中并旋转90度 */
+  opacity: 0.6; /* 设置不透明度为0.6 */
 }
 
 .phone-reflection {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: absolute; /* 设置绝对定位 */
+  top: 0; /* 顶部对齐父元素 */
+  left: 0; /* 左侧对齐父元素 */
+  right: 0; /* 右侧对齐父元素 */
+  bottom: 0; /* 底部对齐父元素 */
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.05) 0%,
     rgba(255, 255, 255, 0.15) 50%,
     rgba(255, 255, 255, 0) 100%
-  );
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  ); /* 设置135度角的白色渐变背景，模拟反光效果 */
+  pointer-events: none; /* 禁用鼠标事件，使元素不可点击 */
+  opacity: 0; /* 默认不透明度为0，即隐藏 */
+  transition: opacity 0.3s ease; /* 添加不透明度变化的过渡效果 */
 }
 
 .phone-showcase:hover .phone-reflection {
-  opacity: 1;
+  opacity: 1; /* 鼠标悬停时显示反光效果 */
 }
 
 .phone-stand {
-  position: absolute;
+  position: absolute; /* 设置绝对定位 */
   bottom: 90px; /* 进一步增加距底部的距离 */
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 100%; /* 宽度占满父元素 */
+  display: flex; /* 使用弹性布局 */
+  justify-content: center; /* 水平居中对齐 */
 }
 
 .phone-platform {
-  width: 100px;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  filter: blur(2px);
+  width: 100px; /* 设置宽度为100像素 */
+  height: 4px; /* 设置高度为4像素 */
+  background: rgba(0, 0, 0, 0.1); /* 设置半透明黑色背景 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成椭圆 */
+  filter: blur(2px); /* 添加2像素的模糊效果 */
 }
 
 .view-hint {
-  position: absolute;
+  position: absolute; /* 设置绝对定位 */
   bottom: 70px; /* 提高提示文字的位置 */
-  font-size: 13px;
-  color: #909399;
-  opacity: 0.6;
-  pointer-events: none;
+  font-size: 13px; /* 设置字体大小为13像素 */
+  color: #909399; /* 设置文字颜色为灰色 */
+  opacity: 0.6; /* 设置不透明度为0.6 */
+  pointer-events: none; /* 禁用鼠标事件，使元素不可点击 */
 }
 
 .phone-info-section {
-  flex: 2;
-  min-width: 300px;
+  flex: 2; /* 弹性增长系数为2，占用更多空间 */
+  min-width: 300px; /* 设置最小宽度为300像素 */
 }
 
 .info-main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 20px; /* 设置元素间距为20像素 */
 }
 
 .brand-price {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; /* 使用弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中对齐 */
 }
 
 .phone-brand {
-  display: inline-block;
-  background: #42b983;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(66, 185, 131, 0.2);
+  display: inline-block; /* 设置为行内块元素 */
+  background: #42b983; /* 设置背景颜色为绿色 */
+  color: white; /* 设置文字颜色为白色 */
+  padding: 6px 16px; /* 设置内边距，上下6像素，左右16像素 */
+  border-radius: 20px; /* 设置边框圆角为20像素 */
+  font-size: 14px; /* 设置字体大小为14像素 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  text-transform: uppercase; /* 文本转换为大写 */
+  letter-spacing: 0.5px; /* 设置字母间距为0.5像素 */
+  box-shadow: 0 4px 12px rgba(66, 185, 131, 0.2); /* 添加阴影效果 */
 }
 
 .phone-price {
-  font-size: 28px;
-  color: #f56c6c;
-  font-weight: 700;
+  font-size: 28px; /* 设置字体大小为28像素 */
+  color: #f56c6c; /* 设置文字颜色为红色 */
+  font-weight: 700; /* 设置字体粗细为700 */
 }
 
 .phone-name {
-  font-size: 32px;
-  margin: 0;
-  color: #303133;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 32px; /* 设置字体大小为32像素 */
+  margin: 0; /* 移除默认边距 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  font-weight: 700; /* 设置字体粗细为700 */
+  line-height: 1.2; /* 设置行高为1.2倍字体大小 */
 }
 
 .rating-overview {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 12px;
+  background: #f8f9fa; /* 设置背景颜色为浅灰色 */
+  padding: 15px; /* 设置内边距为15像素 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
 }
 
 .rating-stars {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: space-between; /* 两端对齐 */
 }
 
 .star-group {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 15px; /* 设置元素间距为15像素 */
 }
 
 .rating-value {
-  font-size: 36px;
-  font-weight: 700;
-  color: #303133;
+  font-size: 36px; /* 设置字体大小为36像素 */
+  font-weight: 700; /* 设置字体粗细为700 */
+  color: #303133; /* 设置文字颜色为深灰色 */
 }
 
 .stars {
-  display: flex;
+  display: flex; /* 使用弹性布局 */
 }
 
 .star {
-  color: #dcdfe6;
-  font-size: 24px;
+  color: #dcdfe6; /* 设置文字颜色为浅灰色，表示未选中的星星 */
+  font-size: 24px; /* 设置字体大小为24像素 */
 }
 
 .star.filled {
-  color: #f7ba2a;
+  color: #f7ba2a; /* 设置文字颜色为金黄色，表示已选中的星星 */
 }
 
 .rating-count {
-  color: #909399;
-  font-size: 14px;
+  color: #909399; /* 设置文字颜色为灰色 */
+  font-size: 14px; /* 设置字体大小为14像素 */
 }
 
 .action-buttons {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 10px;
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(2, 1fr); /* 设置两列等宽布局 */
+  gap: 15px; /* 设置元素间距为15像素 */
+  margin-top: 10px; /* 设置上边距为10像素 */
 }
 
 .action-btn {
-  height: 46px;
-  border: none;
+  height: 46px; /* 设置高度为46像素 */
+  border: none; /* 移除边框 */
   border-radius: 23px; /* 更圆润的按钮 */
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-weight: 600; /* 设置字体粗细为600 */
+  font-size: 16px; /* 设置字体大小为16像素 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
 }
 
 .buy-btn {
   background: linear-gradient(45deg, #f56c6c, #e64242); /* 渐变背景 */
-  color: white;
-  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.2);
-  grid-column: span 2;
+  color: white; /* 设置文字颜色为白色 */
+  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.2); /* 添加阴影效果 */
+  grid-column: span 2; /* 横跨两列 */
 }
 
 .buy-btn:hover {
-  background: linear-gradient(45deg, #e64242, #d52121);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(245, 108, 108, 0.3);
+  background: linear-gradient(45deg, #e64242, #d52121); /* 悬停时更深的渐变背景 */
+  transform: translateY(-3px); /* 向上移动3像素，产生悬浮效果 */
+  box-shadow: 0 10px 20px rgba(245, 108, 108, 0.3); /* 增强阴影效果 */
 }
 
 .cart-btn {
   background: linear-gradient(45deg, #e6a23c, #d48f23); /* 渐变背景 */
-  color: white;
-  box-shadow: 0 8px 15px rgba(230, 162, 60, 0.2);
+  color: white; /* 设置文字颜色为白色 */
+  box-shadow: 0 8px 15px rgba(230, 162, 60, 0.2); /* 添加阴影效果 */
 }
 
 .cart-btn:hover {
-  background: linear-gradient(45deg, #d48f23, #bf7e1a);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(230, 162, 60, 0.3);
+  background: linear-gradient(45deg, #d48f23, #bf7e1a); /* 悬停时更深的渐变背景 */
+  transform: translateY(-3px); /* 向上移动3像素，产生悬浮效果 */
+  box-shadow: 0 10px 20px rgba(230, 162, 60, 0.3); /* 增强阴影效果 */
 }
 
 .compare-btn {
-  background: white;
-  color: #409EFF;
-  border: 2px solid #409EFF;
-  border-radius: 23px;
+  background: white; /* 设置背景颜色为白色 */
+  color: #409EFF; /* 设置文字颜色为蓝色 */
+  border: 2px solid #409EFF; /* 添加2像素宽的蓝色边框 */
+  border-radius: 23px; /* 设置边框圆角为23像素 */
 }
 
 .compare-btn:hover, .compare-btn.disabled {
-  background: #409EFF;
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(64, 158, 255, 0.2);
+  background: #409EFF; /* 悬停或禁用状态时背景色为蓝色 */
+  color: white; /* 悬停或禁用状态时文字颜色为白色 */
+  transform: translateY(-3px); /* 向上移动3像素，产生悬浮效果 */
+  box-shadow: 0 8px 15px rgba(64, 158, 255, 0.2); /* 添加阴影效果 */
 }
 
 .compare-btn.disabled {
@@ -979,66 +979,66 @@ const addToCompare = () => {
 }
 
 .favorite-btn {
-  background: white;
-  color: #f56c6c;
-  border: 2px solid #f56c6c;
+  background: white; /* 设置背景颜色为白色 */
+  color: #f56c6c; /* 设置文字颜色为红色 */
+  border: 2px solid #f56c6c; /* 添加2像素宽的红色边框 */
 }
 
 .favorite-btn:hover, .favorite-btn.is-active {
-  background: #f56c6c;
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.2);
+  background: #f56c6c; /* 悬停或激活状态时背景色为红色 */
+  color: white; /* 悬停或激活状态时文字颜色为白色 */
+  transform: translateY(-3px); /* 向上移动3像素，产生悬浮效果 */
+  box-shadow: 0 8px 15px rgba(245, 108, 108, 0.2); /* 添加阴影效果 */
 }
 
 .favorite-btn.is-active {
-  animation: pulse 1s infinite;
+  animation: pulse 1s infinite; /* 应用名为pulse的动画，持续1秒，无限循环 */
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+  0% { transform: scale(1); } /* 动画开始时缩放比例为1 */
+  50% { transform: scale(1.02); } /* 动画中间时缩放比例为1.02 */
+  100% { transform: scale(1); } /* 动画结束时缩放比例为1 */
 }
 
 .tabs {
-  margin-top: 30px;
-  border: 1px solid #e4e7ed;
-  border-radius: 12px;
-  overflow: hidden;
+  margin-top: 30px; /* 设置上边距为30像素 */
+  border: 1px solid #e4e7ed; /* 添加1像素宽的浅灰色边框 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
 }
 
 .tab-header {
-  display: flex;
-  background: #f5f7fa;
+  display: flex; /* 使用弹性布局 */
+  background: #f5f7fa; /* 设置背景颜色为浅灰色 */
 }
 
 .tab-item {
-  padding: 15px 20px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #606266;
-  transition: all 0.3s ease;
-  position: relative;
+  padding: 15px 20px; /* 设置内边距，上下15像素，左右20像素 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  position: relative; /* 设置相对定位，为after伪元素提供参考点 */
 }
 
 .tab-item:hover {
-  color: #42b983;
+  color: #42b983; /* 悬停时文字颜色变为绿色 */
 }
 
 .tab-item.active {
-  color: #42b983;
-  background: white;
+  color: #42b983; /* 激活状态时文字颜色为绿色 */
+  background: white; /* 激活状态时背景色为白色 */
 }
 
 .tab-item.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #42b983;
+  content: ""; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  bottom: 0; /* 底部对齐 */
+  left: 0; /* 左侧对齐 */
+  right: 0; /* 右侧对齐 */
+  height: 3px; /* 设置高度为3像素 */
+  background: #42b983; /* 设置背景颜色为绿色 */
 }
 
 .tab-content {
@@ -1046,532 +1046,532 @@ const addToCompare = () => {
 }
 
 .specs-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 30px;
+  display: flex; /* 使用弹性布局 */
+  flex-wrap: wrap; /* 允许元素换行 */
+  gap: 20px; /* 设置元素间距为20像素 */
+  margin-bottom: 30px; /* 设置下边距为30像素 */
 }
 
 .spec-card {
-  flex: 1;
-  min-width: 180px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  flex: 1; /* 弹性增长系数为1 */
+  min-width: 180px; /* 设置最小宽度为180像素 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 15px; /* 设置元素间距为15像素 */
+  padding: 15px; /* 设置内边距为15像素 */
+  background: #f8f9fa; /* 设置背景颜色为浅灰色 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
 }
 
 .spec-card:hover {
-  background: #eef5ff;
-  transform: translateY(-5px);
+  background: #eef5ff; /* 悬停时背景色变为浅蓝色 */
+  transform: translateY(-5px); /* 向上移动5像素，产生悬浮效果 */
 }
 
 .spec-icon {
-  font-size: 24px;
-  color: #409EFF;
+  font-size: 24px; /* 设置字体大小为24像素 */
+  color: #409EFF; /* 设置文字颜色为蓝色 */
 }
 
 .spec-detail {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
 }
 
 .spec-label {
-  color: #909399;
-  font-size: 14px;
+  color: #909399; /* 设置文字颜色为灰色 */
+  font-size: 14px; /* 设置字体大小为14像素 */
 }
 
 .spec-value {
-  color: #303133;
-  font-weight: 600;
-  font-size: 16px;
+  color: #303133; /* 设置文字颜色为深灰色 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  font-size: 16px; /* 设置字体大小为16像素 */
 }
 
 .section-subtitle {
-  font-size: 18px;
-  font-weight: 600;
-  color: #303133;
-  margin: 20px 0 15px;
-  padding-left: 10px;
-  border-left: 4px solid #42b983;
+  font-size: 18px; /* 设置字体大小为18像素 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  margin: 20px 0 15px; /* 设置上边距为20像素，下边距为15像素 */
+  padding-left: 10px; /* 设置左内边距为10像素 */
+  border-left: 4px solid #42b983; /* 添加4像素宽的绿色左边框 */
 }
 
 .performance-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 15px; /* 设置元素间距为15像素 */
 }
 
 .performance-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 15px; /* 设置元素间距为15像素 */
 }
 
 .perf-label {
-  width: 70px;
-  font-weight: 500;
-  color: #606266;
+  width: 70px; /* 设置宽度为70像素 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  color: #606266; /* 设置文字颜色为灰色 */
 }
 
 .perf-bar-container {
-  flex-grow: 1;
-  height: 12px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
+  flex-grow: 1; /* 允许元素占据剩余空间 */
+  height: 12px; /* 设置高度为12像素 */
+  background: rgba(0, 0, 0, 0.05); /* 设置半透明背景 */
+  border-radius: 6px; /* 设置边框圆角为6像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  position: relative; /* 设置相对定位，为子元素提供参考点 */
 }
 
 .perf-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #42b983, #33a06f);
-  border-radius: 6px;
-  transition: width 1s ease;
+  height: 100%; /* 高度占满父元素 */
+  background: linear-gradient(90deg, #42b983, #33a06f); /* 从左到右的渐变背景 */
+  border-radius: 6px; /* 设置边框圆角为6像素 */
+  transition: width 1s ease; /* 添加宽度变化的过渡效果 */
 }
 
 .perf-value {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  font-weight: 600;
-  color: #606266;
+  position: absolute; /* 设置绝对定位 */
+  right: 10px; /* 右侧位置偏移10像素 */
+  top: 50%; /* 顶部位置为父元素的50% */
+  transform: translateY(-50%); /* 垂直居中 */
+  font-size: 12px; /* 设置字体大小为12像素 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  color: #606266; /* 设置文字颜色为灰色 */
 }
 
 .features-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none; /* 移除列表默认样式 */
+  padding: 0; /* 移除内边距 */
+  margin: 0; /* 移除外边距 */
 }
 
 .feature-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px dotted #ebeef5;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 10px; /* 设置元素间距为10像素 */
+  margin-bottom: 15px; /* 设置下边距为15像素 */
+  padding-bottom: 15px; /* 设置底部内边距为15像素 */
+  border-bottom: 1px dotted #ebeef5; /* 添加1像素宽的点状浅灰色底边框 */
 }
 
 .feature-item:last-child {
-  border-bottom: none;
+  border-bottom: none; /* 移除最后一个元素的底边框 */
 }
 
 .feature-marker {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #edf9f0;
-  color: #42b983;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
+  width: 24px; /* 设置宽度为24像素 */
+  height: 24px; /* 设置高度为24像素 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  background: #edf9f0; /* 设置背景颜色为浅绿色 */
+  color: #42b983; /* 设置文字颜色为绿色 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  font-size: 12px; /* 设置字体大小为12像素 */
+  font-weight: bold; /* 设置字体为粗体 */
 }
 
 .feature-text {
-  color: #606266;
-  font-size: 16px;
+  color: #606266; /* 设置文字颜色为灰色 */
+  font-size: 16px; /* 设置字体大小为16像素 */
 }
 
 /* 使用场景标签 */
 .usage-section {
-  margin-top: 30px;
+  margin-top: 30px; /* 设置上边距为30像素 */
 }
 
 .usage-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: flex; /* 使用弹性布局 */
+  flex-wrap: wrap; /* 允许元素换行 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .usage-tag {
-  padding: 8px 16px;
-  background: #f0f9eb;
-  color: #67c23a;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  padding: 8px 16px; /* 设置内边距，上下8像素，左右16像素 */
+  background: #f0f9eb; /* 设置背景颜色为浅绿色 */
+  color: #67c23a; /* 设置文字颜色为绿色 */
+  border-radius: 20px; /* 设置边框圆角为20像素 */
+  font-size: 14px; /* 设置字体大小为14像素 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
 }
 
 .usage-tag:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(103, 194, 58, 0.2);
+  transform: translateY(-3px); /* 向上移动3像素，产生悬浮效果 */
+  box-shadow: 0 5px 15px rgba(103, 194, 58, 0.2); /* 添加阴影效果 */
 }
 
 /* 相关推荐样式 */
 .similar-phones {
-  margin-top: 50px;
-  padding-top: 30px;
-  border-top: 1px solid #ebeef5;
+  margin-top: 50px; /* 设置上边距为50像素 */
+  padding-top: 30px; /* 设置顶部内边距为30像素 */
+  border-top: 1px solid #ebeef5; /* 添加1像素宽的浅灰色顶边框 */
 }
 
 .section-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #303133;
-  margin-bottom: 20px;
-  text-align: center;
-  position: relative;
+  font-size: 24px; /* 设置字体大小为24像素 */
+  font-weight: 600; /* 设置字体粗细为600 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  margin-bottom: 20px; /* 设置下边距为20像素 */
+  text-align: center; /* 文字居中对齐 */
+  position: relative; /* 设置相对定位，为after伪元素提供参考点 */
 }
 
 .section-title::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: #42b983;
-  margin: 10px auto;
+  content: ""; /* 为伪元素添加内容 */
+  display: block; /* 设置为块级元素 */
+  width: 60px; /* 设置宽度为60像素 */
+  height: 4px; /* 设置高度为4像素 */
+  background: #42b983; /* 设置背景颜色为绿色 */
+  margin: 10px auto; /* 设置上下边距为10像素，左右自动居中 */
 }
 
 .similar-phones-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 25px;
+  display: grid; /* 使用网格布局 */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 设置自适应列宽，最小200像素 */
+  gap: 25px; /* 设置元素间距为25像素 */
 }
 
 .similar-phone-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  cursor: pointer;
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* 添加阴影效果 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
 }
 
 .similar-phone-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px); /* 向上移动10像素，产生悬浮效果 */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* 增强阴影效果 */
 }
 
 .similar-phone-image {
-  width: 100%;
-  height: 150px;
-  object-fit: contain;
-  padding: 15px;
-  background: #f8f9fa;
+  width: 100%; /* 宽度占满父元素 */
+  height: 150px; /* 设置高度为150像素 */
+  object-fit: contain; /* 保持图片比例，确保完整显示 */
+  padding: 15px; /* 设置内边距为15像素 */
+  background: #f8f9fa; /* 设置背景颜色为浅灰色 */
 }
 
 .similar-phone-info {
-  padding: 12px;
+  padding: 12px; /* 设置内边距为12像素 */
 }
 
 .similar-phone-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #303133;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 14px; /* 设置字体大小为14像素 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  color: #303133; /* 设置文字颜色为深灰色 */
+  white-space: nowrap; /* 文本不换行 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 使用省略号表示溢出的内容 */
 }
 
 .similar-phone-price {
-  font-size: 16px;
-  font-weight: 700;
-  color: #f56c6c;
-  margin-top: 5px;
+  font-size: 16px; /* 设置字体大小为16像素 */
+  font-weight: 700; /* 设置字体粗细为700 */
+  color: #f56c6c; /* 设置文字颜色为红色 */
+  margin-top: 5px; /* 设置上边距为5像素 */
 }
 
 .primary-btn, .secondary-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 10px 5px;
+  padding: 10px 20px; /* 设置内边距，上下10像素，左右20像素 */
+  border: none; /* 移除边框 */
+  border-radius: 6px; /* 设置边框圆角为6像素 */
+  font-weight: 500; /* 设置字体粗细为500 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  margin: 10px 5px; /* 设置外边距，上下10像素，左右5像素 */
 }
 
 .primary-btn {
-  background: #409EFF;
-  color: white;
+  background: #409EFF; /* 设置背景颜色为蓝色 */
+  color: white; /* 设置文字颜色为白色 */
 }
 
 .primary-btn:hover {
-  background: #337ecc;
+  background: #337ecc; /* 悬停时背景色变深 */
 }
 
 .secondary-btn {
-  background: #f4f4f5;
-  color: #606266;
+  background: #f4f4f5; /* 设置背景颜色为浅灰色 */
+  color: #606266; /* 设置文字颜色为灰色 */
 }
 
 .secondary-btn:hover {
-  background: #e9e9eb;
+  background: #e9e9eb; /* 悬停时背景色变深 */
 }
 
 .phone-carousel {
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
+  width: 100%; /* 宽度占满父元素 */
+  border-radius: 20px; /* 设置边框圆角为20像素 */
+  overflow: hidden; /* 隐藏溢出内容 */
 }
 
 .color-selector {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  margin-top: 20px; /* 设置上边距为20像素 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 15px; /* 设置元素间距为15像素 */
 }
 
 .color-title {
-  font-size: 14px;
-  color: #606266;
-  font-weight: 500;
+  font-size: 14px; /* 设置字体大小为14像素 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  font-weight: 500; /* 设置字体粗细为500 */
 }
 
 .color-options {
-  display: flex;
-  gap: 10px;
+  display: flex; /* 使用弹性布局 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .color-option {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  width: 30px; /* 设置宽度为30像素 */
+  height: 30px; /* 设置高度为30像素 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  position: relative; /* 设置相对定位，为after伪元素提供参考点 */
 }
 
 .color-option.active {
-  transform: scale(1.2);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.2); /* 放大1.2倍 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 增强阴影效果 */
 }
 
 .color-option.active::after {
-  content: "";
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  top: -5px;
-  left: -5px;
+  content: ""; /* 为伪元素添加内容 */
+  position: absolute; /* 设置绝对定位 */
+  width: 36px; /* 设置宽度为36像素 */
+  height: 36px; /* 设置高度为36像素 */
+  border: 2px solid currentColor; /* 添加2像素宽的边框，颜色与当前元素文字颜色相同 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  top: -5px; /* 顶部位置偏移-5像素 */
+  left: -5px; /* 左侧位置偏移-5像素 */
 }
 
 .purchase-options {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 12px;
-  margin: 15px 0;
+  background: #f8f9fa; /* 设置背景颜色为浅灰色 */
+  padding: 15px; /* 设置内边距为15像素 */
+  border-radius: 12px; /* 设置边框圆角为12像素 */
+  margin: 15px 0; /* 设置上下边距为15像素，左右为0 */
 }
 
 .memory-options {
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* 设置下边距为15像素 */
 }
 
 .memory-title {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #606266;
-  font-weight: 500;
+  display: block; /* 设置为块级元素 */
+  margin-bottom: 10px; /* 设置下边距为10像素 */
+  font-size: 14px; /* 设置字体大小为14像素 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  font-weight: 500; /* 设置字体粗细为500 */
 }
 
 .memory-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: flex; /* 使用弹性布局 */
+  flex-wrap: wrap; /* 允许元素换行 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .memory-btn {
-  padding: 8px 16px;
-  border: 1px solid #dcdfe6;
-  background: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  color: #606266;
-  min-width: 80px;
-  text-align: center;
+  padding: 8px 16px; /* 设置内边距，上下8像素，左右16像素 */
+  border: 1px solid #dcdfe6; /* 添加1像素宽的浅灰色边框 */
+  background: white; /* 设置背景颜色为白色 */
+  border-radius: 6px; /* 设置边框圆角为6像素 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: all 0.3s ease; /* 所有属性变化添加0.3秒过渡效果 */
+  font-size: 14px; /* 设置字体大小为14像素 */
+  color: #606266; /* 设置文字颜色为灰色 */
+  min-width: 80px; /* 设置最小宽度为80像素 */
+  text-align: center; /* 文字居中对齐 */
 }
 
 .memory-btn.active {
-  border-color: #409EFF;
-  color: #409EFF;
-  background: #ecf5ff;
+  border-color: #409EFF; /* 激活状态时边框颜色为蓝色 */
+  color: #409EFF; /* 激活状态时文字颜色为蓝色 */
+  background: #ecf5ff; /* 激活状态时背景色为浅蓝色 */
 }
 
 .memory-btn:hover {
-  border-color: #c6e2ff;
+  border-color: #c6e2ff; /* 悬停时边框颜色变浅 */
 }
 
 .delivery-options {
-  border-top: 1px dashed #dcdfe6;
-  padding-top: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  border-top: 1px dashed #dcdfe6; /* 添加1像素宽的虚线顶边框 */
+  padding-top: 15px; /* 设置顶部内边距为15像素 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .delivery-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #606266;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 8px; /* 设置元素间距为8像素 */
+  font-size: 14px; /* 设置字体大小为14像素 */
+  color: #606266; /* 设置文字颜色为灰色 */
 }
 
 .change-link {
-  color: #409EFF;
-  text-decoration: none;
-  margin-left: 5px;
+  color: #409EFF; /* 设置文字颜色为蓝色 */
+  text-decoration: none; /* 移除下划线 */
+  margin-left: 5px; /* 设置左边距为5像素 */
 }
 
 .change-link:hover {
-  color: #337ecc;
-  text-decoration: underline;
+  color: #337ecc; /* 悬停时文字颜色变深 */
+  text-decoration: underline; /* 添加下划线 */
 }
 
 /* 评价部分样式 */
 .add-review {
-  margin-bottom: 30px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 10px;
+  margin-bottom: 30px; /* 设置下边距为30像素 */
+  padding: 15px; /* 设置内边距为15像素 */
+  background: #f8f9fa; /* 设置背景颜色为浅灰色 */
+  border-radius: 10px; /* 设置边框圆角为10像素 */
 }
 
 .add-review h5 {
-  margin: 0 0 15px;
-  font-size: 16px;
-  color: #303133;
+  margin: 0 0 15px; /* 设置上边距为0，下边距为15像素 */
+  font-size: 16px; /* 设置字体大小为16像素 */
+  color: #303133; /* 设置文字颜色为深灰色 */
 }
 
 .review-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  gap: 15px; /* 设置元素间距为15像素 */
 }
 
 .review-rating {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .reviews-list {
-  margin-top: 20px;
+  margin-top: 20px; /* 设置上边距为20像素 */
 }
 
 .no-reviews {
-  text-align: center;
-  padding: 20px;
-  color: #909399;
-  font-style: italic;
+  text-align: center; /* 文字居中对齐 */
+  padding: 20px; /* 设置内边距为20像素 */
+  color: #909399; /* 设置文字颜色为灰色 */
+  font-style: italic; /* 设置字体为斜体 */
 }
 
 .review-item {
-  padding: 15px;
-  border-bottom: 1px solid #ebeef5;
-  margin-bottom: 15px;
+  padding: 15px; /* 设置内边距为15像素 */
+  border-bottom: 1px solid #ebeef5; /* 添加1像素宽的浅灰色底边框 */
+  margin-bottom: 15px; /* 设置下边距为15像素 */
 }
 
 .review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  display: flex; /* 使用弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: flex-start; /* 顶部对齐 */
+  margin-bottom: 10px; /* 设置下边距为10像素 */
 }
 
 .reviewer-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 10px; /* 设置元素间距为10像素 */
 }
 
 .reviewer-avatar {
-  width: 40px;
-  height: 40px;
-  background: #409EFF;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 18px;
+  width: 40px; /* 设置宽度为40像素 */
+  height: 40px; /* 设置高度为40像素 */
+  background: #409EFF; /* 设置背景颜色为蓝色 */
+  color: white; /* 设置文字颜色为白色 */
+  border-radius: 50%; /* 设置边框圆角为50%，形成圆形 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  font-weight: bold; /* 设置字体为粗体 */
+  font-size: 18px; /* 设置字体大小为18像素 */
 }
 
 .reviewer-details {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
 }
 
 .reviewer-name {
-  font-weight: 500;
-  color: #303133;
+  font-weight: 500; /* 设置字体粗细为500 */
+  color: #303133; /* 设置文字颜色为深灰色 */
 }
 
 .review-date {
-  font-size: 12px;
-  color: #909399;
+  font-size: 12px; /* 设置字体大小为12像素 */
+  color: #909399; /* 设置文字颜色为灰色 */
 }
 
 .review-content {
-  color: #606266;
-  line-height: 1.6;
+  color: #606266; /* 设置文字颜色为灰色 */
+  line-height: 1.6; /* 设置行高为1.6倍字体大小 */
 }
 
 @media (max-width: 900px) {
   .detail-content {
-    flex-direction: column;
+    flex-direction: column; /* 垂直排列子元素 */
   }
   
   .content-wrapper {
-    padding: 20px;
+    padding: 20px; /* 设置内边距为20像素 */
   }
   
   .phone-showcase {
-    height: 320px;
+    height: 320px; /* 设置高度为320像素 */
   }
   
   .phone-name {
-    font-size: 28px;
+    font-size: 28px; /* 设置字体大小为28像素 */
   }
   
   .header-bar h1 {
-    font-size: 20px;
+    font-size: 20px; /* 设置字体大小为20像素 */
   }
   
   .similar-phones-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 设置自适应列宽，最小150像素 */
+    gap: 15px; /* 设置元素间距为15像素 */
   }
 }
 
 @media (max-width: 600px) {
   .specs-row {
-    flex-direction: column;
+    flex-direction: column; /* 垂直排列子元素 */
   }
   
   .action-buttons {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 设置单列布局 */
   }
   
   .buy-btn {
-    grid-column: span 1;
+    grid-column: span 1; /* 占据一列 */
   }
   
   .phone-showcase {
-    height: 280px;
+    height: 280px; /* 设置高度为280像素 */
   }
   
   .similar-phones-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 设置两列等宽布局 */
   }
   
   .tab-item {
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 10px 15px; /* 设置内边距，上下10像素，左右15像素 */
+    font-size: 14px; /* 设置字体大小为14像素 */
   }
 }
 </style>

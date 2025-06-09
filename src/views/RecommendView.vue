@@ -241,7 +241,7 @@
               <div class="phone-card-inner">
                 <!-- 手机图片区域 -->
                 <div class="phone-image-container">
-              <img :src="phone.image" :alt="phone.name" class="phone-image">
+                  <img :src="phone.image" :alt="phone.name" class="phone-image">
                   <!-- 匹配程度标识 -->
                   <div class="match-badge" :class="getMatchClass(phone.matchScore)">
                     {{ Math.min(100, Math.round((phone.matchScore / 25) * 100)) }}%
@@ -257,77 +257,77 @@
                   </button>
                 </div>
                 <h4 class="phone-title">{{ phone.name }}</h4>
-              <div class="phone-info">
+                <div class="phone-info">
                   <el-tag size="small" effect="dark" type="success" class="brand-badge">{{ phone.brand }}</el-tag>
-                <span class="price">¥{{ phone.price.toLocaleString() }}</span>
-              </div>
+                  <span class="price">¥{{ phone.price.toLocaleString() }}</span>
+                </div>
 
-              <!-- 匹配分数进度条 -->
-              <div class="match-score">
-                <el-progress 
-                  :percentage="Math.min(100, (phone.matchScore / 25) * 100)"
-                  :format="format => `匹配度: ${format}%`"
+                <!-- 匹配分数进度条 -->
+                <div class="match-score">
+                  <el-progress 
+                    :percentage="Math.min(100, (phone.matchScore / 25) * 100)"
+                    :format="format => `匹配度: ${format}%`"
                     :status="getMatchStatus(phone.matchScore)"
                     :stroke-width="10"
                     class="match-progress"
-                />
-              </div>
+                  />
+                </div>
 
-              <!-- 手机基本参数展示 -->
-              <div class="phone-specs">
-                <div class="spec-item">
+                <!-- 手机基本参数展示 -->
+                <div class="phone-specs">
+                  <div class="spec-item">
                     <el-tooltip content="存储容量" placement="top" effect="light">
                       <i class="el-icon spec-icon">💾</i>
-                    <span>{{ phone.storage }}GB</span>
-                  </el-tooltip>
-                </div>
-                <div class="spec-item">
+                      <span>{{ phone.storage }}GB</span>
+                    </el-tooltip>
+                  </div>
+                  <div class="spec-item">
                     <el-tooltip content="屏幕尺寸" placement="top" effect="light">
                       <i class="el-icon spec-icon">📱</i>
-                    <span>{{ phone.screen }}"</span>
-                  </el-tooltip>
+                      <span>{{ phone.screen }}"</span>
+                    </el-tooltip>
+                  </div>
                 </div>
-              </div>
 
-              <!-- 性能评分展示 -->
-              <div class="phone-ratings">
-                <div class="rating-item">
-                  <span class="rating-label">相机</span>
+                <!-- 性能评分展示 -->
+                <div class="phone-ratings">
+                  <div class="rating-item">
+                    <span class="rating-label">相机</span>
                     <el-rate v-model="phone.camera" disabled size="small" class="custom-rate"/>
-                </div>
-                <div class="rating-item">
-                  <span class="rating-label">性能</span>
+                  </div>
+                  <div class="rating-item">
+                    <span class="rating-label">性能</span>
                     <el-rate v-model="phone.performance" disabled size="small" class="custom-rate"/>
-                </div>
-                <div class="rating-item">
-                  <span class="rating-label">电池</span>
+                  </div>
+                  <div class="rating-item">
+                    <span class="rating-label">电池</span>
                     <el-rate v-model="phone.battery" disabled size="small" class="custom-rate"/>
+                  </div>
                 </div>
-              </div>
 
-              <!-- 使用场景标签 -->
-              <div class="usage-tags">
-                <el-tag 
-                  v-for="usage in phone.usage" 
-                  :key="usage"
-                  size="small"
-                  :type="preferences.usage.includes(usage) ? 'warning' : 'info'"
+                <!-- 使用场景标签 -->
+                <div class="usage-tags">
+                  <el-tag 
+                    v-for="usage in phone.usage" 
+                    :key="usage"
+                    size="small"
+                    :type="preferences.usage.includes(usage) ? 'warning' : 'info'"
                     effect="plain"
-                  class="usage-tag"
-                >
-                  {{ usage }}
-                </el-tag>
-              </div>
+                    class="usage-tag"
+                  >
+                    {{ usage }}
+                  </el-tag>
+                </div>
 
-              <!-- 查看详情按钮 -->
-              <el-button 
-                type="primary" 
-                @click="viewDetail(phone.id)"
-                size="default"
-                class="detail-btn"
-              >
-                <el-icon><view /></el-icon> 查看详情
-              </el-button>
+                <!-- 查看详情按钮 -->
+                <el-button 
+                  type="primary" 
+                  @click="viewDetail(phone.id)"
+                  size="default"
+                  class="detail-btn"
+                >
+                  <el-icon><view /></el-icon> 查看详情
+                </el-button>
               </div>
             </el-card>
           </div>
@@ -533,586 +533,666 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/* 推荐视图容器 - 设置基本布局和背景渐变效果 */
 .recommend-view {
-  padding: 30px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  position: relative;
-  overflow: hidden;
+  padding: 30px; /* 内边距，确保内容不会贴近边缘 */
+  min-height: 100vh; /* 最小高度为视口高度，确保占满整个屏幕 */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* 渐变背景，从左上角到右下角 */
+  position: relative; /* 相对定位，作为子元素的定位参考 */
+  overflow: hidden; /* 隐藏超出容器的内容 */
 }
 
+/* 背景渐变球效果 - 共同样式设置 */
 .bg-gradient-1,
 .bg-gradient-2 {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 0;
-  opacity: 0.5;
+  position: absolute; /* 绝对定位，相对于父容器 */
+  border-radius: 50%; /* 圆形边框 */
+  filter: blur(80px); /* 高斯模糊效果，创建柔和的边缘 */
+  z-index: 0; /* 层级设置，确保在内容后面 */
+  opacity: 0.5; /* 半透明效果 */
 }
 
+/* 第一个背景渐变球 - 绿色调 */
 .bg-gradient-1 {
-  background: radial-gradient(circle, rgba(66, 185, 131, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 60vw;
-  height: 60vw;
-  top: -20vw;
-  right: -20vw;
-  animation: float-1 15s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(66, 185, 131, 0.3) 0%, rgba(255, 255, 255, 0) 70%); /* 径向渐变，从中心向外扩散 */
+  width: 60vw; /* 宽度为视口宽度的60% */
+  height: 60vw; /* 高度为视口宽度的60% */
+  top: -20vw; /* 顶部偏移，部分在视口外 */
+  right: -20vw; /* 右侧偏移，部分在视口外 */
+  animation: float-1 15s ease-in-out infinite alternate; /* 应用浮动动画，无限循环交替 */
 }
 
+/* 第二个背景渐变球 - 蓝色调 */
 .bg-gradient-2 {
-  background: radial-gradient(circle, rgba(91, 143, 249, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  width: 70vw;
-  height: 70vw;
-  bottom: -30vw;
-  left: -20vw;
-  animation: float-2 20s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(91, 143, 249, 0.3) 0%, rgba(255, 255, 255, 0) 70%); /* 径向渐变，从中心向外扩散 */
+  width: 70vw; /* 宽度为视口宽度的70% */
+  height: 70vw; /* 高度为视口宽度的70% */
+  bottom: -30vw; /* 底部偏移，部分在视口外 */
+  left: -20vw; /* 左侧偏移，部分在视口外 */
+  animation: float-2 20s ease-in-out infinite alternate; /* 应用浮动动画，无限循环交替 */
 }
 
+/* 第一个背景渐变球的浮动动画 */
 @keyframes float-1 {
   0% {
-    transform: translate(0, 0);
+    transform: translate(0, 0); /* 起始位置 */
   }
   100% {
-    transform: translate(-5vw, 5vw);
+    transform: translate(-5vw, 5vw); /* 结束位置，向左上方移动 */
   }
 }
 
+/* 第二个背景渐变球的浮动动画 */
 @keyframes float-2 {
   0% {
-    transform: translate(0, 0);
+    transform: translate(0, 0); /* 起始位置 */
   }
   100% {
-    transform: translate(5vw, -5vw);
+    transform: translate(5vw, -5vw); /* 结束位置，向右下方移动 */
   }
 }
 
+/* 筛选卡片 - 左侧筛选条件面板 */
 .filter-card {
-  position: sticky;
-  top: 20px;
-  border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  z-index: 2;
+  position: sticky; /* 粘性定位，滚动时保持可见 */
+  top: 20px; /* 距离顶部的距离 */
+  border-radius: 16px; /* 圆角边框 */
+  background-color: rgba(255, 255, 255, 0.95); /* 半透明白色背景 */
+  backdrop-filter: blur(10px); /* 背景模糊效果，增强玻璃质感 */
+  border: none; /* 移除边框 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 阴影效果，增强立体感 */
+  transition: all 0.3s ease; /* 平滑过渡动画 */
+  overflow: hidden; /* 隐藏超出部分 */
+  z-index: 2; /* 层级设置，确保在背景之上 */
 }
 
+/* 筛选卡片悬停效果 */
 .filter-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px); /* 向上浮动效果 */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* 更强的阴影效果 */
 }
 
+/* 筛选卡片头部 - 标题和操作按钮区域 */
 .filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 10px 0; /* 上下内边距 */
 }
 
+/* 筛选卡片标题样式 */
 .filter-header h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #303133;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin: 0; /* 移除外边距 */
+  font-size: 18px; /* 字体大小 */
+  color: #303133; /* 字体颜色 */
+  display: flex; /* 弹性布局，用于图标和文字对齐 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px; /* 元素之间的间距 */
 }
 
+/* 筛选操作按钮区域 */
 .filter-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px; /* 按钮之间的间距 */
 }
 
+/* 筛选折叠面板 - 自定义Element Plus组件样式 */
 .filter-collapse {
-  --el-collapse-header-height: auto;
-  --el-collapse-header-bg-color: transparent;
-  --el-collapse-header-text-color: #303133;
-  --el-collapse-content-bg-color: transparent;
-  --el-collapse-border-color: rgba(0, 0, 0, 0.05);
+  --el-collapse-header-height: auto; /* 自定义头部高度 */
+  --el-collapse-header-bg-color: transparent; /* 透明背景 */
+  --el-collapse-header-text-color: #303133; /* 文字颜色 */
+  --el-collapse-content-bg-color: transparent; /* 内容区透明背景 */
+  --el-collapse-border-color: rgba(0, 0, 0, 0.05); /* 淡化边框颜色 */
 }
 
+/* 折叠面板标题样式 */
 .collapse-title {
-  margin: 0;
-  font-size: 16px;
-  color: #409EFF;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin: 0; /* 移除外边距 */
+  font-size: 16px; /* 字体大小 */
+  color: #409EFF; /* 主题蓝色 */
+  display: flex; /* 弹性布局，用于图标和文字对齐 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px; /* 元素之间的间距 */
 }
 
+/* 快速筛选按钮组 */
 .quick-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 10px;
+  display: flex; /* 弹性布局 */
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 8px; /* 按钮之间的间距 */
+  margin-bottom: 10px; /* 底部外边距 */
 }
 
+/* 快速筛选按钮样式 */
 .quick-filter-btn {
-  margin: 0;
-  flex-grow: 1;
-  min-width: calc(50% - 8px);
+  margin: 0; /* 移除外边距 */
+  flex-grow: 1; /* 允许按钮伸展填充空间 */
+  min-width: calc(50% - 8px); /* 最小宽度，确保一行最多两个按钮 */
 }
 
+/* 已保存的筛选条件按钮样式 */
 .saved-filter {
-  position: relative;
-  padding-right: 24px;
+  position: relative; /* 相对定位，用于删除图标定位 */
+  padding-right: 24px; /* 右侧留出删除图标的空间 */
 }
 
+/* 删除筛选条件图标 */
 .delete-icon {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  opacity: 0.7;
-  transition: all 0.3s;
+  position: absolute; /* 绝对定位 */
+  right: 5px; /* 右侧距离 */
+  top: 50%; /* 垂直居中 */
+  transform: translateY(-50%); /* 精确垂直居中定位 */
+  font-size: 12px; /* 图标大小 */
+  opacity: 0.7; /* 默认半透明 */
+  transition: all 0.3s; /* 过渡动画 */
 }
 
+/* 删除图标悬停效果 */
 .delete-icon:hover {
-  opacity: 1;
-  color: #f56c6c;
+  opacity: 1; /* 完全不透明 */
+  color: #f56c6c; /* 警告红色 */
 }
 
+/* 价格区间控制器区域 */
 .price-range {
-  padding: 10px 0 20px;
-  margin-bottom: 10px;
-  position: relative;
+  padding: 10px 0 20px; /* 内边距 */
+  margin-bottom: 10px; /* 底部外边距 */
+  position: relative; /* 相对定位 */
 }
 
+/* 价格范围显示容器 */
 .range-values {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  font-weight: 500;
-  color: #f56c6c;
-  padding: 0 8px 0 20px;
-  position: relative;
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  margin-bottom: 24px; /* 底部外边距 */
+  font-weight: 500; /* 中等字体粗细 */
+  color: #f56c6c; /* 价格红色 */
+  padding: 0 8px 0 20px; /* 内边距 */
+  position: relative; /* 相对定位 */
 }
 
+/* 价格范围最小值样式 */
 .range-values span:first-child {
-  text-align: left;
+  text-align: left; /* 左对齐 */
 }
 
+/* 价格范围最大值样式 */
 .range-values span:last-child {
-  text-align: right;
-  padding-right: 18px;
-  position: absolute;
-  right: 8px;
+  text-align: right; /* 右对齐 */
+  padding-right: 18px; /* 右侧内边距 */
+  position: absolute; /* 绝对定位 */
+  right: 8px; /* 右侧距离 */
 }
 
+/* 价格滑块容器 */
 .budget-slider {
-  margin: 30px 0 24px;
-  padding: 0;
-  width: 96%;
-  margin-left: 2%;
+  margin: 30px 0 24px; /* 外边距 */
+  padding: 0; /* 移除内边距 */
+  width: 96%; /* 宽度略小于父容器 */
+  margin-left: 2%; /* 左侧外边距，居中对齐 */
 }
 
+/* 价格滑块轨道样式 */
 .budget-slider :deep(.el-slider__runway) {
-  margin: 20px 0;
-  height: 6px;
-  width: 100%;
+  margin: 20px 0; /* 上下外边距 */
+  height: 6px; /* 轨道高度 */
+  width: 100%; /* 轨道宽度 */
 }
 
+/* 价格滑块已选择部分样式 */
 .budget-slider :deep(.el-slider__bar) {
-  height: 6px;
+  height: 6px; /* 高度与轨道一致 */
 }
 
+/* 价格滑块手柄样式 */
 .budget-slider :deep(.el-slider__button) {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #42b983;
+  width: 20px; /* 手柄宽度 */
+  height: 20px; /* 手柄高度 */
+  border: 2px solid #42b983; /* 绿色边框 */
 }
 
+/* 价格滑块手柄包装器样式 */
 .budget-slider :deep(.el-slider__button-wrapper) {
-  top: -20px;
-  height: 40px;
-  width: 40px;
-  z-index: 2;
+  top: -20px; /* 顶部位置调整 */
+  height: 40px; /* 高度 */
+  width: 40px; /* 宽度 */
+  z-index: 2; /* 层级 */
 }
 
+/* 价格滑块刻度标记样式 */
 .budget-slider :deep(.el-slider__marks) {
-  top: 16px;
-  width: 100%;
-  left: 0;
+  top: 16px; /* 顶部位置 */
+  width: 100%; /* 宽度 */
+  left: 0; /* 左侧位置 */
 }
 
+/* 价格滑块刻度文本样式 */
 .budget-slider :deep(.el-slider__marks-text) {
-  margin-top: 16px;
-  color: #606266;
+  margin-top: 16px; /* 顶部外边距 */
+  color: #606266; /* 文本颜色 */
 }
 
+/* 价格快捷选择按钮组 */
 .popular-price-ranges {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 均匀分布 */
+  margin-top: 25px; /* 顶部外边距 */
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 8px; /* 按钮间距 */
 }
 
+/* 价格快捷选择按钮 */
 .popular-price-ranges .el-button {
-  flex: 1;
-  min-width: calc(25% - 6px);
-  margin: 0;
+  flex: 1; /* 均等分配空间 */
+  min-width: calc(25% - 6px); /* 设置最小宽度，确保每行最多四个按钮 */
+  margin: 0; /* 移除外边距 */
 }
 
+/* 规格筛选区域容器 */
 .spec-filters {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 纵向排列 */
+  gap: 15px; /* 项目间距 */
 }
 
+/* 规格筛选项 */
 .spec-filter-item {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 纵向排列 */
+  gap: 5px; /* 内部元素间距 */
 }
 
+/* 规格标签文字 */
 .spec-label {
-  font-size: 14px;
-  color: #606266;
-  margin-bottom: 5px;
+  font-size: 14px; /* 字体大小 */
+  color: #606266; /* 文字颜色 */
+  margin-bottom: 5px; /* 底部外边距 */
 }
 
+/* 使用场景复选框组 */
 .usage-checkbox-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  display: grid; /* 网格布局 */
+  grid-template-columns: repeat(2, 1fr); /* 两列等宽 */
+  gap: 10px; /* 项目间距 */
 }
 
+/* 高级筛选选项容器 */
 .advanced-filters {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 纵向排列 */
+  gap: 10px; /* 选项间距 */
 }
 
+/* 操作系统选择单选按钮组 */
 .os-radio-group {
-  margin-top: 5px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  margin-top: 5px; /* 顶部外边距 */
+  width: 100%; /* 宽度占满 */
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 均匀分布 */
 }
 
+/* 顶部外边距10px的工具类 */
 .mt-10 {
-  margin-top: 10px;
+  margin-top: 10px; /* 顶部外边距 */
 }
 
+/* 结果展示卡片 - 右侧推荐结果区域 */
 .results-card {
-  border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  z-index: 1;
+  border-radius: 16px; /* 圆角边框 */
+  background-color: rgba(255, 255, 255, 0.95); /* 半透明白色背景 */
+  backdrop-filter: blur(10px); /* 背景模糊效果 */
+  border: none; /* 移除边框 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  transition: all 0.3s ease; /* 平滑过渡动画 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  z-index: 1; /* 层级设置 */
 }
 
+/* 推荐结果标题栏 */
 .recommendation-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 10px 0; /* 上下内边距 */
 }
 
+/* 推荐结果标题文本 */
 .recommendation-header h3 {
-  margin: 0;
-  font-size: 20px;
-  color: #303133;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin: 0; /* 移除外边距 */
+  font-size: 20px; /* 字体大小 */
+  color: #303133; /* 字体颜色 */
+  font-weight: 600; /* 字体粗细 */
+  display: flex; /* 弹性布局，用于图标和文字对齐 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px; /* 元素间距 */
 }
 
+/* 结果数量标签 */
 .result-count {
-  font-size: 14px;
-  padding: 6px 12px;
-  border-radius: 20px;
+  font-size: 14px; /* 字体大小 */
+  padding: 6px 12px; /* 内边距 */
+  border-radius: 20px; /* 圆角效果 */
 }
 
+/* 手机卡片网格布局 */
 .phone-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-  margin-top: 20px;
+  display: grid; /* 网格布局 */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 自适应列数和宽度 */
+  gap: 25px; /* 网格间距 */
+  margin-top: 20px; /* 顶部外边距 */
 }
 
+/* 手机卡片容器 */
 .phone-card {
-  border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: none;
-  overflow: hidden;
-  background: transparent;
-  perspective: 1000px;
+  border-radius: 16px; /* 圆角效果 */
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* 平滑过渡动画，带弹性效果 */
+  border: none; /* 移除边框 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  background: transparent; /* 透明背景 */
+  perspective: 1000px; /* 3D透视效果 */
 }
 
+/* 手机卡片内部容器 */
 .phone-card-inner {
-  background: white;
-  border-radius: 16px;
-  padding: 15px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  transform-style: preserve-3d;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  background: white; /* 白色背景 */
+  border-radius: 16px; /* 圆角效果 */
+  padding: 15px; /* 内边距 */
+  height: 100%; /* 高度占满父容器 */
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 纵向排列 */
+  transition: all 0.3s ease; /* 平滑过渡动画 */
+  transform-style: preserve-3d; /* 保持3D变换风格 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* 阴影效果 */
 }
 
+/* 手机卡片悬停效果 */
 .phone-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  z-index: 2;
+  transform: translateY(-10px) scale(1.02); /* 上移并略微放大 */
+  z-index: 2; /* 提高层级，避免被其他卡片覆盖 */
 }
 
+/* 手机卡片悬停时内部容器效果 */
 .phone-card:hover .phone-card-inner {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* 加深阴影效果 */
 }
 
+/* 手机图片容器 */
 .phone-image-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #f8f9fa;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative; /* 相对定位，作为子元素定位参考 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  border-radius: 12px; /* 圆角效果 */
+  background: #f8f9fa; /* 浅灰色背景 */
+  height: 200px; /* 固定高度 */
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
 }
 
+/* 手机图片样式 */
 .phone-image {
-  width: 80%;
-  height: 90%;
-  object-fit: contain;
-  transition: all 0.5s ease;
+  width: 80%; /* 宽度为容器的80% */
+  height: 90%; /* 高度为容器的90% */
+  object-fit: contain; /* 保持图片比例，完整显示 */
+  transition: all 0.5s ease; /* 平滑过渡动画 */
 }
 
+/* 手机卡片悬停时图片效果 */
 .phone-card:hover .phone-image {
-  transform: scale(1.1);
+  transform: scale(1.1); /* 图片放大效果 */
 }
 
+/* 匹配度徽章 */
 .match-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: absolute; /* 绝对定位 */
+  top: 10px; /* 距顶部距离 */
+  right: 10px; /* 距右侧距离 */
+  width: 42px; /* 固定宽度 */
+  height: 42px; /* 固定高度 */
+  border-radius: 50%; /* 圆形效果 */
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  font-weight: bold; /* 字体加粗 */
+  font-size: 14px; /* 字体大小 */
+  color: white; /* 白色文字 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
 }
 
+/* 匹配度优秀标识 - 绿色 */
 .match-excellent {
-  background: linear-gradient(145deg, #42b983, #36a777);
+  background: linear-gradient(145deg, #42b983, #36a777); /* 绿色渐变背景 */
 }
 
+/* 匹配度良好标识 - 黄色 */
 .match-good {
-  background: linear-gradient(145deg, #e6a23c, #d48f23);
+  background: linear-gradient(145deg, #e6a23c, #d48f23); /* 黄色渐变背景 */
 }
 
+/* 匹配度一般标识 - 红色 */
 .match-fair {
-  background: linear-gradient(145deg, #f56c6c, #e45555);
+  background: linear-gradient(145deg, #f56c6c, #e45555); /* 红色渐变背景 */
 }
 
+/* 手机标题样式 */
 .phone-title {
-  margin: 15px 0 8px;
-  font-size: 16px;
-  color: #303133;
-  font-weight: 600;
-  height: 40px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 15px 0 8px; /* 外边距 */
+  font-size: 16px; /* 字体大小 */
+  color: #303133; /* 字体颜色 */
+  font-weight: 600; /* 字体粗细 */
+  height: 40px; /* 固定高度 */
+  display: -webkit-box; /* 特殊显示方式，用于多行文本截断 */
+  -webkit-line-clamp: 2; /* 最多显示2行 */
+  -webkit-box-orient: vertical; /* 垂直方向 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 文本溢出显示省略号 */
 }
 
+/* 手机基本信息区域 */
 .phone-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 0;
+  display: flex; /* 弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  margin: 10px 0; /* 上下外边距 */
 }
 
+/* 品牌标签样式 */
 .brand-badge {
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 4px 8px; /* 内边距 */
+  border-radius: 6px; /* 圆角效果 */
 }
 
+/* 匹配分数区域 */
 .match-score {
-  margin: 15px 0;
+  margin: 15px 0; /* 上下外边距 */
 }
 
+/* 匹配进度条样式 */
 .match-progress {
-  --el-progress-border-radius: 10px;
+  --el-progress-border-radius: 10px; /* 自定义进度条圆角 */
 }
 
+/* 价格标签样式 */
 .price {
-  color: #f56c6c;
-  font-size: 18px;
-  font-weight: 700;
+  color: #f56c6c; /* 价格红色 */
+  font-size: 18px; /* 字体大小 */
+  font-weight: 700; /* 粗体 */
 }
 
+/* 手机规格展示区域 */
 .phone-specs {
-  display: flex;
-  justify-content: space-around;
-  margin: 12px 0;
-  padding: 10px;
-  background: rgba(64, 158, 255, 0.1);
-  border-radius: 10px;
+  display: flex; /* 弹性布局 */
+  justify-content: space-around; /* 均匀分布 */
+  margin: 12px 0; /* 上下外边距 */
+  padding: 10px; /* 内边距 */
+  background: rgba(64, 158, 255, 0.1); /* 浅蓝色背景 */
+  border-radius: 10px; /* 圆角效果 */
 }
 
+/* 规格项样式 */
 .spec-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #409EFF;
-  font-weight: 500;
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  gap: 6px; /* 元素间距 */
+  color: #409EFF; /* 蓝色文字 */
+  font-weight: 500; /* 字体粗细 */
 }
 
+/* 规格图标样式 */
 .spec-icon {
-  font-size: 16px;
+  font-size: 16px; /* 图标大小 */
 }
 
+/* 手机评分展示区域 */
 .phone-ratings {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 15px 0;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 10px;
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 纵向排列 */
+  gap: 8px; /* 项目间距 */
+  margin: 15px 0; /* 上下外边距 */
+  padding: 12px; /* 内边距 */
+  background: rgba(0, 0, 0, 0.02); /* 浅灰背景色 */
+  border-radius: 10px; /* 圆角效果 */
 }
 
+/* 评分项目样式 */
 .rating-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: space-between; /* 两端对齐 */
 }
 
+/* 评分标签样式 */
 .rating-label {
-  color: #606266;
-  font-size: 14px;
-  width: 40px;
-  font-weight: 500;
+  color: #606266; /* 文字颜色 */
+  font-size: 14px; /* 字体大小 */
+  width: 40px; /* 固定宽度 */
+  font-weight: 500; /* 字体粗细 */
 }
 
+/* 使用场景标签容器 */
 .usage-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 12px 0;
-  min-height: 50px;
+  display: flex; /* 弹性布局 */
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 6px; /* 标签间距 */
+  margin: 12px 0; /* 上下外边距 */
+  min-height: 50px; /* 最小高度 */
 }
 
+/* 使用场景标签样式 */
 .usage-tag {
-  margin: 0;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  margin: 0; /* 移除外边距 */
+  border-radius: 6px; /* 圆角效果 */
+  transition: all 0.3s ease; /* 过渡动画 */
 }
 
+/* 使用场景标签悬停效果 */
 .usage-tag:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* 上浮效果 */
 }
 
+/* 查看详情按钮 */
 .detail-btn {
-  width: 100%;
-  margin-top: auto;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  width: 100%; /* 宽度占满 */
+  margin-top: auto; /* 顶部外边距自动，推到底部 */
+  border-radius: 8px; /* 圆角效果 */
+  padding: 10px 20px; /* 内边距 */
+  font-weight: 500; /* 字体粗细 */
+  letter-spacing: 0.5px; /* 字符间距 */
+  transition: all 0.3s ease; /* 过渡动画 */
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  gap: 6px; /* 元素间距 */
 }
 
+/* 详情按钮悬停效果 */
 .detail-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(64, 158, 255, 0.3);
+  transform: translateY(-3px); /* 上浮效果 */
+  box-shadow: 0 5px 15px rgba(64, 158, 255, 0.3); /* 阴影效果 */
 }
 
+/* 收藏按钮 */
 .favorite-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  opacity: 0.7;
+  position: absolute; /* 绝对定位 */
+  top: 10px; /* 顶部距离 */
+  left: 10px; /* 左侧距离 */
+  width: 36px; /* 宽度 */
+  height: 36px; /* 高度 */
+  border-radius: 50%; /* 圆形 */
+  background: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+  border: none; /* 移除边框 */
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  cursor: pointer; /* 鼠标手型 */
+  transition: all 0.3s ease; /* 过渡动画 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+  z-index: 2; /* 层级设置 */
+  opacity: 0.7; /* 默认半透明 */
 }
 
+/* 收藏按钮悬停效果 */
 .favorite-btn:hover {
-  transform: scale(1.1);
-  opacity: 1;
-  background: white;
+  transform: scale(1.1); /* 放大效果 */
+  opacity: 1; /* 完全不透明 */
+  background: white; /* 白色背景 */
 }
 
+/* 已收藏状态的按钮样式 */
 .favorite-btn.is-favorite {
-  background: #f56c6c;
-  color: white;
-  opacity: 1;
+  background: #f56c6c; /* 红色背景 */
+  color: white; /* 白色文字 */
+  opacity: 1; /* 完全不透明 */
 }
 
+/* 已收藏状态的按钮悬停效果 */
 .favorite-btn.is-favorite:hover {
-  background: #e64242;
+  background: #e64242; /* 深红色背景 */
 }
 
+/* 收藏按钮图标样式 */
 .favorite-btn .el-icon {
-  font-size: 18px;
-  transition: all 0.3s ease;
+  font-size: 18px; /* 图标大小 */
+  transition: all 0.3s ease; /* 过渡动画 */
 }
 
+/* 收藏按钮悬停时图标效果 */
 .favorite-btn:hover .el-icon {
-  transform: scale(1.2);
+  transform: scale(1.2); /* 图标放大效果 */
 }
 
+/* 响应式布局 - 大屏幕 */
 @media (max-width: 1200px) {
   .phone-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* 稍微减小卡片宽度 */
   }
 }
 
+/* 响应式布局 - 中等屏幕 */
 @media (max-width: 768px) {
   .recommend-view {
-    padding: 20px;
+    padding: 20px; /* 减小内边距 */
   }
   
   .phone-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 进一步减小卡片宽度 */
+    gap: 15px; /* 减小卡片间距 */
   }
   
   .filter-card {
-    margin-bottom: 20px;
-    position: static;
+    margin-bottom: 20px; /* 底部外边距 */
+    position: static; /* 取消粘性定位 */
   }
 }
 
+/* 响应式布局 - 小屏幕 */
 @media (max-width: 576px) {
   .phone-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 单列布局 */
   }
   
   .phone-image-container {
-    height: 180px;
+    height: 180px; /* 减小图片容器高度 */
   }
 }
 </style>

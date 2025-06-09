@@ -14,25 +14,25 @@
 
  
 ## 项目结构
-├─ src/                    # 源代码目录
-│  ├─ views/               # 视图组件
-│  │  ├─ HomeView.vue      # 首页
-│  │  ├─ RecommendView.vue # 推荐页面
-│  │  ├─ DetailView.vue    # 手机详情页
-│  │  ├─ CompareView.vue   # 手机对比页面
-│  │  ├─ FavoriteView.vue  # 收藏页面
-│  │  └─ AboutView.vue     # 关于页面
-│  ├─ router/              # 路由配置
-│  │  └─ index.js         
-│  ├─ stores/              # 状态管理
-│  │  └─ phone.js          # 手机数据和用户偏好管理
-│  ├─ data/                # 静态数据
-│  │  └─ phones.json       # 手机数据
-│  ├─ App.vue              # 应用根组件
-│  └─ main.js              # 应用入口文件
-├─ public/                 # 公共资源目录
-├─ index.html              # HTML入口文件
-└─ vite.config.js          # Vite配置文件
+    ├─ src/                    # 源代码目录
+    │  ├─ views/               # 视图组件
+    │  │  ├─ HomeView.vue      # 首页
+    │  │  ├─ RecommendView.vue # 推荐页面
+    │  │  ├─ DetailView.vue    # 手机详情页
+    │  │  ├─ CompareView.vue   # 手机对比页面
+    │  │  ├─ FavoriteView.vue  # 收藏页面
+    │  │  └─ AboutView.vue     # 关于页面
+    │  ├─ router/              # 路由配置
+    │  │  └─ index.js         
+    │  ├─ stores/              # 状态管理
+    │  │  └─ phone.js          # 手机数据和用户偏好管理
+    │  ├─ data/                # 静态数据
+    │  │  └─ phones.json       # 手机数据
+    │  ├─ App.vue              # 应用根组件
+    │  └─ main.js              # 应用入口文件
+    ├─ public/                 # 公共资源目录
+    ├─ index.html              # HTML入口文件
+    └─ vite.config.js          # Vite配置文件
 
 
 ## 作者
